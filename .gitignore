@@ -1,0 +1,40 @@
+# Node modules and package lock
+node_modules/
+package-lock.json
+
+# Build and cache output
+dist/
+build/
+.cache/
+*.log
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# Local environments and env files
+.env
+.env.*
+
+# Audio or video output
+*.webm
+*.mp3
+*.wav
+*.ogg
+
+# Compiled or temporary
+*.tmp
+*.bak
+*.swp
+
+# Git and deployment
+vendor/
+*.zip
+*.tar.gz
+
+# Browsersync or local servers
+.browser-sync/
