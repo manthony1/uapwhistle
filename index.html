@@ -1,15 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
+  <!--
+Credit: https://codepen.io/justin_stoner/pen/qEEWrpa
+  -->
 <head>
   <meta charset="UTF-8" />
   <title>UAP Whistle Summoner</title>
   <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-  <h2>🛸 UAP Whistle Summoner 🎶 - <code>v1.0.1</code></h2>
+  <h2>🛸 UAP Whistle Summoner (Mike's Version) 🎶 - <code>v1.0</code></h2>
   <button id="startButton">Start Summoning</button>
   <button id="previewButton">Preview Sound Only</button>
   <button id="stopButton" disabled>Stop</button>
+
+  <table border="1" cellpadding="8" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Layer</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>7.83 Hz AM</td>
+      <td>Simulates Schumann resonance by modulating 100 Hz tone</td>
+    </tr>
+    <tr>
+      <td>528 Hz</td>
+      <td>Gentle harmonic tone</td>
+    </tr>
+    <tr>
+      <td>17 kHz Pings</td>
+      <td>Short pulses every few seconds</td>
+    </tr>
+    <tr>
+      <td>Pulse interval</td>
+      <td>How often to pulse in seconds</td>
+    </tr>
+    <tr>
+      <td>2.5 kHz Chirps</td>
+      <td>Every 10 seconds, quick squawk</td>
+    </tr>
+    <tr>
+      <td>432 Hz Pad</td>
+      <td>Smooth ambient foundation</td>
+    </tr>
+    <tr>
+      <td>Breath Layer</td>
+      <td>White noise modulated to simulate breathing</td>
+    </tr>
+  </tbody>
+  <tfoot>
+    <tr>
+      <td colspan="2">
+        <strong>Origin</strong> - JasonWilde108 <a href="https://x.com/JasonWilde108/status/1910816547070685522?s=19" target="_blank">https://x.com/JasonWilde108/status/1910816547070685522?s=19</a>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <strong>Credit</strong> - TalesOnTheGo <a href="https://www.youtube.com/watch?v=Gbk63d_yb3k" target="_blank">https://www.youtube.com/watch?v=Gbk63d_yb3k</a>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+
+<pre>
+  TODO
+  
+  - Expose all parameters through UI controls
+  - Brute force the schnitzel out of it
+  - Start your cameras
+  - Let it work over night
+  </pre>
 
   <script src="whistle.js"></script>
 </body>
