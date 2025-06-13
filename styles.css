@@ -10,14 +10,14 @@ body {
 }
 
 h1, h2, h3 {
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 0.5em;
   color: #333;
 }
 
 p {
   margin-bottom: 1em;
-  font-size: 1rem;
+  font-size: 1.3rem;
 }
 
 button {
@@ -27,9 +27,9 @@ button {
   margin: 0.5em 0.5em 1em 0;
   font-size: 1rem;
   font-weight: 500;
-  cursor: pointer;
   box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   transition: background 0.2s ease, transform 0.1s ease;
+  cursor: pointer;
 }
 
 button:disabled {
@@ -51,10 +51,28 @@ button:disabled {
 
 /* Stop Red */
 #stopButton {
-  background-color: #d32f2f;
+  background-color: #cccccc;
   color: white;
 }
 
 #stopButton:hover {
-  background-color: #b71c1c;
+  background-color: #ff4800;
 }
+
+.tone-button {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: .72rem;
+  padding: 0;
+  border: none;
+  background-color: #1976d2;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.tone-button.active {
+  background-color: #c62828; /* red when active */
+}
+
