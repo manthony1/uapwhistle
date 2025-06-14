@@ -10,23 +10,36 @@ Credit: https://codepen.io/justin_stoner/pen/qEEWrpa
 </head>
 <body>
   <h2>🛸 UAP Whistle Summoner (Mike's Version) 🎶 - <code>v1.0</code></h2>
-  <button id="startButton">Start Summoning</button>
-  <button id="previewButton">Preview Sound Only</button>
-  <button id="stopButton">Stop</button>
+  <button id="startButton">Audio Download</button>
+  <button id="previewButton">Summon UAP Now</button>
+  <button id="stopButton" class="hidden">Stop</button>
+  <div id="recordingIndicator" class="hidden">
+    <span id="recordingLabel">🔴 Recording...</span> <span id="countdownTimer">(30s remaining)</span>
+  </div>
 
   <table border="1" cellpadding="8" cellspacing="0">
   <thead>
     <tr>
       <th>Layer</th>
       <th>Description</th>
-       <th></th> <!-- Empty heading for play buttons -->
+      <th></th> <!-- Empty heading for play buttons -->
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>7.83 Hz AM</td>
-      <td>Simulates Schumann resonance by modulating 100 Hz tone</td>
+      <td>7.83 Hz AM (fundamental)</td>
+      <td>Base Schumann resonance modulating 100 Hz tone</td>
       <td><button id="playTone1" class="tone-button">▶</button></td>
+    </tr>
+    <tr>
+      <td>14.3 Hz AM</td>
+      <td>2nd Schumann resonance modulating 120 Hz carrier</td>
+      <td><button id="playTone8" class="tone-button">▶</button></td>
+    </tr>
+    <tr>
+      <td>20.8 Hz AM</td>
+      <td>3rd Schumann resonance modulating 140 Hz carrier</td>
+      <td><button id="playTone9" class="tone-button">▶</button></td>
     </tr>
     <tr>
       <td>528 Hz</td>
@@ -35,17 +48,17 @@ Credit: https://codepen.io/justin_stoner/pen/qEEWrpa
     </tr>
     <tr>
       <td>17 kHz Pings</td>
-      <td>Short pulses every few seconds</td>
+      <td>Short ultrasonic pulses every 3 seconds</td>
       <td><button id="playTone3" class="tone-button">▶</button></td>
     </tr>
     <tr>
-      <td>Pulse interval</td>
-      <td>How often to pulse in seconds</td>
+      <td>1 kHz Pulses</td>
+      <td>Sharp 'heartbeat' pulse tone every 2 seconds</td>
       <td><button id="playTone4" class="tone-button">▶</button></td>
     </tr>
     <tr>
       <td>2.5 kHz Chirps</td>
-      <td>Every 10 seconds, quick squawk</td>
+      <td>Quick 'plink' chirp tone every 10 seconds</td>
       <td><button id="playTone5" class="tone-button">▶</button></td>
     </tr>
     <tr>
@@ -73,14 +86,6 @@ Credit: https://codepen.io/justin_stoner/pen/qEEWrpa
   </tfoot>
 </table>
 
-<pre>
-  TODO
-  
-  - Expose all parameters through UI controls
-  - Brute force the schnitzel out of it
-  - Start your cameras
-  - Let it work over night
-  </pre>
 
   <script src="whistle.js"></script>
 </body>

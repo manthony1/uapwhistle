@@ -6,10 +6,27 @@ function main() {
   let chunks = [];
   let previewTimeout;
 
+  let toneGains = {
+    tone1: 0.7,   // 7.83 Hz AM (fundamental)
+    tone2: 0.6,   // 14.3 Hz AM (2nd Schumann resonance)
+    tone3: 0.5,   // 20.8 Hz AM (3rd Schumann resonance)
+    tone4: 0.04,  // 528 Hz harmonic tone
+    tone5: 0.1,   // 17 kHz ultrasonic ping
+    tone6: 0.2,   // 1 kHz pulses every 2s
+    tone7: 0.2,   // 2.5 kHz chirps every 10s
+    tone8: 0.02,  // 432 Hz ambient pad
+    tone9: 0.03   // Breath layer (white noise)
+  };
+
+
   const startButton = document.getElementById("startButton");
   const stopButton = document.getElementById("stopButton");
   const previewButton = document.getElementById("previewButton");
+  const recordingIndicator = document.getElementById("recordingIndicator");
+  const countdownTimer = document.getElementById("countdownTimer");
+  const recordingLabel = document.getElementById("recordingLabel");
 
+  let countdownInterval;
   let previewContext;
   let previewNodes = [];
   let previewChirpInterval;
@@ -56,7 +73,7 @@ function main() {
       const lfoGain = ctx.createGain();
 
       lfo.frequency.value = 7.83;
-      lfoGain.gain.value = 0.3;
+      lfoGain.gain.value = toneGains.tone1;
 
       lfo.connect(lfoGain).connect(carrier.frequency);
       carrier.connect(ampGain).connect(ctx.destination);
@@ -75,7 +92,7 @@ function main() {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.frequency.value = 528;
-      gain.gain.value = 0.05;
+      lfoGain.gain.value = toneGains.tone2;
       osc.connect(gain).connect(ctx.destination);
       osc.start();
       return [osc];
@@ -91,7 +108,7 @@ function main() {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.frequency.value = 17000;
-      gain.gain.value = 0.1;
+      lfoGain.gain.value = toneGains.tone3;
       osc.connect(gain).connect(ctx.destination);
       osc.start();
       osc.stop(ctx.currentTime + 0.05);
@@ -117,7 +134,7 @@ function main() {
       const gain = ctx.createGain();
       osc.frequency.value = 1000; // You can tweak this
       osc.type = 'square';
-      gain.gain.value = 0.2;
+      lfoGain.gain.value = toneGains.tone4;
       osc.connect(gain).connect(ctx.destination);
       osc.start();
       osc.stop(ctx.currentTime + 0.1);
@@ -142,7 +159,7 @@ function main() {
         const gain = ctx.createGain();
         osc.frequency.setValueAtTime(2500, ctx.currentTime);
         osc.type = 'square';
-        gain.gain.setValueAtTime(0.2, ctx.currentTime);
+        gain.gain.setValueAtTime(toneGains.tone5, ctx.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
         osc.connect(gain).connect(ctx.destination);
         osc.start();
@@ -165,7 +182,7 @@ function main() {
       const gain = ctx.createGain();
       osc.frequency.value = 432;
       osc.type = 'triangle';
-      gain.gain.value = 0.02;
+      gain.gain.value = toneGains.tone6;
       osc.connect(gain).connect(ctx.destination);
       osc.start();
       return [osc];
@@ -191,7 +208,7 @@ function main() {
       whiteNoise.loop = true;
 
       const noiseGain = ctx.createGain();
-      noiseGain.gain.setValueAtTime(0.03, ctx.currentTime);
+      noiseGain.gain.setValueAtTime(toneGains.tone7, ctx.currentTime);
 
       const lfo = ctx.createOscillator();
       const lfoGain = ctx.createGain();
@@ -227,6 +244,55 @@ function main() {
     }
   });
 
+  //tone 8
+  registerToneToggle({
+    buttonId: 'playTone8',
+    setupFn: (ctx) => {
+      const carrier = ctx.createOscillator();
+      carrier.frequency.value = 120;
+
+      const ampGain = ctx.createGain();
+      const lfo = ctx.createOscillator();
+      const lfoGain = ctx.createGain();
+
+      lfo.frequency.value = 14.3;
+      lfoGain.gain.value = toneGains.tone8;
+
+      lfo.connect(lfoGain).connect(carrier.frequency);
+      carrier.connect(ampGain).connect(ctx.destination);
+
+      lfo.start();
+      carrier.start();
+
+      return [carrier, lfo];
+    }
+  });
+
+  //tone 9
+  registerToneToggle({
+    buttonId: 'playTone9',
+    setupFn: (ctx) => {
+      const carrier = ctx.createOscillator();
+      carrier.frequency.value = 140;
+
+      const ampGain = ctx.createGain();
+      const lfo = ctx.createOscillator();
+      const lfoGain = ctx.createGain();
+
+      lfo.frequency.value = 20.8;
+      lfoGain.gain.value = toneGains.tone9;
+
+      lfo.connect(lfoGain).connect(carrier.frequency);
+      carrier.connect(ampGain).connect(ctx.destination);
+
+      lfo.start();
+      carrier.start();
+
+      return [carrier, lfo];
+    }
+  });
+
+
   startButton.onclick = () => {
     context = new (window.AudioContext || window.webkitAudioContext)();
     const destination = context.createMediaStreamDestination();
@@ -247,6 +313,14 @@ function main() {
 
     recorder.start();
 
+    let timeLeft = 30;
+    countdownTimer.textContent = `(${timeLeft}s remaining)`;
+    countdownInterval = setInterval(() => {
+      timeLeft--;
+      countdownTimer.textContent = `(${timeLeft}s remaining)`;
+      if (timeLeft <= 0) clearInterval(countdownInterval);
+    }, 1000);
+
     setTimeout(() => {
       if (!stopButton.disabled) {
         stopButton.onclick();
@@ -256,6 +330,9 @@ function main() {
 
     startButton.disabled = true;
     stopButton.disabled = false;
+    recordingIndicator.classList.remove("hidden");
+    stopButton.classList.remove("hidden");
+
   };
 
   stopButton.onclick = () => {
@@ -286,14 +363,38 @@ function main() {
     if (recorder && recorder.state !== "inactive") {
       recorder.stop();
     }
+
+    recordingIndicator.classList.add("hidden");
+
+    recordingLabel.textContent = '🔴 Recording...';
+    recordingLabel.classList.remove('summoning');
+
+
+    clearInterval(countdownInterval);
+
   };
 
   previewButton.onclick = () => {
+    recordingIndicator.classList.remove("hidden");
     previewButton.disabled = true;
     stopButton.disabled = false;
+    stopButton.classList.remove("hidden");
+    recordingLabel.textContent = '🌀 Summoning...';
+    recordingLabel.classList.add('summoning');
+
+    countdownTimer.textContent = `(30s remaining)`;
     previewContext = new (window.AudioContext || window.webkitAudioContext)();
     const destination = previewContext.destination;
     startPreviewAudioLayers(previewContext, destination);
+
+    let timeLeft = 30;
+    countdownTimer.textContent = `(${timeLeft}s remaining)`;
+    countdownInterval = setInterval(() => {
+      timeLeft--;
+      countdownTimer.textContent = `(${timeLeft}s remaining)`;
+      if (timeLeft <= 0) clearInterval(countdownInterval);
+    }, 1000);
+
 
     previewTimeout = setTimeout(() => {
       previewNodes.forEach((n) => n.stop && n.stop());
@@ -302,7 +403,11 @@ function main() {
       clearInterval(previewPingInterval);
       previewContext.close();
       previewButton.disabled = false;
-    }, 15000);
+      recordingIndicator.classList.add("hidden");
+      countdownTimer.textContent = '';
+
+
+    }, 30000);
   };
 
   function startAudioLayers(context, destination) {
@@ -316,7 +421,7 @@ function main() {
   }
 
   function layeredAudio(context, destination, storeNodes, setChirpId, setPingId = () => {}) {
-    // 1. 100 Hz AM by 7.83 Hz
+    // 1. 7.83 Hz AM (fundamental)
     {
       const carrier = context.createOscillator();
       carrier.frequency.value = 100;
@@ -324,7 +429,7 @@ function main() {
       const lfo = context.createOscillator();
       const lfoGain = context.createGain();
       lfo.frequency.value = 7.83;
-      lfoGain.gain.value = 0.3;
+      lfoGain.gain.value = toneGains.tone1;
       lfo.connect(lfoGain).connect(carrier.frequency);
       carrier.connect(ampGain).connect(destination);
       lfo.start();
@@ -332,24 +437,56 @@ function main() {
       storeNodes.push(carrier, lfo);
     }
 
-    // 2. 528 Hz tone
+    // 2. 14.3 Hz AM
+    {
+      const carrier = context.createOscillator();
+      carrier.frequency.value = 120;
+      const ampGain = context.createGain();
+      const lfo = context.createOscillator();
+      const lfoGain = context.createGain();
+      lfo.frequency.value = 14.3;
+      lfoGain.gain.value = toneGains.tone2;
+      lfo.connect(lfoGain).connect(carrier.frequency);
+      carrier.connect(ampGain).connect(destination);
+      lfo.start();
+      carrier.start();
+      storeNodes.push(carrier, lfo);
+    }
+
+    // 3. 20.8 Hz AM
+    {
+      const carrier = context.createOscillator();
+      carrier.frequency.value = 140;
+      const ampGain = context.createGain();
+      const lfo = context.createOscillator();
+      const lfoGain = context.createGain();
+      lfo.frequency.value = 20.8;
+      lfoGain.gain.value = toneGains.tone3;
+      lfo.connect(lfoGain).connect(carrier.frequency);
+      carrier.connect(ampGain).connect(destination);
+      lfo.start();
+      carrier.start();
+      storeNodes.push(carrier, lfo);
+    }
+
+    // 4. 528 Hz tone
     {
       const osc = context.createOscillator();
       const gain = context.createGain();
       osc.frequency.value = 528;
-      gain.gain.value = 0.05;
+      gain.gain.value = toneGains.tone4;
       osc.connect(gain).connect(destination);
       osc.start();
       storeNodes.push(osc);
     }
 
-    // 3. 17 kHz ping
+    // 5. 17 kHz pings
     {
       const id = setInterval(() => {
         const osc = context.createOscillator();
         const gain = context.createGain();
         osc.frequency.value = 17000;
-        gain.gain.value = 0.1;
+        gain.gain.setValueAtTime(toneGains.tone5, context.currentTime);
         osc.connect(gain).connect(destination);
         osc.start();
         osc.stop(context.currentTime + 0.05);
@@ -357,14 +494,28 @@ function main() {
       setPingId(id);
     }
 
-    // 4. 2.5 kHz chirp
+    // 6. 1 kHz pulses
+    {
+      const interval = setInterval(() => {
+        const osc = context.createOscillator();
+        const gain = context.createGain();
+        osc.frequency.value = 1000;
+        gain.gain.value = toneGains.tone6;
+        osc.connect(gain).connect(destination);
+        osc.start();
+        osc.stop(context.currentTime + 0.1);
+      }, 2000);
+      setTimeout(() => clearInterval(interval), 30000); // match audio duration
+    }
+
+    // 7. 2.5 kHz chirps
     {
       const id = setInterval(() => {
         const osc = context.createOscillator();
         const gain = context.createGain();
         osc.frequency.setValueAtTime(2500, context.currentTime);
         osc.type = "square";
-        gain.gain.setValueAtTime(0.2, context.currentTime);
+        gain.gain.setValueAtTime(toneGains.tone7, context.currentTime);
         gain.gain.exponentialRampToValueAtTime(0.001, context.currentTime + 0.2);
         osc.connect(gain).connect(destination);
         osc.start();
@@ -374,19 +525,19 @@ function main() {
       setChirpId(id);
     }
 
-    // 5. 432 Hz pad
+    // 8. 432 Hz ambient pad
     {
       const osc = context.createOscillator();
       const gain = context.createGain();
       osc.frequency.value = 432;
       osc.type = "triangle";
-      gain.gain.value = 0.02;
+      gain.gain.value = toneGains.tone8;
       osc.connect(gain).connect(destination);
       osc.start();
       storeNodes.push(osc);
     }
 
-    // 6. Breath noise
+    // 9. Breath noise layer
     {
       const bufferSize = 2 * context.sampleRate;
       const noiseBuffer = context.createBuffer(1, bufferSize, context.sampleRate);
@@ -400,7 +551,7 @@ function main() {
       whiteNoise.loop = true;
 
       const noiseGain = context.createGain();
-      noiseGain.gain.setValueAtTime(0.03, context.currentTime);
+      noiseGain.gain.setValueAtTime(toneGains.tone9, context.currentTime);
 
       const lfo = context.createOscillator();
       const lfoGain = context.createGain();
@@ -429,20 +580,12 @@ function main() {
       whiteNoise.start();
       lfo.start();
       lfoP.start();
-      storeNodes.push(whiteNoise, lfo, lfoP, pFilter, pFilter1, lfoPGain);
+
+      storeNodes.push(whiteNoise, lfo, lfoP, pFilter, pFilter1, lfoGain, lfoPGain);
     }
   }
+
 }
-
-// function ready(fn) {
-//   if (document.readyState !== "loading") {
-//     fn();
-//   } else {
-//     document.addEventListener("DOMContentLoaded", fn);
-//   }
-// }
-
 
   window.addEventListener("DOMContentLoaded", main);
 
-// ready(main);
