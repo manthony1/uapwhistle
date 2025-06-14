@@ -47,7 +47,7 @@ Serious skywatchers use **multi-domain sensor platforms** to detect non-ballisti
 
 ## 🛰️ Framework Alignment
 
-This tool aligns with **Layer 2 (Sensory Calibration)** and **Layer 3 (Sensor Cueing)** in the [Skywatcher Discovery Framework](https://github.com/your-framework-link), supporting:
+This tool aligns with **Layer 2 (Sensory Calibration)** and **Layer 3 (Sensor Cueing)** in the [Skywatcher Discovery Framework](https://skywatcher.ai/research), supporting:
 
 - Emission of specific frequency cues theorized to interact with anomalous flight behaviors
 - Triggering passive sensor systems for detection during layered sound emission
