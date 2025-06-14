@@ -103,3 +103,7 @@ button:disabled {
 #recordingLabel.summoning {
   color: #767CFA;
 }
+
+#recordingLabel.summoning + #countdownTimer {
+  color: #767CFA;
+}
