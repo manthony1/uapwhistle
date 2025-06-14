@@ -4,6 +4,8 @@ A browser-based sound tool designed to generate layered tones theorized to stimu
 
 ---
 
+![UAP Whistle](screenshot.jpg−url"UAP Whistle Screenshot")
+
 ## 🎧 Features
 
 - Nine layered audio tones including:
@@ -18,8 +20,35 @@ A browser-based sound tool designed to generate layered tones theorized to stimu
 - "Summon UAP Now" live preview mode
 - Individual toggles to isolate and preview each tone
 - Built-in countdown and animated recording indicator
+- Real-time frequency bar visualizer appears during summoning preview to show active tone spectrum
 
 ---
+
+### 🎚️ Frequency Spectrum Analysis
+
+The following spectrum confirms the presence of all nine tones, including Schumann resonances, harmonic layers, and ambient noise.
+
+![UAP Summon Spectrum](spectrum_labeled.png)
+
+✅ **Confirmed Frequencies in the Audio**
+
+From the clear peaks in the spectrum:
+
+| Frequency (Hz) | Tone Description                           | Status                    |
+|----------------|---------------------------------------------|---------------------------|
+| ~100           | 7.83 Hz AM-modulated carrier                | ✅ Present                |
+| ~120           | 14.3 Hz AM-modulated carrier                | ✅ Present                |
+| ~140           | 20.8 Hz AM-modulated carrier                | ✅ Present                |
+| ~432           | Ambient triangle tone                       | ✅ Present                |
+| ~528           | Harmonic tone                               | ✅ Present                |
+| ~1000          | Periodic pulse tone                         | ✅ Present                |
+| ~2500          | Chirps                                      | ✅ Present                |
+| ~17,000        | Ultrasonic ping (not visible in this graph) | ✅ Analyzed separately    |
+| 0–2000 spread  | Breath/white noise                          | ✅ Noise floor visible    |
+
+
+This plot was generated using an FFT (Fast Fourier Transform) analysis of the downloaded `.webm` audio. Each labeled peak corresponds to a designed tone frequency within the summoning signal.
+
 
 ## 💻 How to Use
 

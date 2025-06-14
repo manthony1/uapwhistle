@@ -1,4 +1,10 @@
 function main() {
+
+  const canvas = document.getElementById("soundGraph");
+  const ctx = canvas.getContext("2d");
+  ctx.fillStyle = "Gainsboro";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
   const startButton = document.getElementById("startButton");
   const stopButton = document.getElementById("stopButton");
   const previewButton = document.getElementById("previewButton");
@@ -599,7 +605,10 @@ function main() {
       analyser.getByteFrequencyData(dataArray);
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#767CFA";
+      ctx.fillStyle = "Gainsboro"; // or your desired dark grey
+      ctx.fillRect(0, 0, canvas.width, canvas.height); // draw background
+      ctx.fillStyle = "#767CFA"; // then draw bars
+
 
       const barWidth = canvas.width / dataArray.length;
       dataArray.forEach((val, i) => {
