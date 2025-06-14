@@ -1,4 +1,11 @@
 function main() {
+  const startButton = document.getElementById("startButton");
+  const stopButton = document.getElementById("stopButton");
+  const previewButton = document.getElementById("previewButton");
+  const recordingIndicator = document.getElementById("recordingIndicator");
+  const countdownTimer = document.getElementById("countdownTimer");
+  const recordingLabel = document.getElementById("recordingLabel");
+  
   let context;
   let nodes = [];
   let chirpInterval;
@@ -17,14 +24,6 @@ function main() {
     tone8: 0.02,  // 432 Hz ambient pad
     tone9: 0.03   // Breath layer (white noise)
   };
-
-
-  const startButton = document.getElementById("startButton");
-  const stopButton = document.getElementById("stopButton");
-  const previewButton = document.getElementById("previewButton");
-  const recordingIndicator = document.getElementById("recordingIndicator");
-  const countdownTimer = document.getElementById("countdownTimer");
-  const recordingLabel = document.getElementById("recordingLabel");
 
   let countdownInterval;
   let previewContext;
@@ -313,7 +312,7 @@ function main() {
 
     recorder.start();
 
-    let timeLeft = 30;
+    timeLeft = 30;
     countdownTimer.textContent = `(${timeLeft}s remaining)`;
     countdownInterval = setInterval(() => {
       timeLeft--;
@@ -374,41 +373,46 @@ function main() {
 
   };
 
-  previewButton.onclick = () => {
-    recordingIndicator.classList.remove("hidden");
-    previewButton.disabled = true;
-    stopButton.disabled = false;
-    stopButton.classList.remove("hidden");
-    recordingLabel.textContent = '🌀 Summoning...';
-    recordingLabel.classList.add('summoning');
+    previewButton.onclick = () => {
+      previewButton.disabled = true;
+      stopButton.disabled = false;
+      stopButton.classList.remove("hidden");
+      recordingIndicator.classList.remove("hidden");
+      recordingLabel.textContent = '🌀 Summoning...';
+      recordingLabel.classList.add('summoning');
+      countdownTimer.textContent = `(30s remaining)`;
 
-    countdownTimer.textContent = `(30s remaining)`;
-    previewContext = new (window.AudioContext || window.webkitAudioContext)();
-    const destination = previewContext.destination;
-    startPreviewAudioLayers(previewContext, destination);
+      previewContext = new (window.AudioContext || window.webkitAudioContext)();
+      const destination = previewContext.destination;
 
-    let timeLeft = 30;
-    countdownTimer.textContent = `(${timeLeft}s remaining)`;
-    countdownInterval = setInterval(() => {
-      timeLeft--;
-      countdownTimer.textContent = `(${timeLeft}s remaining)`;
-      if (timeLeft <= 0) clearInterval(countdownInterval);
-    }, 1000);
+      const analyser = previewContext.createAnalyser();
+      const analyserGain = previewContext.createGain();
+      analyserGain.connect(analyser);
+      analyser.connect(destination);
 
-
-    previewTimeout = setTimeout(() => {
-      previewNodes.forEach((n) => n.stop && n.stop());
-      previewNodes = [];
-      clearInterval(previewChirpInterval);
-      clearInterval(previewPingInterval);
-      previewContext.close();
-      previewButton.disabled = false;
-      recordingIndicator.classList.add("hidden");
-      countdownTimer.textContent = '';
+      startPreviewAudioLayers(previewContext, analyserGain);
+      startGraphVisualizer(analyser);
 
 
-    }, 30000);
-  };
+      timeLeft = 30;
+      countdownInterval = setInterval(() => {
+        timeLeft--;
+        countdownTimer.textContent = `(${timeLeft}s remaining)`;
+        if (timeLeft <= 0) clearInterval(countdownInterval);
+      }, 1000);
+
+      previewTimeout = setTimeout(() => {
+        previewNodes.forEach((n) => n.stop && n.stop());
+        previewNodes = [];
+        clearInterval(previewChirpInterval);
+        clearInterval(previewPingInterval);
+        previewContext.close();
+        previewButton.disabled = false;
+        recordingIndicator.classList.add("hidden");
+        countdownTimer.textContent = '';
+      }, 30000);
+    };
+
 
   function startAudioLayers(context, destination) {
     // Audio layers for main session
@@ -583,6 +587,28 @@ function main() {
 
       storeNodes.push(whiteNoise, lfo, lfoP, pFilter, pFilter1, lfoGain, lfoPGain);
     }
+  }
+
+  function startGraphVisualizer(analyser) {
+    const canvas = document.getElementById("soundGraph");
+    const ctx = canvas.getContext("2d");
+    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+    function draw() {
+      requestAnimationFrame(draw);
+      analyser.getByteFrequencyData(dataArray);
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "#767CFA";
+
+      const barWidth = canvas.width / dataArray.length;
+      dataArray.forEach((val, i) => {
+        const height = val / 2;
+        ctx.fillRect(i * barWidth, canvas.height - height, barWidth - 1, height);
+      });
+    }
+
+    draw();
   }
 
 }
