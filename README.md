@@ -4,7 +4,7 @@ A browser-based sound tool designed to generate layered tones theorized to stimu
 
 ---
 
-![UAP Whistle](screenshot.jpg−url"UAP Whistle Screenshot")
+![UAP Whistle](screenshot.jpg"UAP Whistle Screenshot")
 
 ## 🎧 Features
 
@@ -45,6 +45,21 @@ From the clear peaks in the spectrum:
 | ~2500          | Chirps                                      | ✅ Present                |
 | ~17,000        | Ultrasonic ping (not visible in this graph) | ✅ Analyzed separately    |
 | 0–2000 spread  | Breath/white noise                          | ✅ Noise floor visible    |
+
+
+### 🔍 Audio Analysis
+
+#### 📈 High-Frequency Spectrum (10–20 kHz)
+![High Frequency FFT](uap_fft_high_band.png)  
+This zoomed-in FFT reveals the presence of the 17 kHz ultrasonic ping — a subtle yet important element of the signal, often inaudible to humans.  
+
+✅ *Confirms full-spectrum design for UAP-related experiments*
+
+#### 📊 Time-Frequency Spectrogram
+![Spectrogram](uap_spectrogram.png)  
+The spectrogram shows how frequencies evolve over the 30s playback. Pulses, modulations, and ambient tones are visible and time-aligned.  
+
+✅ *Verifies correct timing of pulsed chirps, breath patterns, and modulated tones*
 
 
 This plot was generated using an FFT (Fast Fourier Transform) analysis of the downloaded `.webm` audio. Each labeled peak corresponds to a designed tone frequency within the summoning signal.

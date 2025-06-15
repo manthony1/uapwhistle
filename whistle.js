@@ -300,10 +300,25 @@ function main() {
 
   startButton.onclick = () => {
     context = new (window.AudioContext || window.webkitAudioContext)();
+
+    // const destination = context.createMediaStreamDestination();
+    // startAudioLayers(context, destination);
+    // recorder = new MediaRecorder(destination.stream);
+
+    const analyser = context.createAnalyser();
+    const analyserGain = context.createGain();
+    analyserGain.connect(analyser);
+    analyser.connect(context.destination);
+
     const destination = context.createMediaStreamDestination();
-    startAudioLayers(context, destination);
+    analyser.connect(destination); // tap into recorder stream
+
+    startAudioLayers(context, analyserGain);
+    startGraphVisualizer(analyser);
 
     recorder = new MediaRecorder(destination.stream);
+
+
     chunks = [];
 
     recorder.ondataavailable = (e) => chunks.push(e.data);
