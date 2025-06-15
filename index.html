@@ -13,14 +13,31 @@ Credit: https://codepen.io/justin_stoner/pen/qEEWrpa
   <button id="startButton">Audio Download</button>
   <button id="previewButton">Summon UAP Now</button>
   <button id="stopButton" class="hidden">Stop</button>
+  <button id="resetButton" disabled>Reset</button>
   <div id="recordingIndicator" class="hidden">
     <span id="recordingLabel">🔴 Recording...</span> <span id="countdownTimer">(30s remaining)</span>
   </div>
 
   <h3 style="margin-bottom: 0.2em;">🌐 Tone Activity Graph</h3>
   <canvas id="soundGraph" width="600" height="100"
-    style="width: 50%; min-width: 500px; background-color: #222; border-radius: 8px; margin-bottom: 1.5em;">
+    style="width: 50%; min-width: 500px; background-color: WhiteSmoke; border-radius: 8px; margin-bottom: 1.5em;">
   </canvas>
+
+  <div class="legend">
+  <strong>🎨 Frequency Legend:</strong>
+  <div class="legend-row">
+    <span class="legend-color" style="background-color: #767CFA;"></span> Quiet / Low Amplitude
+  </div>
+  <div class="legend-row">
+    <span class="legend-color" style="background-color: #00FFFF;"></span> Medium Amplitude
+  </div>
+  <div class="legend-row">
+    <span class="legend-color" style="background-color: #FFFF00;"></span> High Amplitude
+  </div>
+  <div class="legend-row">
+    <span class="legend-color" style="background-color: #FF4500;"></span> Intense Peaks / Strong Signal
+  </div>
+</div>
 
   <table border="1" cellpadding="8" cellspacing="0">
   <thead>
@@ -90,8 +107,6 @@ Credit: https://codepen.io/justin_stoner/pen/qEEWrpa
     </tr>
   </tfoot>
 </table>
-
-
   <script src="whistle.js"></script>
 </body>
 </html>

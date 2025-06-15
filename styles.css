@@ -59,6 +59,19 @@ button:disabled {
   background-color: #ff4800;
 }
 
+#resetButton {
+  background-color: #dddddd;
+  color: #333;
+  border: 1px solid #888;
+}
+
+/* Optional hover tweak */
+#resetButton:hover {
+  background-color: #cccccc;
+}]'
+'
+w 121234321`24GT 
+
 table {
   width: 50%;
   margin: 10;
@@ -116,6 +129,39 @@ table {
   color: #767CFA;
 }
 
+/* #soundGraph {
+  background-color: WhiteSmoke;
+} */
+
 #soundGraph {
-  background-color: Gainsboro;
+  background-color: WhiteSmoke;
+  width: 50%;
+  height: 150px;
+  min-width: 500px;
+  display: block;
+  margin: 0;
+  border: 1px solid #767CFA;
+  box-shadow: 0 0 10px #767CFA;
+  border-radius: 6px;
+}
+
+.legend {
+  font-size: 0.9em;
+  margin-top: 0.5em;
+  margin-bottom: 1em;
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  margin-top: 0.2em;
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  margin-right: 8px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
 }

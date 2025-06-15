@@ -2,7 +2,7 @@ function main() {
 
   const canvas = document.getElementById("soundGraph");
   const ctx = canvas.getContext("2d");
-  ctx.fillStyle = "Gainsboro";
+  ctx.fillStyle = "#E8E8E8";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   const startButton = document.getElementById("startButton");
@@ -20,15 +20,15 @@ function main() {
   let previewTimeout;
 
   let toneGains = {
-    tone1: 0.7,   // 7.83 Hz AM (fundamental)
-    tone2: 0.6,   // 14.3 Hz AM (2nd Schumann resonance)
-    tone3: 0.5,   // 20.8 Hz AM (3rd Schumann resonance)
-    tone4: 0.04,  // 528 Hz harmonic tone
-    tone5: 0.1,   // 17 kHz ultrasonic ping
-    tone6: 0.2,   // 1 kHz pulses every 2s
-    tone7: 0.2,   // 2.5 kHz chirps every 10s
-    tone8: 0.02,  // 432 Hz ambient pad
-    tone9: 0.03   // Breath layer (white noise)
+    tone1: 0.0,   // 7.83 Hz AM (fundamental) 0.7
+    tone2: 0.0,   // 14.3 Hz AM (2nd Schumann resonance) 0.6
+    tone3: 0.0,   // 20.8 Hz AM (3rd Schumann resonance) 0.5
+    tone4: 0.0,  // 528 Hz harmonic tone 0.04
+    tone5: 0.0,   // 17 kHz ultrasonic ping 0.1
+    tone6: 0.0,   // 1 kHz pulses every 2s 0.2
+    tone7: 0.0,   // 2.5 kHz chirps every 10s 0.2
+    tone8: 0.0,  // 432 Hz ambient pad 0.02
+    tone9: 0.0   // Breath layer (white noise) 0.03
   };
 
   let countdownInterval;
@@ -36,8 +36,13 @@ function main() {
   let previewNodes = [];
   let previewChirpInterval;
   let previewPingInterval;
+ 
+  let soundGraphCanvas = document.getElementById("soundGraph");
+  let soundGraphCtx = soundGraphCanvas.getContext("2d");
+  let animationId = null;
 
-  //register tone toggle
+
+  //FUNCTION DEFINITION: REGISTER TONES
   function registerToneToggle({ buttonId, setupFn }) {
   const button = document.getElementById(buttonId);
   let ctx = null;
@@ -65,7 +70,7 @@ function main() {
     }
   };
 }
-
+  //REGISTER TONES
   //tone 1
   registerToneToggle({
     buttonId: 'playTone1',
@@ -297,7 +302,7 @@ function main() {
     }
   });
 
-
+  //ON CLICK EVENT HANDLERS
   startButton.onclick = () => {
     context = new (window.AudioContext || window.webkitAudioContext)();
 
@@ -379,6 +384,7 @@ function main() {
 
     startButton.disabled = false;
     stopButton.disabled = true;
+    resetButton.disabled = false;
     
     if (recorder && recorder.state !== "inactive") {
       recorder.stop();
@@ -394,47 +400,108 @@ function main() {
 
   };
 
-    previewButton.onclick = () => {
-      previewButton.disabled = true;
-      stopButton.disabled = false;
-      stopButton.classList.remove("hidden");
-      recordingIndicator.classList.remove("hidden");
-      recordingLabel.textContent = '🌀 Summoning...';
-      recordingLabel.classList.add('summoning');
-      countdownTimer.textContent = `(30s remaining)`;
+  // resetButton.onclick = () => {
+  // // Stop and clear analyzer
+  // if (analyser) {
+  //   analyser.disconnect();
+  //   analyser = null;
+  // }
 
-      previewContext = new (window.AudioContext || window.webkitAudioContext)();
-      const destination = previewContext.destination;
+  // // Clear canvas
+  // const canvas = document.getElementById("soundGraph");
+  // const ctx = canvas.getContext("2d");
+  // ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      const analyser = previewContext.createAnalyser();
-      const analyserGain = previewContext.createGain();
-      analyserGain.connect(analyser);
-      analyser.connect(destination);
+  // // Reset indicator and countdown
+  // recordingIndicator.textContent = '';
+  // recordingIndicator.classList.remove('recording');
 
-      startPreviewAudioLayers(previewContext, analyserGain);
-      startGraphVisualizer(analyser);
+  // // Reset buttons
+  // startButton.disabled = false;
+  // stopButton.disabled = true;
+  // previewButton.disabled = false;
+  // resetButton.disabled = true;
+  // };
+
+//   resetButton.onclick = () => {
+//   // Reset visual text + disable stop/reset
+//   resetButton.disabled = true;
+//   stopButton.classList.add("hidden");
+//   recordingIndicator.classList.add("hidden");
+
+//   // Reset graph
+//   if (animationId) cancelAnimationFrame(animationId);
+//   if (soundGraphCtx) {
+//     soundGraphCtx.clearRect(0, 0, soundGraphCanvas.width, soundGraphCanvas.height);
+//   }
+
+//   // Reset recording state
+//   previewButton.disabled = false;
+//   startButton.disabled = false;
+// };
+
+  resetButton.onclick = () => {
+    // Stop the graph animation
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+
+    // Clear the graph canvas
+    if (soundGraphCtx) {
+      soundGraphCtx.clearRect(0, 0, soundGraphCanvas.width, soundGraphCanvas.height);
+    }
+
+    // Reset visual elements
+    recordingIndicator.classList.add("hidden");
+    resetButton.disabled = true;
+    stopButton.classList.add("hidden");
+    startButton.disabled = false;
+    previewButton.disabled = false;
+  };
 
 
-      timeLeft = 30;
-      countdownInterval = setInterval(() => {
-        timeLeft--;
-        countdownTimer.textContent = `(${timeLeft}s remaining)`;
-        if (timeLeft <= 0) clearInterval(countdownInterval);
-      }, 1000);
+  previewButton.onclick = () => {
+    previewButton.disabled = true;
+    stopButton.disabled = false;
+    stopButton.classList.remove("hidden");
+    recordingIndicator.classList.remove("hidden");
+    recordingLabel.textContent = '🌀 Summoning...';
+    recordingLabel.classList.add('summoning');
+    countdownTimer.textContent = `(30s remaining)`;
 
-      previewTimeout = setTimeout(() => {
-        previewNodes.forEach((n) => n.stop && n.stop());
-        previewNodes = [];
-        clearInterval(previewChirpInterval);
-        clearInterval(previewPingInterval);
-        previewContext.close();
-        previewButton.disabled = false;
-        recordingIndicator.classList.add("hidden");
-        countdownTimer.textContent = '';
-      }, 30000);
-    };
+    previewContext = new (window.AudioContext || window.webkitAudioContext)();
+    const destination = previewContext.destination;
+
+    const analyser = previewContext.createAnalyser();
+    const analyserGain = previewContext.createGain();
+    analyserGain.connect(analyser);
+    analyser.connect(destination);
+
+    startPreviewAudioLayers(previewContext, analyserGain);
+    startGraphVisualizer(analyser);
 
 
+    timeLeft = 30;
+    countdownInterval = setInterval(() => {
+      timeLeft--;
+      countdownTimer.textContent = `(${timeLeft}s remaining)`;
+      if (timeLeft <= 0) clearInterval(countdownInterval);
+    }, 1000);
+
+    previewTimeout = setTimeout(() => {
+      previewNodes.forEach((n) => n.stop && n.stop());
+      previewNodes = [];
+      clearInterval(previewChirpInterval);
+      clearInterval(previewPingInterval);
+      previewContext.close();
+      previewButton.disabled = false;
+      recordingIndicator.classList.add("hidden");
+      countdownTimer.textContent = '';
+    }, 30000);
+  };
+
+  //START AUDIO LAYERS
   function startAudioLayers(context, destination) {
     // Audio layers for main session
     layeredAudio(context, destination, nodes, (id) => chirpInterval = id);
@@ -610,30 +677,69 @@ function main() {
     }
   }
 
-  function startGraphVisualizer(analyser) {
-    const canvas = document.getElementById("soundGraph");
-    const ctx = canvas.getContext("2d");
-    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+  // function startGraphVisualizer(analyser) {
+  //   const canvas = document.getElementById("soundGraph");
+  //   const ctx = canvas.getContext("2d");
+  //   const dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-    function draw() {
-      requestAnimationFrame(draw);
-      analyser.getByteFrequencyData(dataArray);
+  //   function draw() {
+  //     requestAnimationFrame(draw);
+  //     analyser.getByteFrequencyData(dataArray);
 
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "Gainsboro"; // or your desired dark grey
-      ctx.fillRect(0, 0, canvas.width, canvas.height); // draw background
-      ctx.fillStyle = "#767CFA"; // then draw bars
+  //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //     ctx.fillStyle = "WhiteSmoke";
+  //     ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  //     const barWidth = canvas.width / dataArray.length;
+
+  //     dataArray.forEach((val, i) => {
+  //       const height = val / 2;
+  //       const x = i * barWidth;
+
+  //       // Map amplitude to hue (220 = blue → 0 = red)
+  //       const hue = 220 - (val / 255) * 220; // 0–220 scale
+  //       ctx.fillStyle = `hsl(${hue}, 100%, 55%)`;
 
 
-      const barWidth = canvas.width / dataArray.length;
-      dataArray.forEach((val, i) => {
-        const height = val / 2;
-        ctx.fillRect(i * barWidth, canvas.height - height, barWidth - 1, height);
-      });
-    }
+  //       ctx.fillRect(x, canvas.height - height, barWidth - 1, height);
+  //     });
+  //   }
 
-    draw();
+
+  //   draw();
+  // }
+
+  function startGraphVisualizer(analyserNode) {
+  const analyser = analyserNode;
+  analyser.fftSize = 256;
+  const bufferLength = analyser.frequencyBinCount;
+  const dataArray = new Uint8Array(bufferLength);
+
+  function draw() {
+    animationId = requestAnimationFrame(draw);
+    analyser.getByteFrequencyData(dataArray);
+
+    soundGraphCtx.clearRect(0, 0, soundGraphCanvas.width, soundGraphCanvas.height);
+    soundGraphCtx.fillStyle = "WhiteSmoke";
+    soundGraphCtx.fillRect(0, 0, soundGraphCanvas.width, soundGraphCanvas.height);
+
+    const barWidth = soundGraphCanvas.width / bufferLength;
+
+    dataArray.forEach((val, i) => {
+      const height = val / 2;
+      const x = i * barWidth;
+
+      // Gradient based on amplitude: blue to red
+      const hue = 220 - (val / 255) * 220;
+      soundGraphCtx.fillStyle = `hsl(${hue}, 100%, 55%)`;
+
+      soundGraphCtx.fillRect(x, soundGraphCanvas.height - height, barWidth - 1, height);
+    });
   }
+
+  draw();
+}
+
 
 }
 

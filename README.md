@@ -98,6 +98,10 @@ This tool aligns with **Layer 2 (Sensory Calibration)** and **Layer 3 (Sensor Cu
 
 Though not a sensor itself, this tool helps **initiate conditions** for layered, multispectral observation experiments.
 
+Per SkyWatcher:
+
+"Our findings suggest that varying the method can apparently alter the “class” of UAPs that respond (where the class is defined as the form of the UAP as well as their flight characteristics). Colloquially we refer to this set of signatures as the "dog whistle". To be clear, this capability is entirely technology-driven. It involves deploying specific equipment in the field, configuring it in a precise manner, and executing defined 7 operational activities to elicit UAP responses. Through controlled testing, we have observed that control "dog whistles" (sets of randomly determined electronic signatures) fail to attract UAPs, whereas our refined techniques have to date never failed to elicit a response."
+
 ---
 
 ## 🧪 Origin & Credits
