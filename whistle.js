@@ -12,6 +12,7 @@ function main() {
   const countdownTimer = document.getElementById("countdownTimer");
   const recordingLabel = document.getElementById("recordingLabel");
   
+  let masterGainNode;
   let context;
   let nodes = [];
   let chirpInterval;
@@ -305,24 +306,25 @@ function main() {
   //ON CLICK EVENT HANDLERS
   startButton.onclick = () => {
     context = new (window.AudioContext || window.webkitAudioContext)();
+    masterGainNode = context.createGain();
+    masterGainNode.gain.value = document.getElementById("volumeSlider").valueAsNumber;
 
-    // const destination = context.createMediaStreamDestination();
-    // startAudioLayers(context, destination);
-    // recorder = new MediaRecorder(destination.stream);
+
+    const destination = context.createMediaStreamDestination();
+    startAudioLayers(context, masterGainNode);  // 👈 updated this line
+    masterGainNode.connect(context.destination); // 👂 live playback
+    masterGainNode.connect(destination);         // 🎙️ recording
+    recorder = new MediaRecorder(destination.stream);
 
     const analyser = context.createAnalyser();
+    analyser.smoothingTimeConstant = 0.9;
+
     const analyserGain = context.createGain();
     analyserGain.connect(analyser);
     analyser.connect(context.destination);
-
-    const destination = context.createMediaStreamDestination();
     analyser.connect(destination); // tap into recorder stream
 
-    startAudioLayers(context, analyserGain);
     startGraphVisualizer(analyser);
-
-    recorder = new MediaRecorder(destination.stream);
-
 
     chunks = [];
 
@@ -474,6 +476,8 @@ function main() {
     const destination = previewContext.destination;
 
     const analyser = previewContext.createAnalyser();
+    analyser.smoothingTimeConstant = 0.9;
+
     const analyserGain = previewContext.createGain();
     analyserGain.connect(analyser);
     analyser.connect(destination);
