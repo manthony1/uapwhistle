@@ -17,10 +17,11 @@ A browser-based sound tool designed to generate layered tones theorized to stimu
   - Breath-mimicking white noise
 - Web-native audio generation using the Web Audio API
 - One-click 30-second `.webm` audio file download
-- "Summon UAP Now" live preview mode
-- Individual toggles to isolate and preview each tone
-- Built-in countdown and animated recording indicator
-- Real-time frequency bar visualizer appears during summoning preview to show active tone spectrum
+- **SUMMON / LIVE PREVIEW** mode
+- Individual play/pause toggles and volume sliders to isolate, mix, and preview each tone
+- Built-in countdown timer and active recording indicator
+- Real-time frequency bar visualizer rendering on a clean, light canvas
+- Highly readable layout utilizing **Inter** sans-serif font and enlarged user controls
 
 ---
 
@@ -67,9 +68,9 @@ This plot was generated using an FFT (Fast Fourier Transform) analysis of the do
 
 ## 💻 How to Use
 
-1. Click **Audio Download** to generate a 30-second layered tone and download as `.webm`.
-2. Click **Summon UAP Now** for a live preview of the sound.
-3. Click individual ▶ buttons to isolate and test each tone in your browser.
+1. Click **DOWNLOAD WebM (30s)** to generate and download a 30-second compiled signal as a `.webm` file.
+2. Click **SUMMON (LIVE PREVIEW)** for a real-time playback preview in your browser.
+3. Click individual play buttons (▶/⏸) and drag volume sliders on the **Frequency Mixer Board** to isolate, tune, and test each tone.
 
 ---
 
