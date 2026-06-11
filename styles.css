@@ -1,185 +1,114 @@
-html {
-  background: whitesmoke;
-}
+/* UAP Summoner Pro - Light Theme Redesign Stylesheet */
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 2em;
-  color: #222;
-  line-height: 1.6;
+  background-color: #f8fafc;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
-h1, h2, h3 {
-  font-weight: 700;
-  margin-bottom: 0.5em;
-  color: #333;
+/* Custom Webkit scrollbar for light theme styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
-
-p {
-  margin-bottom: 1em;
-  font-size: 1.3rem;
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
 }
-
-button {
-  border: none;
-  border-radius: 4px;
-  padding: 0.75em 1.5em;
-  margin: 0.5em 0.5em 0.5em 0;
-  font-size: 1rem;
-  font-weight: 500;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  transition: background 0.2s ease, transform 0.1s ease;
-  cursor: pointer;
-}
-
-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-/* Primary Blue */
-#startButton,
-#previewButton {
-  background-color: #1976d2;
-  color: white;
-}
-
-#startButton:hover,
-#previewButton:hover {
-  background-color: #1565c0;
-}
-
-/* Stop Red */
-#stopButton {
-  background-color: #616161;
-  color: white;
-}
-
-#stopButton:hover {
-  background-color: #ff4800;
-}
-
-#resetButton {
-  background-color: #dddddd;
-  color: #333;
-  border: 1px solid #888;
-}
-
-/* Optional hover tweak */
-#resetButton:hover {
-  background-color: #cccccc;
-}
-
-table {
-  width: 50%;
-  margin: 10;
-  border-collapse: collapse;
-  min-width: 500px;
-}
-
-
-.tone-button {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  font-size: .72rem;
-  padding: 0;
-  border: none;
-  background-color: #1976d2;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}
-
-.tone-button.active {
-  background-color: #c62828; /* red when active */
-}
-
-.hidden {
-  visibility: hidden;
-  pointer-events: none;
-}
-
-#recordingIndicator {
-  color: red;
-  font-weight: bold;
-  margin-top: 1em;
-  margin-bottom: 1em;
-  height: 1.5em;
-  animation: pulse 1.2s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
-}
-
-#countdownTimer {
-  font-weight: normal;
-  margin-left: 0.5em;
-}
-
-#recordingLabel.summoning {
-  color: #767CFA;
-}
-
-#recordingLabel.summoning + #countdownTimer {
-  color: #767CFA;
-}
-
-/* #soundGraph {
-  background-color: WhiteSmoke;
-} */
-
-#soundGraph {
-  background-color: WhiteSmoke;
-  width: 50%;
-  height: 150px;
-  min-width: 500px;
-  display: block;
-  margin: 0;
-  border: 1px solid #767CFA;
-  box-shadow: 0 0 10px #767CFA;
-  border-radius: 6px;
-}
-
-.legend {
-  font-size: 0.9em;
-  margin-top: 0.5em;
-  margin-bottom: 1em;
-}
-
-.legend-row {
-  display: flex;
-  align-items: center;
-  margin-top: 0.2em;
-}
-
-.legend-color {
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-  margin-right: 8px;
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
   border-radius: 3px;
-  border: 1px solid #ccc;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
-
-#visualizerWrapper {
-  display: flex;
-  align-items: center;
-  gap: 1em;
-  margin-bottom: 1em;
+/* Fallback card styles */
+.bg-cyber-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
 }
 
-#volumeControl {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-size: 0.9em;
-  color: #333;
+/* Soft, professional pulsing rings for active states */
+@keyframes activePulseIndigo {
+  0%, 100% {
+    box-shadow: 0 0 0 0px rgba(79, 70, 229, 0.15);
+    border-color: #e2e8f0;
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(79, 70, 229, 0.25);
+    border-color: #6366f1;
+  }
 }
 
-#volumeSlider {
-  width: 100px;
+.summon-active {
+  animation: activePulseIndigo 2s infinite ease-in-out;
+}
+
+/* Range input styling overrides - prioritizing usability and size */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: #e2e8f0;
+  border-radius: 9999px;
+  outline: none;
+  height: 6px;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  background: #e2e8f0;
+  border-radius: 9999px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: #4f46e5;
+  border: 2px solid #ffffff;
+  cursor: pointer;
+  -webkit-appearance: none;
+  margin-top: -5px; /* (6px - 16px) / 2 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  transition: transform 0.15s, background-color 0.15s;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: #4338ca;
+}
+
+/* Volume range specific for rose-accented sliders or different states */
+.accent-rose-500::-webkit-slider-thumb {
+  background: #e11d48;
+}
+
+.accent-rose-500::-webkit-slider-thumb:hover {
+  background: #be123c;
+}
+
+/* Animation for blinking telemetry LED */
+@keyframes blinkLed {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+.blink-led {
+  animation: blinkLed 1s infinite steps(1);
+}
+
+/* Tone active buttons - clean, high-contrast, professional */
+.btn-active-glow {
+  background-color: #eef2ff !important;
+  border-color: #818cf8 !important;
+  color: #4f46e5 !important;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.08) !important;
+}
+
+/* Channel active card highlight */
+.channel-active {
+  border-color: #818cf8 !important;
+  background-color: rgba(238, 242, 255, 0.6) !important;
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.06) !important;
 }
