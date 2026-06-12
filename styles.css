@@ -28,19 +28,19 @@ body {
 }
 
 /* Soft, professional pulsing rings for active states */
-@keyframes activePulseIndigo {
+@keyframes activePulseEmerald {
   0%, 100% {
-    box-shadow: 0 0 0 0px rgba(79, 70, 229, 0.15);
+    box-shadow: 0 0 0 0px rgba(4, 120, 87, 0.15);
     border-color: #e2e8f0;
   }
   50% {
-    box-shadow: 0 0 0 8px rgba(79, 70, 229, 0.25);
-    border-color: #6366f1;
+    box-shadow: 0 0 0 8px rgba(4, 120, 87, 0.25);
+    border-color: #10b981;
   }
 }
 
 .summon-active {
-  animation: activePulseIndigo 2s infinite ease-in-out;
+  animation: activePulseEmerald 2s infinite ease-in-out;
 }
 
 /* Range input styling overrides - prioritizing usability and size */
@@ -65,7 +65,7 @@ input[type="range"]::-webkit-slider-thumb {
   height: 16px;
   width: 16px;
   border-radius: 50%;
-  background: #4f46e5;
+  background: #047857;
   border: 2px solid #ffffff;
   cursor: pointer;
   -webkit-appearance: none;
@@ -76,7 +76,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 input[type="range"]::-webkit-slider-thumb:hover {
   transform: scale(1.2);
-  background: #4338ca;
+  background: #065f46;
 }
 
 /* Volume range specific for rose-accented sliders or different states */
@@ -100,15 +100,15 @@ input[type="range"]::-webkit-slider-thumb:hover {
 
 /* Tone active buttons - clean, high-contrast, professional */
 .btn-active-glow {
-  background-color: #eef2ff !important;
-  border-color: #818cf8 !important;
-  color: #4f46e5 !important;
-  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.08) !important;
+  background-color: #ecfdf5 !important;
+  border-color: #34d399 !important;
+  color: #047857 !important;
+  box-shadow: 0 2px 8px rgba(4, 120, 87, 0.08) !important;
 }
 
 /* Channel active card highlight */
 .channel-active {
-  border-color: #818cf8 !important;
-  background-color: rgba(238, 242, 255, 0.6) !important;
-  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.06) !important;
+  border-color: #34d399 !important;
+  background-color: rgba(236, 253, 245, 0.6) !important;
+  box-shadow: 0 4px 12px rgba(4, 120, 87, 0.06) !important;
 }

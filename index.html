@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>UAP Summoner Pro - Atmospheric Resonance Suite</title>
+  <title>UAP Whistle - Atmospheric Resonance Suite</title>
   <!-- Google Fonts for clean, premium sans-serif typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +25,7 @@
     }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-900 font-outfit min-h-screen relative overflow-x-hidden selection:bg-indigo-100 selection:text-indigo-900">
+<body class="bg-slate-50 text-slate-900 font-outfit min-h-screen relative overflow-x-hidden selection:bg-emerald-100 selection:text-emerald-900">
   <!-- Soft Ambient Background Grid Overlay -->
   <div class="fixed inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_75%,transparent_100%)] opacity-30 pointer-events-none z-0"></div>
   
@@ -38,24 +38,19 @@
         <div class="flex items-center gap-3">
           <span class="inline-block animate-bounce text-3xl">🛸</span>
           <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight text-slate-900">
-            UAP Summoner Pro
+            UAP Whistle
           </h1>
-          <span class="px-2.5 py-0.5 text-xs font-bold border border-indigo-200 rounded-full text-indigo-700 bg-indigo-50 tracking-wider">v2.0</span>
+          <span class="px-2.5 py-0.5 text-xs font-bold border border-emerald-200 rounded-full text-emerald-700 bg-emerald-50 tracking-wider">v2.0</span>
         </div>
         <p class="text-sm sm:text-base text-slate-600 mt-2 font-medium">
-          Multi-frequency atmospheric coupling & acoustic resonance excitation console.
+          Multi-frequency atmospheric coupling & acoustic resonance console for Non-Human Intelligence (NHI) communication.
         </p>
       </div>
       
       <!-- Telemetry Dashboard Status -->
       <div class="bg-white border border-slate-200 rounded-xl px-4 py-2.5 flex items-center gap-6 text-sm text-slate-600 font-medium shadow-sm self-start md:self-auto">
-        <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span>SYS STATUS: <strong class="text-emerald-600 font-bold">NOMINAL</strong></span>
-        </div>
-        <div class="h-5 w-px bg-slate-200"></div>
         <div>
-          <span>RESONANCE: <strong class="text-indigo-600 font-bold">SCHUMANN COHERENT</strong></span>
+          <span>RESONANCE: <strong class="text-slate-500 font-bold" id="resonanceCoherence">NOT STARTED</strong></span>
         </div>
       </div>
     </header>
@@ -68,61 +63,37 @@
         
         <!-- CARD 1: SUMMONING CONTROL DECK -->
         <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative overflow-hidden transition-all hover:shadow-md">
-          <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-500/5 rounded-full filter blur-3xl"></div>
+          <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full filter blur-3xl"></div>
           <div class="absolute bottom-0 left-0 w-32 h-32 bg-teal-500/5 rounded-full filter blur-3xl"></div>
           
-          <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase mb-5 flex items-center gap-2">
-            <span class="w-2 h-2 bg-indigo-600 rounded-full"></span> Command Console
+          <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase mb-5">
+            Command Console
           </h2>
           
           <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-            <!-- Left Side: Circular Summon Action Button -->
+            <!-- Left Side: Rectangular Summon Action Button -->
             <div class="md:col-span-5 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-200 pb-6 md:pb-0 md:pr-6">
-              <button id="previewButton" class="group relative w-40 h-40 rounded-full bg-gradient-to-tr from-indigo-600 to-indigo-500 text-white font-extrabold tracking-wider text-sm border-4 border-white shadow-[0_10px_25px_-5px_rgba(79,70,229,0.35)] hover:shadow-[0_15px_30px_-5px_rgba(79,70,229,0.45)] hover:scale-105 active:scale-95 transition-all duration-300 flex flex-col items-center justify-center gap-1.5 cursor-pointer">
-                <span class="text-3xl">🌀</span>
-                <span class="text-base uppercase tracking-widest font-black">SUMMON</span>
-                <span class="text-xs font-semibold text-indigo-100 tracking-normal">LIVE PREVIEW</span>
-              </button>
-              
-              <!-- Stop Button appears dynamically -->
-              <button id="stopButton" class="hidden mt-4 w-full max-w-[160px] bg-rose-600 hover:bg-rose-700 text-white font-bold py-2.5 rounded-xl text-sm tracking-wider shadow-[0_4px_12px_rgba(220,38,38,0.2)] hover:shadow-[0_6px_16px_rgba(220,38,38,0.3)] transition-all duration-200 cursor-pointer">
-                ⏹ STOP SEQUENCE
+              <button id="previewButton" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-3.5 px-6 rounded-xl text-sm tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                Summon
               </button>
             </div>
             
             <!-- Right Side: Secondary Actions & Realtime Output Console -->
             <div class="md:col-span-7 space-y-5">
-              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                <div class="space-y-0.5">
-                  <span class="text-xs text-slate-500 font-bold uppercase tracking-wider block">AUDIO EXPORT MODULE</span>
-                  <span class="text-base sm:text-lg font-bold text-slate-800">Compile Atmospheric Signal</span>
-                </div>
-                <button id="startButton" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-xl font-bold text-sm tracking-wider shadow-sm hover:shadow-indigo-500/20 transition-all duration-200 flex items-center gap-2 cursor-pointer">
-                  <span>📥 DOWNLOAD WebM (30s)</span>
-                </button>
-              </div>
-
-              <!-- Reset Button -->
-              <div class="flex items-center justify-between border-t border-slate-200 pt-4">
-                <span class="text-sm text-slate-600 font-medium">Reset System Audio Nodes</span>
+              <!-- Reset Button (Moved Up) -->
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-slate-600 font-medium">Reset Audio</span>
                 <button id="resetButton" class="bg-slate-100 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed text-slate-700 px-4 py-2 rounded-lg text-xs font-bold tracking-wider transition-all cursor-pointer" disabled>
-                  RESET CONTEXT
+                  RESET AUDIO
                 </button>
               </div>
               
               <!-- Telemetry Board & Timer -->
-              <div class="bg-slate-50 rounded-xl p-4 border border-slate-200 text-sm text-slate-700 flex justify-between items-center h-16 relative overflow-hidden">
-                <div class="space-y-1">
-                  <div class="flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-slate-400" id="statusLED"></span>
-                    <span class="text-xs uppercase text-slate-500 font-bold tracking-wider">SIGNAL STATE:</span>
-                  </div>
-                  <div class="text-slate-800 font-extrabold uppercase tracking-wider text-sm" id="statusText">STANDBY</div>
-                </div>
-                <div class="text-right">
-                  <span class="text-xs text-slate-500 font-bold block uppercase tracking-wider">REMAINING TIME:</span>
+              <div class="bg-slate-50 rounded-xl py-6 px-5 border border-slate-200 text-sm text-slate-700 flex justify-center items-center relative overflow-hidden">
+                <div class="text-center">
+                  <span class="text-xs text-slate-500 font-bold block uppercase tracking-wider mb-1">REMAINING TIME:</span>
                   <!-- Recording Indicator / Countdown -->
-                  <div id="recordingIndicator" class="hidden inline-flex items-center gap-1.5 text-rose-600 font-bold text-sm">
+                  <div id="recordingIndicator" class="hidden inline-flex items-center justify-center gap-1.5 text-rose-600 font-bold text-sm">
                     <span id="recordingLabel">🔴 RECORDING</span> 
                     <span id="countdownTimer" class="font-extrabold text-white bg-rose-600 px-2 py-0.5 rounded border border-rose-500">30.0s</span>
                   </div>
@@ -133,12 +104,19 @@
           </div>
         </div>
         
+        <!-- Download WebM feature as a simple text link below the summon card -->
+        <div class="text-center mt-4">
+          <button id="startButton" class="text-xs text-slate-500 hover:text-emerald-700 underline font-semibold transition-colors duration-150 cursor-pointer bg-transparent border-0 outline-none">
+            Download WebM
+          </button>
+        </div>
+        
         <!-- CARD 2: ATMOSPHERIC ACTIVITY GRAPH -->
         <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative overflow-hidden transition-all hover:shadow-md">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
             <div>
-              <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase flex items-center gap-2">
-                <span class="w-2 h-2 bg-indigo-600 rounded-full"></span> Tone Activity Graph
+              <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase">
+                Tone Activity Graph
               </h2>
               <p class="text-sm text-slate-500 mt-1">Real-time Fast Fourier Transform (FFT) signal amplitude distribution.</p>
             </div>
@@ -157,31 +135,31 @@
               <!-- Live Master Volume -->
               <div class="flex items-center gap-3 bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-200 shadow-sm">
                 <label for="volumeSlider" class="text-xs font-bold text-slate-600 whitespace-nowrap">🔊 LIVE VOLUME</label>
-                <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5" class="w-28 h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+                <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5" class="w-28 h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
               </div>
             </div>
           </div>
           
           <!-- Visualizer Visual Container -->
-          <div id="visualizerWrapper" class="flex flex-col md:flex-row w-full md:h-[180px] bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-inner">
-            <!-- 2D Telemetry Panel (3/4 width on desktop, full width on mobile) -->
-            <div class="relative flex-1 md:flex-[3] h-[180px] md:h-full border-b md:border-b-0 md:border-r border-slate-200 overflow-hidden">
+          <div id="visualizerWrapper" class="flex flex-col md:flex-row w-full md:h-[210px] bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-inner">
+            <!-- 2D Telemetry Panel (2/3 width on desktop, full width on mobile) -->
+            <div class="relative flex-1 md:flex-[2] h-[210px] md:h-full border-b md:border-b-0 md:border-r border-slate-200 overflow-hidden">
               <!-- Grid overlay lines for oscilloscope vibe -->
               <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
               <canvas id="soundGraph" class="w-full h-full block absolute inset-0 z-10"></canvas>
             </div>
-            <!-- 3D Resonance Orb Panel (1/4 width on desktop, full width on mobile) -->
-            <div class="relative flex-1 md:flex-[1] h-[180px] md:h-full bg-slate-950 overflow-hidden">
+            <!-- 3D Resonance Orb Panel (1/3 width on desktop, full width on mobile) -->
+            <div class="relative flex-1 md:flex-[1] h-[210px] md:h-full bg-slate-50 overflow-hidden">
               <canvas id="resonanceOrb" class="w-full h-full block absolute inset-0 z-10"></canvas>
               <!-- Small label indicating it's a 3D simulation -->
-              <div class="absolute top-2 right-2 z-20 text-[8px] font-black tracking-widest text-slate-400 bg-slate-900/80 px-1.5 py-0.5 rounded border border-slate-800 pointer-events-none uppercase">3D RESONANCE ORB</div>
+              <div class="absolute top-2 right-2 z-20 text-[8px] font-black tracking-widest text-slate-500 bg-white/90 px-1.5 py-0.5 rounded border border-slate-200 pointer-events-none uppercase">3D RESONANCE ORB</div>
             </div>
           </div>
           
           <!-- Frequency Legend Bar -->
           <div class="flex flex-wrap items-center justify-between gap-3 mt-4 text-xs text-slate-600 font-medium">
             <div class="flex items-center gap-1.5">
-              <span class="w-3.5 h-3.5 rounded bg-indigo-400 border border-indigo-200"></span>
+              <span class="w-3.5 h-3.5 rounded bg-emerald-400 border border-emerald-200"></span>
               <span>Low Amp</span>
             </div>
             <div class="flex items-center gap-1.5">
@@ -197,15 +175,15 @@
               <span>Intense Peaks</span>
             </div>
             <div class="h-4 w-px bg-slate-200"></div>
-            <div class="text-xs text-indigo-600 font-bold">Spectrum Scale: 0 Hz – 20 kHz</div>
+            <div class="text-xs text-emerald-700 font-bold">Spectrum Scale: 0 Hz – 20 kHz</div>
           </div>
         </div>
 
         <!-- CARD 3: TONE MIXER BOARD -->
         <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative overflow-hidden transition-all hover:shadow-md">
           <div class="mb-6">
-            <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase flex items-center gap-2">
-              <span class="w-2 h-2 bg-indigo-600 rounded-full"></span> Frequency Mixer Board
+            <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase">
+              Frequency Mixer Board
             </h2>
             <p class="text-sm text-slate-500 mt-1">
               Toggle individual signals or modify their modulation volumes to sculpt custom resonance formulas.
@@ -216,217 +194,217 @@
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
             
             <!-- Channel 1 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-indigo-300 hover:bg-indigo-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard1">
-              <div class="absolute -top-6 -right-6 w-12 h-12 bg-indigo-500/5 rounded-full group-hover:bg-indigo-500/10 transition-colors"></div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard1">
+              <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-xs font-bold text-slate-400 tracking-wider">CH 01</span>
                   <span class="w-2.5 h-2.5 rounded-full bg-slate-300" id="channelIndicator1"></span>
                 </div>
                 <h3 class="text-base font-bold text-slate-800 leading-tight">Schumann Resonance 1</h3>
-                <span class="text-xs font-medium text-indigo-600 block mt-1">7.83 Hz LFO on 100 Hz</span>
+                <span class="text-xs font-medium text-emerald-700 block mt-1">7.83 Hz LFO on 100 Hz</span>
                 <p class="text-sm text-slate-600 mt-2 leading-relaxed">Fundamental frequency of atmospheric Earth resonance.</p>
               </div>
               <div class="flex items-center gap-4 mt-5 border-t border-slate-200 pt-4">
-                <button id="playTone1" class="w-10 h-10 rounded-full bg-white hover:bg-indigo-50 border border-slate-300 hover:border-indigo-400 text-slate-700 hover:text-indigo-600 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm animate-none" title="Toggle Channel">▶</button>
+                <button id="playTone1" class="w-10 h-10 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm animate-none" title="Toggle Channel">▶</button>
                 <div class="flex-1 space-y-1.5">
                   <div class="flex justify-between text-xs font-bold text-slate-500">
                     <span>MIX VOL</span>
                     <span id="volVal1">70%</span>
                   </div>
-                  <input type="range" id="volumeTone1" min="0" max="1.0" step="0.01" value="0.7" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+                  <input type="range" id="volumeTone1" min="0" max="1.0" step="0.01" value="0.7" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
                 </div>
               </div>
             </div>
 
             <!-- Channel 2 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-indigo-300 hover:bg-indigo-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard8">
-              <div class="absolute -top-6 -right-6 w-12 h-12 bg-indigo-500/5 rounded-full group-hover:bg-indigo-500/10 transition-colors"></div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard8">
+              <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-xs font-bold text-slate-400 tracking-wider">CH 02</span>
                   <span class="w-2.5 h-2.5 rounded-full bg-slate-300" id="channelIndicator8"></span>
                 </div>
                 <h3 class="text-base font-bold text-slate-800 leading-tight">Schumann Resonance 2</h3>
-                <span class="text-xs font-medium text-indigo-600 block mt-1">14.3 Hz LFO on 120 Hz</span>
+                <span class="text-xs font-medium text-emerald-700 block mt-1">14.3 Hz LFO on 120 Hz</span>
                 <p class="text-sm text-slate-600 mt-2 leading-relaxed">Second order harmonic Schumann frequency resonance.</p>
               </div>
               <div class="flex items-center gap-4 mt-5 border-t border-slate-200 pt-4">
-                <button id="playTone8" class="w-10 h-10 rounded-full bg-white hover:bg-indigo-50 border border-slate-300 hover:border-indigo-400 text-slate-700 hover:text-indigo-600 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm" title="Toggle Channel">▶</button>
+                <button id="playTone8" class="w-10 h-10 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm" title="Toggle Channel">▶</button>
                 <div class="flex-1 space-y-1.5">
                   <div class="flex justify-between text-xs font-bold text-slate-500">
                     <span>MIX VOL</span>
                     <span id="volVal8">60%</span>
                   </div>
-                  <input type="range" id="volumeTone8" min="0" max="1.0" step="0.01" value="0.6" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+                  <input type="range" id="volumeTone8" min="0" max="1.0" step="0.01" value="0.6" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
                 </div>
               </div>
             </div>
 
             <!-- Channel 3 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-indigo-300 hover:bg-indigo-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard9">
-              <div class="absolute -top-6 -right-6 w-12 h-12 bg-indigo-500/5 rounded-full group-hover:bg-indigo-500/10 transition-colors"></div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard9">
+              <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-xs font-bold text-slate-400 tracking-wider">CH 03</span>
                   <span class="w-2.5 h-2.5 rounded-full bg-slate-300" id="channelIndicator9"></span>
                 </div>
                 <h3 class="text-base font-bold text-slate-800 leading-tight">Schumann Resonance 3</h3>
-                <span class="text-xs font-medium text-indigo-600 block mt-1">20.8 Hz LFO on 140 Hz</span>
+                <span class="text-xs font-medium text-emerald-700 block mt-1">20.8 Hz LFO on 140 Hz</span>
                 <p class="text-sm text-slate-600 mt-2 leading-relaxed">Third order harmonic Schumann frequency resonance.</p>
               </div>
               <div class="flex items-center gap-4 mt-5 border-t border-slate-200 pt-4">
-                <button id="playTone9" class="w-10 h-10 rounded-full bg-white hover:bg-indigo-50 border border-slate-300 hover:border-indigo-400 text-slate-700 hover:text-indigo-600 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm" title="Toggle Channel">▶</button>
+                <button id="playTone9" class="w-10 h-10 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm" title="Toggle Channel">▶</button>
                 <div class="flex-1 space-y-1.5">
                   <div class="flex justify-between text-xs font-bold text-slate-500">
                     <span>MIX VOL</span>
                     <span id="volVal9">50%</span>
                   </div>
-                  <input type="range" id="volumeTone9" min="0" max="1.0" step="0.01" value="0.5" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+                  <input type="range" id="volumeTone9" min="0" max="1.0" step="0.01" value="0.5" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
                 </div>
               </div>
             </div>
 
             <!-- Channel 4 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-indigo-300 hover:bg-indigo-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard2">
-              <div class="absolute -top-6 -right-6 w-12 h-12 bg-indigo-500/5 rounded-full group-hover:bg-indigo-500/10 transition-colors"></div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard2">
+              <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-xs font-bold text-slate-400 tracking-wider">CH 04</span>
                   <span class="w-2.5 h-2.5 rounded-full bg-slate-300" id="channelIndicator2"></span>
                 </div>
                 <h3 class="text-base font-bold text-slate-800 leading-tight">528 Hz Harmonic</h3>
-                <span class="text-xs font-medium text-indigo-600 block mt-1">528 Hz Constant Sine</span>
+                <span class="text-xs font-medium text-emerald-700 block mt-1">528 Hz Constant Sine</span>
                 <p class="text-sm text-slate-600 mt-2 leading-relaxed">Solfeggio frequency associated with healing and DNA tuning.</p>
               </div>
               <div class="flex items-center gap-4 mt-5 border-t border-slate-200 pt-4">
-                <button id="playTone2" class="w-10 h-10 rounded-full bg-white hover:bg-indigo-50 border border-slate-300 hover:border-indigo-400 text-slate-700 hover:text-indigo-600 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm" title="Toggle Channel">▶</button>
+                <button id="playTone2" class="w-10 h-10 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm" title="Toggle Channel">▶</button>
                 <div class="flex-1 space-y-1.5">
                   <div class="flex justify-between text-xs font-bold text-slate-500">
                     <span>MIX VOL</span>
                     <span id="volVal2">4%</span>
                   </div>
-                  <input type="range" id="volumeTone2" min="0" max="0.2" step="0.005" value="0.04" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+                  <input type="range" id="volumeTone2" min="0" max="0.2" step="0.005" value="0.04" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
                 </div>
               </div>
             </div>
 
             <!-- Channel 5 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-indigo-300 hover:bg-indigo-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard3">
-              <div class="absolute -top-6 -right-6 w-12 h-12 bg-indigo-500/5 rounded-full group-hover:bg-indigo-500/10 transition-colors"></div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard3">
+              <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-xs font-bold text-slate-400 tracking-wider">CH 05</span>
                   <span class="w-2.5 h-2.5 rounded-full bg-slate-300" id="channelIndicator3"></span>
                 </div>
                 <h3 class="text-base font-bold text-slate-800 leading-tight">Ultrasonic Pings</h3>
-                <span class="text-xs font-medium text-indigo-600 block mt-1">17 kHz Pulsed (every 3s)</span>
+                <span class="text-xs font-medium text-emerald-700 block mt-1">17 kHz Pulsed (every 3s)</span>
                 <p class="text-sm text-slate-600 mt-2 leading-relaxed">Extremely high-frequency pings near limits of human hearing.</p>
               </div>
               <div class="flex items-center gap-4 mt-5 border-t border-slate-200 pt-4">
-                <button id="playTone3" class="w-10 h-10 rounded-full bg-white hover:bg-indigo-50 border border-slate-300 hover:border-indigo-400 text-slate-700 hover:text-indigo-600 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm" title="Toggle Channel">▶</button>
+                <button id="playTone3" class="w-10 h-10 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm" title="Toggle Channel">▶</button>
                 <div class="flex-1 space-y-1.5">
                   <div class="flex justify-between text-xs font-bold text-slate-500">
                     <span>MIX VOL</span>
                     <span id="volVal3">10%</span>
                   </div>
-                  <input type="range" id="volumeTone3" min="0" max="0.5" step="0.01" value="0.1" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+                  <input type="range" id="volumeTone3" min="0" max="0.5" step="0.01" value="0.1" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
                 </div>
               </div>
             </div>
 
             <!-- Channel 6 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-indigo-300 hover:bg-indigo-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard4">
-              <div class="absolute -top-6 -right-6 w-12 h-12 bg-indigo-500/5 rounded-full group-hover:bg-indigo-500/10 transition-colors"></div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard4">
+              <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-xs font-bold text-slate-400 tracking-wider">CH 06</span>
                   <span class="w-2.5 h-2.5 rounded-full bg-slate-300" id="channelIndicator4"></span>
                 </div>
                 <h3 class="text-base font-bold text-slate-800 leading-tight">1 kHz Pulses</h3>
-                <span class="text-xs font-medium text-indigo-600 block mt-1">1 kHz Square (every 2s)</span>
+                <span class="text-xs font-medium text-emerald-700 block mt-1">1 kHz Square (every 2s)</span>
                 <p class="text-sm text-slate-600 mt-2 leading-relaxed">Rhythmic 'heartbeat' pulses that build EM structures.</p>
               </div>
               <div class="flex items-center gap-4 mt-5 border-t border-slate-200 pt-4">
-                <button id="playTone4" class="w-10 h-10 rounded-full bg-white hover:bg-indigo-50 border border-slate-300 hover:border-indigo-400 text-slate-700 hover:text-indigo-600 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm" title="Toggle Channel">▶</button>
+                <button id="playTone4" class="w-10 h-10 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm" title="Toggle Channel">▶</button>
                 <div class="flex-1 space-y-1.5">
                   <div class="flex justify-between text-xs font-bold text-slate-500">
                     <span>MIX VOL</span>
                     <span id="volVal4">20%</span>
                   </div>
-                  <input type="range" id="volumeTone4" min="0" max="0.5" step="0.01" value="0.2" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+                  <input type="range" id="volumeTone4" min="0" max="0.5" step="0.01" value="0.2" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
                 </div>
               </div>
             </div>
 
             <!-- Channel 7 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-indigo-300 hover:bg-indigo-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard5">
-              <div class="absolute -top-6 -right-6 w-12 h-12 bg-indigo-500/5 rounded-full group-hover:bg-indigo-500/10 transition-colors"></div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard5">
+              <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-xs font-bold text-slate-400 tracking-wider">CH 07</span>
                   <span class="w-2.5 h-2.5 rounded-full bg-slate-300" id="channelIndicator5"></span>
                 </div>
                 <h3 class="text-base font-bold text-slate-800 leading-tight">2.5 kHz Chirps</h3>
-                <span class="text-xs font-medium text-indigo-600 block mt-1">2.5 kHz Sweep (every 10s)</span>
+                <span class="text-xs font-medium text-emerald-700 block mt-1">2.5 kHz Sweep (every 10s)</span>
                 <p class="text-sm text-slate-600 mt-2 leading-relaxed">Quick sweep patterns simulating telemetry signatures.</p>
               </div>
               <div class="flex items-center gap-4 mt-5 border-t border-slate-200 pt-4">
-                <button id="playTone5" class="w-10 h-10 rounded-full bg-white hover:bg-indigo-50 border border-slate-300 hover:border-indigo-400 text-slate-700 hover:text-indigo-600 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm" title="Toggle Channel">▶</button>
+                <button id="playTone5" class="w-10 h-10 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm" title="Toggle Channel">▶</button>
                 <div class="flex-1 space-y-1.5">
                   <div class="flex justify-between text-xs font-bold text-slate-500">
                     <span>MIX VOL</span>
                     <span id="volVal5">20%</span>
                   </div>
-                  <input type="range" id="volumeTone5" min="0" max="0.5" step="0.01" value="0.2" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+                  <input type="range" id="volumeTone5" min="0" max="0.5" step="0.01" value="0.2" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
                 </div>
               </div>
             </div>
 
             <!-- Channel 8 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-indigo-300 hover:bg-indigo-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard6">
-              <div class="absolute -top-6 -right-6 w-12 h-12 bg-indigo-500/5 rounded-full group-hover:bg-indigo-500/10 transition-colors"></div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard6">
+              <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-xs font-bold text-slate-400 tracking-wider">CH 08</span>
                   <span class="w-2.5 h-2.5 rounded-full bg-slate-300" id="channelIndicator6"></span>
                 </div>
                 <h3 class="text-base font-bold text-slate-800 leading-tight">432 Hz Ambient Pad</h3>
-                <span class="text-xs font-medium text-indigo-600 block mt-1">432 Hz Triangle Tone</span>
+                <span class="text-xs font-medium text-emerald-700 block mt-1">432 Hz Triangle Tone</span>
                 <p class="text-sm text-slate-600 mt-2 leading-relaxed">Natural tuned frequency of a basic mathematical sound matrix.</p>
               </div>
               <div class="flex items-center gap-4 mt-5 border-t border-slate-200 pt-4">
-                <button id="playTone6" class="w-10 h-10 rounded-full bg-white hover:bg-indigo-50 border border-slate-300 hover:border-indigo-400 text-slate-700 hover:text-indigo-600 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm" title="Toggle Channel">▶</button>
+                <button id="playTone6" class="w-10 h-10 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm" title="Toggle Channel">▶</button>
                 <div class="flex-1 space-y-1.5">
                   <div class="flex justify-between text-xs font-bold text-slate-500">
                     <span>MIX VOL</span>
                     <span id="volVal6">2%</span>
                   </div>
-                  <input type="range" id="volumeTone6" min="0" max="0.1" step="0.002" value="0.02" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+                  <input type="range" id="volumeTone6" min="0" max="0.1" step="0.002" value="0.02" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
                 </div>
               </div>
             </div>
 
             <!-- Channel 9 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-indigo-300 hover:bg-indigo-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard7">
-              <div class="absolute -top-6 -right-6 w-12 h-12 bg-indigo-500/5 rounded-full group-hover:bg-indigo-500/10 transition-colors"></div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard7">
+              <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
                   <span class="text-xs font-bold text-slate-400 tracking-wider">CH 09</span>
                   <span class="w-2.5 h-2.5 rounded-full bg-slate-300" id="channelIndicator7"></span>
                 </div>
                 <h3 class="text-base font-bold text-slate-800 leading-tight">Breathing Noise</h3>
-                <span class="text-xs font-medium text-indigo-600 block mt-1">Modulated White Noise</span>
+                <span class="text-xs font-medium text-emerald-700 block mt-1">Modulated White Noise</span>
                 <p class="text-sm text-slate-600 mt-2 leading-relaxed">Simulates organic slow breathing patterns to mask signals.</p>
               </div>
               <div class="flex items-center gap-4 mt-5 border-t border-slate-200 pt-4">
-                <button id="playTone7" class="w-10 h-10 rounded-full bg-white hover:bg-indigo-50 border border-slate-300 hover:border-indigo-400 text-slate-700 hover:text-indigo-600 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm" title="Toggle Channel">▶</button>
+                <button id="playTone7" class="w-10 h-10 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-sm active:scale-95 text-sm" title="Toggle Channel">▶</button>
                 <div class="flex-1 space-y-1.5">
                   <div class="flex justify-between text-xs font-bold text-slate-500">
                     <span>MIX VOL</span>
                     <span id="volVal7">3%</span>
                   </div>
-                  <input type="range" id="volumeTone7" min="0" max="0.15" step="0.005" value="0.03" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600" />
+                  <input type="range" id="volumeTone7" min="0" max="0.15" step="0.005" value="0.03" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
                 </div>
               </div>
             </div>
@@ -441,14 +419,14 @@
         <!-- SIDEBAR AD CONTAINER: FIELD RESEARCH SHOP -->
         <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-6">
           <div>
-            <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase flex items-center gap-2">
-              <span class="w-2 h-2 bg-indigo-600 rounded-full"></span> Hardware Shop
+            <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase">
+              Get Hardware
             </h2>
             <p class="text-xs text-slate-500 mt-1 font-medium">Support research with field-tested UAP equipment.</p>
           </div>
           
           <!-- Ad Item 1 -->
-          <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200/80 space-y-3.5 hover:border-indigo-300 transition-all duration-300 shadow-sm">
+          <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200/80 space-y-3.5 hover:border-emerald-300 transition-all duration-300 shadow-sm">
             <div class="relative h-36 rounded-xl overflow-hidden bg-slate-100 flex items-center justify-center border border-slate-200">
               <img src="night_vision_ad.png" alt="SST Night Vision Smartphone Lens" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity" />
               <span class="absolute top-2 right-2 bg-slate-900/85 text-[8px] font-extrabold tracking-widest text-white border border-slate-700 px-2 py-0.5 rounded-md">RECOMMENDED LENS</span>
@@ -459,13 +437,13 @@
                 Fits any modern smartphone. Custom optical glass specifically calibrated for near-infrared atmospheric observations and thermal imaging.
               </p>
             </div>
-            <a href="#" onclick="alert('Demo Affiliate Link: Redirecting to SST Night Vision Lens detail page...')" class="block text-center text-xs font-bold tracking-wider bg-white hover:bg-slate-100 border border-slate-300 hover:border-indigo-400 text-slate-700 hover:text-indigo-600 py-2.5 rounded-xl transition-all shadow-sm">
+            <a href="#" onclick="alert('Demo Affiliate Link: Redirecting to SST Night Vision Lens detail page...')" class="block text-center text-xs font-bold tracking-wider bg-white hover:bg-slate-100 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 py-2.5 rounded-xl transition-all shadow-sm">
               VIEW SPECIFICATIONS →
             </a>
           </div>
 
           <!-- Ad Item 2 -->
-          <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200/80 space-y-3.5 hover:border-indigo-300 transition-all duration-300 shadow-sm">
+          <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200/80 space-y-3.5 hover:border-emerald-300 transition-all duration-300 shadow-sm">
             <div class="relative h-36 rounded-xl overflow-hidden bg-slate-100 flex items-center justify-center border border-slate-200">
               <img src="emf_detector_ad.png" alt="Tri-Field EMF Anomalies Detector" class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity" />
               <span class="absolute top-2 right-2 bg-slate-900/85 text-[8px] font-extrabold tracking-widest text-white border border-slate-700 px-2 py-0.5 rounded-md">SPONSORED PRODUCT</span>
@@ -476,13 +454,13 @@
                 Monitor real-time radiofrequency, electromagnetic field perturbations, and magnetic changes associated with atmospheric cue responses.
               </p>
             </div>
-            <a href="#" onclick="alert('Demo Sponsor Link: Checking EMF detector inventory...')" class="block text-center text-xs font-bold tracking-wider bg-white hover:bg-slate-100 border border-slate-300 hover:border-indigo-400 text-slate-700 hover:text-indigo-600 py-2.5 rounded-xl transition-all shadow-sm">
+            <a href="#" onclick="alert('Demo Sponsor Link: Checking EMF detector inventory...')" class="block text-center text-xs font-bold tracking-wider bg-white hover:bg-slate-100 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 py-2.5 rounded-xl transition-all shadow-sm">
               CHECK AVAILABILITY →
             </a>
           </div>
 
           <!-- Ad Item 3 (Self Owned Mock Product) -->
-          <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200/80 space-y-3.5 hover:border-indigo-300 transition-all duration-300 shadow-sm">
+          <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200/80 space-y-3.5 hover:border-emerald-300 transition-all duration-300 shadow-sm">
             <div class="space-y-1.5">
               <div class="flex items-center justify-between">
                 <h3 class="text-sm font-bold text-slate-800 leading-snug">UAP Summoner Field Handbook</h3>
@@ -500,13 +478,13 @@
 
         <!-- INFO CARD: SYSTEM FRAMEWORK ALIGNMENT -->
         <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4 text-sm text-slate-600 leading-relaxed font-normal">
-          <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase flex items-center gap-2">
-            <span class="w-2 h-2 bg-indigo-600 rounded-full"></span> Skywatcher Cooperative
+          <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase">
+            Skywatcher Cooperative
           </h2>
           
           <div class="space-y-3">
             <p>
-              This console aligns with <strong>Layer 2 (Sensory Calibration)</strong> and <strong>Layer 3 (Sensor Cueing)</strong> of the <a href="https://skywatcher.ai/research" target="_blank" class="text-indigo-600 hover:underline font-semibold">Skywatcher Discovery Framework</a>.
+              This console aligns with <strong>Layer 2 (Sensory Calibration)</strong> and <strong>Layer 3 (Sensor Cueing)</strong> of the <a href="https://skywatcher.ai/research" target="_blank" class="text-emerald-700 hover:underline font-semibold">Skywatcher Discovery Framework</a>.
             </p>
             <p>
               We broadcast precise acoustic frequencies, creating a localized atmospheric resonance signature. Observing setups (IR/EM platforms) should be fully active during cue cycles.
@@ -516,11 +494,11 @@
           <div class="border-t border-slate-200 pt-4 space-y-2 text-xs font-medium text-slate-500">
             <div class="flex items-start gap-1">
               <span class="text-slate-400">ORIGIN:</span>
-              <a href="https://x.com/JasonWilde108/status/1910816547070685522?s=19" target="_blank" class="text-indigo-600 hover:underline break-all">JasonWilde108 (X/Twitter)</a>
+              <a href="https://x.com/JasonWilde108/status/1910816547070685522?s=19" target="_blank" class="text-emerald-700 hover:underline break-all">JasonWilde108 (X/Twitter)</a>
             </div>
             <div class="flex items-start gap-1">
               <span class="text-slate-600">CREDIT:</span>
-              <a href="https://www.youtube.com/watch?v=Gbk63d_yb3k" target="_blank" class="text-indigo-600 hover:underline break-all">TalesOnTheGo (Acoustic Analogy)</a>
+              <a href="https://www.youtube.com/watch?v=Gbk63d_yb3k" target="_blank" class="text-emerald-700 hover:underline break-all">TalesOnTheGo (Acoustic Analogy)</a>
             </div>
           </div>
         </div>

@@ -1,0 +1,20 @@
+make the title "UAP Whistle" to match the domain name
+subtitle: "Multi-frequency..." update to say something about aliens or
+NHI (Non Human Intelligence)
+
+
+remove "sys status normal", this is a non-sensical noise
+
+remove the bullet on the card titles
+
+confirm if Resonance "Schumann Coherent" can be a feature that changes with changing the mixer (or what about presets?)
+
+what does 'reset context' mean? i think we need to be clear
+as to what context is being reset, or change the name
+
+Center button text "Download WebM
+
+Remove "Signal State" and "Standby", just have the button
+be binary: recording (red), or not recording (grey)
+
+Change "Hardware Shop" to just "Get Hardware"

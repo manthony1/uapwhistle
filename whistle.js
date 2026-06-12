@@ -2,15 +2,12 @@
 
 function main() {
   const startButton = document.getElementById("startButton");
-  const stopButton = document.getElementById("stopButton");
   const previewButton = document.getElementById("previewButton");
   const resetButton = document.getElementById("resetButton");
   const masterVolumeSlider = document.getElementById("volumeSlider");
   const visualizerModeSelect = document.getElementById("visualizerMode");
   const recordingIndicator = document.getElementById("recordingIndicator");
   const countdownTimer = document.getElementById("countdownTimer");
-  const statusText = document.getElementById("statusText");
-  const statusLED = document.getElementById("statusLED");
   const idleTimerText = document.getElementById("idleTimerText");
 
   let audioContext = null;
@@ -120,18 +117,211 @@ function main() {
     pointLight.position.set(0, 0, 3);
     threeScene.add(pointLight);
 
-    // 1. Solid Core (pulses with Schumann/Bass harmonics)
+    // Procedurally generate a high-tech Earth texture mapping
+    const createEarthTexture = () => {
+      const canvas = document.createElement("canvas");
+      canvas.width = 512;
+      canvas.height = 256;
+      const ctx = canvas.getContext("2d");
+      const tw = canvas.width;
+      const th = canvas.height;
+
+      // Fill ocean (deep blue)
+      ctx.fillStyle = "#1e3a8a";
+      ctx.fillRect(0, 0, tw, th);
+
+      // Draw latitude/longitude grid lines
+      ctx.strokeStyle = "rgba(255, 255, 255, 0.05)";
+      ctx.lineWidth = 1;
+      for (let x = 0; x < tw; x += tw / 18) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, th);
+        ctx.stroke();
+      }
+      for (let y = 0; y < th; y += th / 10) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(tw, y);
+        ctx.stroke();
+      }
+
+      // Draw continents with emerald fill and cyan borders
+      ctx.fillStyle = "#047857";
+      ctx.strokeStyle = "#06b6d4";
+      ctx.lineWidth = 2;
+
+      const drawLand = (coords) => {
+        ctx.beginPath();
+        ctx.moveTo(coords[0].x * tw, coords[0].y * th);
+        for (let i = 1; i < coords.length; i++) {
+          ctx.lineTo(coords[i].x * tw, coords[i].y * th);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+      };
+
+      // North America (canada, hudson bay, alaska, us, florida, gulf of mexico, central america)
+      drawLand([
+        { x: 0.05, y: 0.15 },
+        { x: 0.12, y: 0.1 },
+        { x: 0.22, y: 0.07 },
+        { x: 0.25, y: 0.1 },
+        { x: 0.25, y: 0.17 },
+        { x: 0.28, y: 0.17 },
+        { x: 0.31, y: 0.12 },
+        { x: 0.33, y: 0.16 },
+        { x: 0.3, y: 0.25 },
+        { x: 0.32, y: 0.32 }, // florida
+        { x: 0.29, y: 0.33 },
+        { x: 0.28, y: 0.38 }, // gulf of mexico
+        { x: 0.23, y: 0.36 },
+        { x: 0.25, y: 0.45 }, // central america
+        { x: 0.22, y: 0.46 },
+        { x: 0.19, y: 0.36 }, // mexico
+        { x: 0.17, y: 0.36 }, // baja
+        { x: 0.18, y: 0.31 },
+        { x: 0.13, y: 0.26 }, // west coast US
+        { x: 0.08, y: 0.25 }  // alaska bottom
+      ]);
+
+      // South America
+      drawLand([
+        { x: 0.26, y: 0.46 }, // panama
+        { x: 0.32, y: 0.45 }, // venezuela
+        { x: 0.35, y: 0.52 }, // brazil bulge
+        { x: 0.33, y: 0.64 }, // rio
+        { x: 0.29, y: 0.76 }, // argentina
+        { x: 0.27, y: 0.85 }, // horn
+        { x: 0.25, y: 0.8 },
+        { x: 0.24, y: 0.65 }, // chile
+        { x: 0.22, y: 0.54 }, // peru
+        { x: 0.24, y: 0.48 }
+      ]);
+
+      // Greenland
+      drawLand([
+        { x: 0.31, y: 0.08 },
+        { x: 0.37, y: 0.06 },
+        { x: 0.39, y: 0.14 },
+        { x: 0.34, y: 0.16 }
+      ]);
+
+      // Great Britain & Ireland
+      drawLand([
+        { x: 0.42, y: 0.21 },
+        { x: 0.44, y: 0.19 },
+        { x: 0.44, y: 0.24 },
+        { x: 0.42, y: 0.25 }
+      ]);
+
+      // Iceland
+      drawLand([
+        { x: 0.39, y: 0.16 },
+        { x: 0.42, y: 0.15 },
+        { x: 0.41, y: 0.18 },
+        { x: 0.39, y: 0.18 }
+      ]);
+
+      // Madagascar
+      drawLand([
+        { x: 0.59, y: 0.64 },
+        { x: 0.61, y: 0.61 },
+        { x: 0.6, y: 0.73 },
+        { x: 0.58, y: 0.74 }
+      ]);
+
+      // Japan
+      drawLand([
+        { x: 0.88, y: 0.24 },
+        { x: 0.9, y: 0.28 },
+        { x: 0.89, y: 0.33 },
+        { x: 0.87, y: 0.31 }
+      ]);
+
+      // Eurasia (Europe + Asia)
+      drawLand([
+        { x: 0.41, y: 0.35 }, // spain
+        { x: 0.42, y: 0.26 }, // france
+        { x: 0.45, y: 0.23 }, // denmark
+        { x: 0.47, y: 0.15 }, // scandinavia
+        { x: 0.49, y: 0.16 },
+        { x: 0.49, y: 0.24 }, // baltic
+        { x: 0.56, y: 0.14 }, // siberia north
+        { x: 0.7, y: 0.12 },
+        { x: 0.84, y: 0.13 },
+        { x: 0.87, y: 0.16 }, // kamchatka
+        { x: 0.84, y: 0.22 },
+        { x: 0.86, y: 0.28 }, // korea
+        { x: 0.87, y: 0.34 }, // china coast
+        { x: 0.84, y: 0.41 }, // indochina
+        { x: 0.79, y: 0.42 }, // bangladesh
+        { x: 0.77, y: 0.46 }, // india
+        { x: 0.74, y: 0.4 },
+        { x: 0.69, y: 0.42 }, // arabia
+        { x: 0.67, y: 0.48 },
+        { x: 0.62, y: 0.45 },
+        { x: 0.62, y: 0.39 }, // red sea
+        { x: 0.58, y: 0.36 }, // turkey
+        { x: 0.51, y: 0.33 }, // greece/italy
+        { x: 0.45, y: 0.32 }  // mediterranean
+      ]);
+
+      // Africa
+      drawLand([
+        { x: 0.45, y: 0.36 }, // morocco
+        { x: 0.54, y: 0.35 }, // libya
+        { x: 0.59, y: 0.39 }, // sinai
+        { x: 0.59, y: 0.49 }, // horn of africa
+        { x: 0.56, y: 0.66 }, // mozambique
+        { x: 0.53, y: 0.77 }, // south africa
+        { x: 0.49, y: 0.74 },
+        { x: 0.48, y: 0.55 }, // gulf of guinea
+        { x: 0.41, y: 0.47 }, // west hump
+        { x: 0.43, y: 0.38 }
+      ]);
+
+      // Australia
+      drawLand([
+        { x: 0.76, y: 0.63 }, // west
+        { x: 0.82, y: 0.58 }, // darwin
+        { x: 0.87, y: 0.61 }, // queensland
+        { x: 0.88, y: 0.73 }, // sydney
+        { x: 0.83, y: 0.76 }, // melbourne
+        { x: 0.76, y: 0.73 }
+      ]);
+
+      // Antarctica (wavy polygon instead of full block)
+      drawLand([
+        { x: 0.05, y: 0.94 },
+        { x: 0.15, y: 0.91 },
+        { x: 0.3, y: 0.93 },
+        { x: 0.45, y: 0.89 },
+        { x: 0.6, y: 0.91 },
+        { x: 0.75, y: 0.9 },
+        { x: 0.88, y: 0.93 },
+        { x: 0.95, y: 0.95 },
+        { x: 0.95, y: 0.99 },
+        { x: 0.05, y: 0.99 }
+      ]);
+
+      const texture = new THREE.CanvasTexture(canvas);
+      return texture;
+    };
+
+    // 1. Solid Earth Core (pulses with Schumann/Bass harmonics)
+    const earthTexture = createEarthTexture();
     const coreGeom = new THREE.SphereGeometry(0.85, 32, 32);
     const coreMat = new THREE.MeshStandardMaterial({
-      color: 0x4f46e5,
-      emissive: 0x4f46e5,
-      emissiveIntensity: 0.35,
-      roughness: 0.3,
-      metalness: 0.8,
+      map: earthTexture,
+      roughness: 0.4,
+      metalness: 0.25,
       transparent: true,
-      opacity: 0.9
+      opacity: 0.95
     });
     coreMesh = new THREE.Mesh(coreGeom, coreMat);
+    coreMesh.rotation.y = Math.PI; // Face the Americas nicely on start
     threeScene.add(coreMesh);
 
     // 2. Wireframe Cage (undulates with active frequency spectrum)
@@ -182,7 +372,7 @@ function main() {
     };
 
     const particleMat = new THREE.PointsMaterial({
-      color: 0x06b6d4,
+      color: 0x0891b2,
       size: 0.075,
       transparent: true,
       opacity: 0.85
@@ -191,6 +381,42 @@ function main() {
     threeScene.add(orbitPoints);
   }
   initThreeJS();
+
+  // Dynamic resonance coherence display based on active mixer channels
+  function updateResonanceCoherence() {
+    const resonanceEl = document.getElementById("resonanceCoherence");
+    if (!resonanceEl) return;
+
+    const activeIds = Object.keys(activeChannels).map(Number);
+    
+    if (activeIds.length === 0) {
+      resonanceEl.textContent = "NOT STARTED";
+      resonanceEl.className = "text-slate-500 font-bold";
+      return;
+    }
+
+    // Schumann Resonance Channel IDs: 1 (CH1), 8 (CH2), 9 (CH3)
+    const schumannIds = [1, 8, 9];
+    const activeSchumann = activeIds.filter(id => schumannIds.includes(id));
+    const activeOthers = activeIds.filter(id => !schumannIds.includes(id));
+
+    if (activeOthers.length === 0 && activeSchumann.length > 0) {
+      resonanceEl.textContent = "SCHUMANN COHERENT";
+      resonanceEl.className = "text-emerald-700 font-bold animate-pulse";
+    } else if (activeIds.includes(3) || activeIds.includes(4) || activeIds.includes(5)) {
+      resonanceEl.textContent = "ULTRASONIC COUPLING";
+      resonanceEl.className = "text-amber-600 font-bold";
+    } else if (activeIds.includes(2) || activeIds.includes(6)) {
+      resonanceEl.textContent = "SOLFEGGIO HARMONIC";
+      resonanceEl.className = "text-emerald-600 font-bold";
+    } else if (activeIds.includes(7)) {
+      resonanceEl.textContent = "ORGANIC MASKING";
+      resonanceEl.className = "text-teal-600 font-bold";
+    } else {
+      resonanceEl.textContent = "COMPLEX COUPLING";
+      resonanceEl.className = "text-purple-600 font-bold";
+    }
+  }
 
   // Helper to convert HSL to Hex color for PixiJS drawing
   function hslaToHex(h, s, l) {
@@ -620,6 +846,9 @@ function main() {
       if (card) card.classList.add("channel-active");
       resetButton.disabled = false;
     }
+
+    // Dynamic Resonance updates
+    updateResonanceCoherence();
   }
 
   function stopChannel(id) {
@@ -683,13 +912,9 @@ function main() {
     });
 
     // Update Console HUD UI
-    previewButton.classList.add("hidden");
-    stopButton.classList.remove("hidden");
+    previewButton.textContent = "Stop Sequence";
+    previewButton.className = "w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3.5 px-6 rounded-xl text-sm tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
     resetButton.disabled = true;
-
-    statusLED.className = "w-2.5 h-2.5 rounded-full bg-indigo-600 blink-led";
-    statusText.textContent = "SUMMONING LIVE";
-    statusText.className = "text-indigo-600 font-extrabold uppercase tracking-wider text-sm";
 
     recordingIndicator.classList.add("hidden");
     idleTimerText.classList.remove("hidden");
@@ -726,13 +951,9 @@ function main() {
     clearTimeout(summonTimeout);
 
     // Reset Console HUD UI
-    previewButton.classList.remove("hidden");
-    stopButton.classList.add("hidden");
+    previewButton.textContent = "Summon";
+    previewButton.className = "w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-3.5 px-6 rounded-xl text-sm tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
     resetButton.disabled = false;
-
-    statusLED.className = "w-2.5 h-2.5 rounded-full bg-slate-300";
-    statusText.textContent = "STANDBY";
-    statusText.className = "text-slate-800 font-extrabold uppercase tracking-wider text-sm";
 
     idleTimerText.textContent = "30.0s";
     recordingIndicator.classList.add("hidden");
@@ -778,13 +999,9 @@ function main() {
     recorder.start();
 
     // Update Console HUD UI
-    previewButton.classList.add("hidden");
-    stopButton.classList.remove("hidden");
+    previewButton.textContent = "Stop Sequence";
+    previewButton.className = "w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3.5 px-6 rounded-xl text-sm tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
     resetButton.disabled = true;
-
-    statusLED.className = "w-2.5 h-2.5 rounded-full bg-rose-600 blink-led";
-    statusText.textContent = "RECORDING SIGNAL";
-    statusText.className = "text-rose-600 font-extrabold uppercase tracking-wider text-sm";
 
     idleTimerText.classList.add("hidden");
     recordingIndicator.classList.remove("hidden");
@@ -820,12 +1037,18 @@ function main() {
 
   startButton.onclick = startRecording;
 
-  // STOP BUTTON BEHAVIOR COVERS BOTH STATES
-  stopButton.onclick = () => {
-    if (recorder && recorder.state !== "inactive") {
-      stopRecordingFlow();
+  // PREVIEW BUTTON BEHAVIOR TOGGLES ACTIVE STATES
+  previewButton.onclick = () => {
+    const isRecording = recorder && recorder.state !== "inactive";
+    const isPlaying = Object.keys(activeChannels).length > 0;
+    if (isRecording || isPlaying) {
+      if (isRecording) {
+        stopRecordingFlow();
+      } else {
+        stopAllAudio();
+      }
     } else {
-      stopAllAudio();
+      startSummoning();
     }
   };
 
@@ -864,8 +1087,9 @@ function main() {
         audioContext = null;
         masterGainNode = null;
         analyserNode = null;
+        updateResonanceCoherence();
         resetButton.disabled = true;
-        alert("System Audio context reset successfully.");
+        alert("Audio reset successfully.");
       });
     }
   };
