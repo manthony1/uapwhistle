@@ -4,6 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>UAP Whistle - Atmospheric Resonance Suite</title>
+
+  <!-- Search Engine Optimization (SEO) Metadata -->
+  <meta name="description" content="UAP Whistle is an interactive atmospheric resonance suite designed to generate and broadcast structured acoustic beacons based on Schumann resonances, Solfeggio harmonics, and ultrasonic pulses to attract and cue anomalous aerial phenomena (UAP/UFO) as described in the Skywatcher Discovery Framework." />
+  <meta name="keywords" content="UAP Whistle, UAP Summoner, Schumann Resonance, CE-5 Protocol, UFO beacon, atmospheric resonance, sensor cueing, acoustic lens, FLIR camera, EMF anomalies detector, skywatching gear, Non-Human Intelligence, NHI signals" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://uapwhistle.com/" />
+
+  <!-- Open Graph / Facebook Social Sharing Tags -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="UAP Whistle - Atmospheric Resonance Suite (CE-5 Beacon)" />
+  <meta property="og:description" content="Generate layered acoustic beacon frequencies to calibrate airspace and cue night vision or thermal cameras during CE-5 observations. Grounded in the Skywatcher Framework." />
+  <meta property="og:url" content="https://uapwhistle.com/" />
+  <meta property="og:image" content="https://uapwhistle.com/screenshot.jpg" />
+
+  <!-- Twitter Card Sharing Tags -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="UAP Whistle - Atmospheric Resonance Suite" />
+  <meta name="twitter:description" content="Broadcast Earth's Schumann resonances and Solfeggio harmonics to attract atmospheric anomalous propulsion signatures. Ready for field operators." />
+  <meta name="twitter:image" content="https://uapwhistle.com/screenshot.jpg" />
+
   <!-- Google Fonts for clean, premium sans-serif typography -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -231,10 +251,10 @@
           </div>
           
           <!-- BASIC MIXER: GRID OF CARDS -->
-          <div id="mixerContainerBasic" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          <div id="mixerContainerBasic" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 bg-slate-200/70 border border-slate-300/80 rounded-2xl p-4 shadow-inner">
             
             <!-- Channel 1 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard1">
+            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard1">
               <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
@@ -258,7 +278,7 @@
             </div>
 
             <!-- Channel 2 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard8">
+            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard8">
               <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
@@ -282,7 +302,7 @@
             </div>
 
             <!-- Channel 3 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard9">
+            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard9">
               <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
@@ -306,7 +326,7 @@
             </div>
 
             <!-- Channel 4 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard2">
+            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard2">
               <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
@@ -322,15 +342,15 @@
                 <div class="flex-1 space-y-1.5">
                   <div class="flex justify-between text-xs font-bold text-slate-500">
                     <span>MIX VOL</span>
-                    <span id="volVal2">10.0%</span>
+                    <span id="volVal2">50%</span>
                   </div>
-                  <input type="range" id="volumeTone2" min="0" max="0.2" step="0.005" value="0.1" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
+                  <input type="range" id="volumeTone2" min="0" max="1.0" step="0.01" value="0.5" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
                 </div>
               </div>
             </div>
 
             <!-- Channel 5 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard3">
+            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard3">
               <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
@@ -346,15 +366,15 @@
                 <div class="flex-1 space-y-1.5">
                   <div class="flex justify-between text-xs font-bold text-slate-500">
                     <span>MIX VOL</span>
-                    <span id="volVal3">25%</span>
+                    <span id="volVal3">50%</span>
                   </div>
-                  <input type="range" id="volumeTone3" min="0" max="0.5" step="0.01" value="0.25" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
+                  <input type="range" id="volumeTone3" min="0" max="1.0" step="0.01" value="0.5" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
                 </div>
               </div>
             </div>
 
             <!-- Channel 6 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard4">
+            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard4">
               <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
@@ -370,15 +390,15 @@
                 <div class="flex-1 space-y-1.5">
                   <div class="flex justify-between text-xs font-bold text-slate-500">
                     <span>MIX VOL</span>
-                    <span id="volVal4">25%</span>
+                    <span id="volVal4">50%</span>
                   </div>
-                  <input type="range" id="volumeTone4" min="0" max="0.5" step="0.01" value="0.25" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
+                  <input type="range" id="volumeTone4" min="0" max="1.0" step="0.01" value="0.5" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
                 </div>
               </div>
             </div>
 
             <!-- Channel 7 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard5">
+            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard5">
               <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
@@ -394,15 +414,15 @@
                 <div class="flex-1 space-y-1.5">
                   <div class="flex justify-between text-xs font-bold text-slate-500">
                     <span>MIX VOL</span>
-                    <span id="volVal5">25%</span>
+                    <span id="volVal5">50%</span>
                   </div>
-                  <input type="range" id="volumeTone5" min="0" max="0.5" step="0.01" value="0.25" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
+                  <input type="range" id="volumeTone5" min="0" max="1.0" step="0.01" value="0.5" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
                 </div>
               </div>
             </div>
 
             <!-- Channel 8 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard6">
+            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard6">
               <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
@@ -418,15 +438,15 @@
                 <div class="flex-1 space-y-1.5">
                   <div class="flex justify-between text-xs font-bold text-slate-500">
                     <span>MIX VOL</span>
-                    <span id="volVal6">5.0%</span>
+                    <span id="volVal6">50%</span>
                   </div>
-                  <input type="range" id="volumeTone6" min="0" max="0.1" step="0.002" value="0.05" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
+                  <input type="range" id="volumeTone6" min="0" max="1.0" step="0.01" value="0.5" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
                 </div>
               </div>
             </div>
 
             <!-- Channel 9 -->
-            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard7">
+            <div class="bg-white border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:shadow-md transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard7">
               <div class="absolute -top-6 -right-6 w-12 h-12 bg-emerald-500/5 rounded-full group-hover:bg-emerald-500/10 transition-colors"></div>
               <div>
                 <div class="flex items-center justify-between mb-2">
@@ -442,9 +462,9 @@
                 <div class="flex-1 space-y-1.5">
                   <div class="flex justify-between text-xs font-bold text-slate-500">
                     <span>MIX VOL</span>
-                    <span id="volVal7">7.5%</span>
+                    <span id="volVal7">50%</span>
                   </div>
-                  <input type="range" id="volumeTone7" min="0" max="0.15" step="0.005" value="0.075" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
+                  <input type="range" id="volumeTone7" min="0" max="1.0" step="0.01" value="0.5" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
                 </div>
               </div>
             </div>
@@ -454,10 +474,10 @@
           <!-- PRO MIXER: VERTICAL DECK -->
           <div id="mixerContainerPro" class="hidden">
             <div class="w-full overflow-x-auto pb-4 pt-2">
-              <div class="flex justify-between gap-3 min-w-[760px] select-none">
+              <div class="flex justify-between gap-1.5 min-w-[630px] select-none bg-slate-200/70 border border-slate-300/80 rounded-2xl p-4 shadow-inner">
                 
                 <!-- Strip 1 (SR 1) -->
-                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard1Pro">
+                <div class="flex flex-col items-center bg-white border border-slate-200/80 rounded-xl py-3 px-1 w-16 shadow-xs relative group overflow-hidden hover:border-emerald-300 hover:shadow-sm transition-all duration-200" id="channelCard1Pro">
                   <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 01</span>
                   <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator1Pro"></span>
                   <button id="playTone1Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
@@ -470,7 +490,7 @@
                 </div>
 
                 <!-- Strip 2 (SR 2) -->
-                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard8Pro">
+                <div class="flex flex-col items-center bg-white border border-slate-200/80 rounded-xl py-3 px-1 w-16 shadow-xs relative group overflow-hidden hover:border-emerald-300 hover:shadow-sm transition-all duration-200" id="channelCard8Pro">
                   <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 02</span>
                   <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator8Pro"></span>
                   <button id="playTone8Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
@@ -483,7 +503,7 @@
                 </div>
 
                 <!-- Strip 3 (SR 3) -->
-                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard9Pro">
+                <div class="flex flex-col items-center bg-white border border-slate-200/80 rounded-xl py-3 px-1 w-16 shadow-xs relative group overflow-hidden hover:border-emerald-300 hover:shadow-sm transition-all duration-200" id="channelCard9Pro">
                   <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 03</span>
                   <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator9Pro"></span>
                   <button id="playTone9Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
@@ -496,79 +516,79 @@
                 </div>
 
                 <!-- Strip 4 (528 Hz) -->
-                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard2Pro">
+                <div class="flex flex-col items-center bg-white border border-slate-200/80 rounded-xl py-3 px-1 w-16 shadow-xs relative group overflow-hidden hover:border-emerald-300 hover:shadow-sm transition-all duration-200" id="channelCard2Pro">
                   <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 04</span>
                   <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator2Pro"></span>
                   <button id="playTone2Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
                   <div class="relative w-8 h-36 flex items-center justify-center my-3">
-                    <input type="range" id="volumeTone2Pro" min="0" max="0.2" step="0.005" value="0.1" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
+                    <input type="range" id="volumeTone2Pro" min="0" max="1.0" step="0.01" value="0.5" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
                   </div>
-                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal2Pro">10.0%</span>
+                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal2Pro">50%</span>
                   <span class="text-[10px] font-extrabold text-emerald-800 uppercase tracking-widest mt-1 text-center leading-none">528 Hz</span>
                   <span class="text-[9px] font-medium text-slate-400 mt-0.5 whitespace-nowrap">Harmonic</span>
                 </div>
 
                 <!-- Strip 5 (Ultrasonic) -->
-                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard3Pro">
+                <div class="flex flex-col items-center bg-white border border-slate-200/80 rounded-xl py-3 px-1 w-16 shadow-xs relative group overflow-hidden hover:border-emerald-300 hover:shadow-sm transition-all duration-200" id="channelCard3Pro">
                   <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 05</span>
                   <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator3Pro"></span>
                   <button id="playTone3Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
                   <div class="relative w-8 h-36 flex items-center justify-center my-3">
-                    <input type="range" id="volumeTone3Pro" min="0" max="0.5" step="0.01" value="0.25" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
+                    <input type="range" id="volumeTone3Pro" min="0" max="1.0" step="0.01" value="0.5" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
                   </div>
-                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal3Pro">25%</span>
+                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal3Pro">50%</span>
                   <span class="text-[10px] font-extrabold text-emerald-800 uppercase tracking-widest mt-1 text-center leading-none">PING</span>
                   <span class="text-[9px] font-medium text-slate-400 mt-0.5 whitespace-nowrap">17 kHz</span>
                 </div>
 
                 <!-- Strip 6 (1 kHz) -->
-                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard4Pro">
+                <div class="flex flex-col items-center bg-white border border-slate-200/80 rounded-xl py-3 px-1 w-16 shadow-xs relative group overflow-hidden hover:border-emerald-300 hover:shadow-sm transition-all duration-200" id="channelCard4Pro">
                   <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 06</span>
                   <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator4Pro"></span>
                   <button id="playTone4Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
                   <div class="relative w-8 h-36 flex items-center justify-center my-3">
-                    <input type="range" id="volumeTone4Pro" min="0" max="0.5" step="0.01" value="0.25" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
+                    <input type="range" id="volumeTone4Pro" min="0" max="1.0" step="0.01" value="0.5" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
                   </div>
-                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal4Pro">25%</span>
+                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal4Pro">50%</span>
                   <span class="text-[10px] font-extrabold text-emerald-800 uppercase tracking-widest mt-1 text-center leading-none">1 kHz</span>
                   <span class="text-[9px] font-medium text-slate-400 mt-0.5 whitespace-nowrap">Pulses</span>
                 </div>
 
                 <!-- Strip 7 (2.5 kHz) -->
-                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard5Pro">
+                <div class="flex flex-col items-center bg-white border border-slate-200/80 rounded-xl py-3 px-1 w-16 shadow-xs relative group overflow-hidden hover:border-emerald-300 hover:shadow-sm transition-all duration-200" id="channelCard5Pro">
                   <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 07</span>
                   <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator5Pro"></span>
                   <button id="playTone5Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
                   <div class="relative w-8 h-36 flex items-center justify-center my-3">
-                    <input type="range" id="volumeTone5Pro" min="0" max="0.5" step="0.01" value="0.25" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
+                    <input type="range" id="volumeTone5Pro" min="0" max="1.0" step="0.01" value="0.5" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
                   </div>
-                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal5Pro">25%</span>
+                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal5Pro">50%</span>
                   <span class="text-[10px] font-extrabold text-emerald-800 uppercase tracking-widest mt-1 text-center leading-none">2.5 k</span>
                   <span class="text-[9px] font-medium text-slate-400 mt-0.5 whitespace-nowrap">Chirps</span>
                 </div>
 
                 <!-- Strip 8 (432 Hz) -->
-                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard6Pro">
+                <div class="flex flex-col items-center bg-white border border-slate-200/80 rounded-xl py-3 px-1 w-16 shadow-xs relative group overflow-hidden hover:border-emerald-300 hover:shadow-sm transition-all duration-200" id="channelCard6Pro">
                   <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 08</span>
                   <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator6Pro"></span>
                   <button id="playTone6Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
                   <div class="relative w-8 h-36 flex items-center justify-center my-3">
-                    <input type="range" id="volumeTone6Pro" min="0" max="0.1" step="0.002" value="0.05" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
+                    <input type="range" id="volumeTone6Pro" min="0" max="1.0" step="0.01" value="0.5" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
                   </div>
-                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal6Pro">5.0%</span>
+                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal6Pro">50%</span>
                   <span class="text-[10px] font-extrabold text-emerald-800 uppercase tracking-widest mt-1 text-center leading-none">432 p</span>
                   <span class="text-[9px] font-medium text-slate-400 mt-0.5 whitespace-nowrap">Ambient</span>
                 </div>
 
                 <!-- Strip 9 (Noise) -->
-                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard7Pro">
+                <div class="flex flex-col items-center bg-white border border-slate-200/80 rounded-xl py-3 px-1 w-16 shadow-xs relative group overflow-hidden hover:border-emerald-300 hover:shadow-sm transition-all duration-200" id="channelCard7Pro">
                   <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 09</span>
                   <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator7Pro"></span>
                   <button id="playTone7Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
                   <div class="relative w-8 h-36 flex items-center justify-center my-3">
-                    <input type="range" id="volumeTone7Pro" min="0" max="0.15" step="0.005" value="0.075" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
+                    <input type="range" id="volumeTone7Pro" min="0" max="1.0" step="0.01" value="0.5" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
                   </div>
-                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal7Pro">7.5%</span>
+                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal7Pro">50%</span>
                   <span class="text-[10px] font-extrabold text-emerald-800 uppercase tracking-widest mt-1 text-center leading-none">NOISE</span>
                   <span class="text-[9px] font-medium text-slate-400 mt-0.5 whitespace-nowrap">Breath</span>
                 </div>
@@ -683,6 +703,321 @@
     </footer>
 
   </div>
+
+  <!-- DYNAMIC AI CHATBOT TERMINAL (A.I.R.A.) -->
+  <div class="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-[9999] font-outfit select-none text-slate-800">
+    <!-- Chat Button (Floating Bubble) -->
+    <button id="chatbotTrigger" class="w-14 h-14 bg-emerald-600 hover:bg-emerald-500 text-white rounded-full flex items-center justify-center shadow-2xl cursor-pointer transition-all duration-300 active:scale-95 group relative border border-emerald-500/30 outline-none">
+      <span class="absolute inset-0 rounded-full border border-emerald-500 animate-ping opacity-60 pointer-events-none"></span>
+      <!-- Sleek Chat SVG Icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 transition-transform duration-300 group-hover:rotate-12">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+      </svg>
+      <!-- Chat notification dot -->
+      <span class="absolute top-0.5 right-0.5 w-3.5 h-3.5 bg-rose-500 border-2 border-white rounded-full"></span>
+    </button>
+
+    <!-- Chat Panel Widget -->
+    <div id="chatbotPanel" class="fixed bottom-24 right-0 sm:right-0 w-[320px] sm:w-[370px] max-h-[460px] h-[460px] bg-white/95 backdrop-blur-md border border-slate-200 rounded-2xl shadow-2xl flex flex-col transition-all duration-300 ease-in-out transform translate-y-10 opacity-0 pointer-events-none overflow-hidden select-text">
+      <!-- Chat Header -->
+      <div class="bg-slate-900 text-white px-4 py-3 flex items-center justify-between border-b border-slate-800">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 bg-emerald-500 rounded-full inline-block animate-pulse"></span>
+          <div>
+            <h4 class="text-xs font-black tracking-wider uppercase">A.I.R.A. System</h4>
+            <p class="text-[9px] text-slate-400 font-medium leading-none">Skywatcher Copilot Terminal</p>
+          </div>
+        </div>
+        <button id="chatbotClose" class="text-slate-400 hover:text-white transition-colors cursor-pointer p-1 rounded hover:bg-slate-800 border-0 outline-none">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Message History Container -->
+      <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-3 bg-slate-50/70 text-xs">
+        <!-- Initial Message is dynamically appended on load -->
+      </div>
+
+      <!-- Quick Response Presets -->
+      <div class="px-3 py-2 bg-slate-100/50 border-t border-slate-200/60 overflow-x-auto whitespace-nowrap flex gap-1.5 scrollbar-thin select-none" id="chatSuggestions">
+        <button class="chat-suggestion px-2.5 py-1 bg-white border border-slate-200 hover:border-emerald-500 hover:text-emerald-700 text-slate-600 rounded-full text-[10px] font-bold shadow-xs transition-all cursor-pointer whitespace-nowrap" data-query="Explain Schumann Modulation">Explain Schumann Modulation</button>
+        <button class="chat-suggestion px-2.5 py-1 bg-white border border-slate-200 hover:border-emerald-500 hover:text-emerald-700 text-slate-600 rounded-full text-[10px] font-bold shadow-xs transition-all cursor-pointer whitespace-nowrap" data-query="Activate Schumann preset">Activate Schumann preset</button>
+        <button class="chat-suggestion px-2.5 py-1 bg-white border border-slate-200 hover:border-emerald-500 hover:text-emerald-700 text-slate-600 rounded-full text-[10px] font-bold shadow-xs transition-all cursor-pointer whitespace-nowrap" data-query="Activate Ultrasonic preset">Activate Ultrasonic preset</button>
+        <button class="chat-suggestion px-2.5 py-1 bg-white border border-slate-200 hover:border-emerald-500 hover:text-emerald-700 text-slate-600 rounded-full text-[10px] font-bold shadow-xs transition-all cursor-pointer whitespace-nowrap" data-query="What gear is required?">What gear is required?</button>
+      </div>
+
+      <!-- Input Form -->
+      <form id="chatForm" class="p-3 border-t border-slate-200 bg-white flex items-center gap-2">
+        <input type="text" id="chatInput" placeholder="Ask AIRA about Schumann resonances or presets..." class="flex-1 border border-slate-200 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 font-medium" />
+        <button type="submit" class="bg-emerald-700 hover:bg-emerald-600 text-white rounded-xl px-3.5 py-2.5 text-xs font-bold transition-all shadow-md cursor-pointer border-0 outline-none">
+          Send
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const trigger = document.getElementById("chatbotTrigger");
+      const panel = document.getElementById("chatbotPanel");
+      const closeBtn = document.getElementById("chatbotClose");
+      const messagesContainer = document.getElementById("chatMessages");
+      const suggestions = document.getElementById("chatSuggestions");
+      const form = document.getElementById("chatForm");
+      const input = document.getElementById("chatInput");
+      const notificationDot = trigger.querySelector(".bg-rose-500");
+
+      let hasOpened = false;
+
+      // Toggle Chat panel open/close
+      trigger.addEventListener("click", () => {
+        panel.classList.toggle("opacity-0");
+        panel.classList.toggle("pointer-events-none");
+        panel.classList.toggle("translate-y-10");
+        panel.classList.toggle("translate-y-0");
+        panel.classList.toggle("opacity-100");
+        panel.classList.toggle("pointer-events-auto");
+        
+        // Hide notification dot on first open
+        if (notificationDot) {
+          notificationDot.classList.add("hidden");
+        }
+
+        if (!hasOpened) {
+          hasOpened = true;
+          addAIRAMessage(responses.greetings[0]);
+        }
+
+        if (panel.classList.contains("opacity-100")) {
+          setTimeout(() => input.focus(), 150);
+          scrollToBottom();
+        }
+      });
+
+      closeBtn.addEventListener("click", () => {
+        panel.classList.add("opacity-0", "pointer-events-none", "translate-y-10");
+        panel.classList.remove("translate-y-0", "opacity-100", "pointer-events-auto");
+      });
+
+      // Scroll to bottom helper
+      function scrollToBottom() {
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
+
+      // Add a message from AIRA
+      function addAIRAMessage(text) {
+        // Remove typing indicator if present
+        const loader = document.getElementById("chatTypingIndicator");
+        if (loader) loader.remove();
+
+        const msgDiv = document.createElement("div");
+        msgDiv.className = "flex items-start gap-2.5 animate-fade-in";
+        
+        // Render simple markdown links or bold text to clean HTML
+        let formattedText = text
+          .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+          .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank" class="text-emerald-700 hover:underline font-bold">$1</a>')
+          .replace(/\n/g, '<br/>');
+
+        msgDiv.innerHTML = `
+          <div class="bg-white border border-slate-200/80 text-slate-850 rounded-2xl rounded-tl-none px-3.5 py-2.5 max-w-[85%] leading-relaxed shadow-xs">
+            ${formattedText}
+          </div>
+        `;
+        messagesContainer.appendChild(msgDiv);
+        scrollToBottom();
+      }
+
+      // Add a message from User
+      function addUserMessage(text) {
+        const msgDiv = document.createElement("div");
+        msgDiv.className = "flex items-start justify-end gap-2.5 animate-fade-in";
+        msgDiv.innerHTML = `
+          <div class="bg-emerald-700 text-white rounded-2xl rounded-tr-none px-3.5 py-2.5 max-w-[85%] leading-relaxed shadow-xs">
+            ${text}
+          </div>
+        `;
+        messagesContainer.appendChild(msgDiv);
+        scrollToBottom();
+      }
+
+      // Show typing indicator
+      function showTypingIndicator() {
+        // Prevent duplicate indicators
+        if (document.getElementById("chatTypingIndicator")) return;
+
+        const loaderDiv = document.createElement("div");
+        loaderDiv.id = "chatTypingIndicator";
+        loaderDiv.className = "flex items-start gap-2.5 animate-fade-in";
+        loaderDiv.innerHTML = `
+          <div class="bg-slate-200/70 text-slate-500 rounded-2xl rounded-tl-none px-4 py-3 shadow-xs flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style="animation-delay: 0ms"></span>
+            <span class="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style="animation-delay: 150ms"></span>
+            <span class="w-1.5 h-1.5 bg-slate-500 rounded-full animate-bounce" style="animation-delay: 300ms"></span>
+          </div>
+        `;
+        messagesContainer.appendChild(loaderDiv);
+        scrollToBottom();
+      }
+
+      // Action preset applicator helper
+      function executePreset(presetName) {
+        const idMap = {
+          1: 1, // Schumann 1
+          2: 8, // Schumann 2
+          3: 9, // Schumann 3
+          4: 2, // 528 Hz Harmonic
+          5: 3, // Ultrasonic
+          6: 4, // 1 kHz Pulses
+          7: 5, // 2.5 kHz Chirps
+          8: 6, // 432 Hz Ambient
+          9: 7  // Breathing Noise
+        };
+
+        let volumes = {};
+        if (presetName === "preset_schumann") {
+          volumes = { 1: 0.8, 2: 0.8, 3: 0.8, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0 };
+        } else if (presetName === "preset_ultrasonic") {
+          volumes = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0.9, 6: 0.6, 7: 0.7, 8: 0, 9: 0 };
+        } else if (presetName === "preset_ambient") {
+          volumes = { 1: 0, 2: 0, 3: 0, 4: 0.5, 5: 0, 6: 0, 7: 0, 8: 0.8, 9: 0.4 };
+        }
+
+        // Apply to each slider and play state via DOM elements
+        for (let chNum = 1; chNum <= 9; chNum++) {
+          const id = idMap[chNum];
+          const targetVol = volumes[chNum];
+
+          // Basic volume slider
+          const slider = document.getElementById("volumeTone" + id);
+          if (slider) {
+            slider.value = targetVol;
+            slider.dispatchEvent(new Event('input'));
+          }
+
+          // Basic play tone button
+          const playBtn = document.getElementById("playTone" + id);
+          if (playBtn) {
+            const isCurrentlyPlaying = playBtn.textContent === "⏸";
+            const shouldPlay = targetVol > 0;
+            
+            if (shouldPlay && !isCurrentlyPlaying) {
+              playBtn.click();
+            } else if (!shouldPlay && isCurrentlyPlaying) {
+              playBtn.click();
+            }
+          }
+        }
+      }
+
+      // Handle query parsing and response
+      function handleUserQuery(query) {
+        const cleanedQuery = query.toLowerCase().trim();
+        addUserMessage(query);
+        showTypingIndicator();
+
+        // Simulate network latency / typing delay
+        setTimeout(() => {
+          let matchedResponse = responses.default.text;
+
+          // Search matches in response config
+          for (const key in responses) {
+            if (key === "default" || key === "greetings") continue;
+            const item = responses[key];
+            if (item.keywords.some(kw => cleanedQuery.includes(kw))) {
+              matchedResponse = item.text;
+              
+              // Trigger action preset if defined
+              if (item.action) {
+                executePreset(item.action);
+              }
+              break;
+            }
+          }
+
+          addAIRAMessage(matchedResponse);
+        }, 1200);
+      }
+
+      // Bind Chat input form
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const text = input.value.trim();
+        if (!text) return;
+        input.value = "";
+        handleUserQuery(text);
+      });
+
+      // Bind suggestion buttons row
+      suggestions.addEventListener("click", (e) => {
+        const btn = e.target.closest(".chat-suggestion");
+        if (btn) {
+          const query = btn.getAttribute("data-query");
+          handleUserQuery(query);
+        }
+      });
+      
+      // Define responses lookup table
+      const responses = {
+        greetings: [
+          "Hello! I am **A.I.R.A.** (Atmospheric Interference & Resonance Assistant). I can help you understand this console, explain frequency resonance science, recommend field setups, or configure custom presets for your skywatch. What can I assist you with today?",
+          "Greetings, Operator. AIRA terminal active. Ready to calibrate acoustic resonance sweeps or explain Layer 2/3 protocols. How can I help you in the field?"
+        ],
+        schumann: {
+          keywords: ["schumann", "earth resonance", "7.83", "14.3", "20.8", "ch01", "ch02", "ch03", "fundamental"],
+          text: "The **Schumann Resonances** (Channels 1, 2, and 3) represent Earth's natural electromagnetic cavity resonances. CH1 (7.83 Hz) is the fundamental frequency, while CH2 (14.3 Hz) and CH3 (20.8 Hz) are the primary harmonic peaks. Modulated on higher carrier waves, they are designed to establish a coherent localized atmospheric resonance grid. Would you like me to activate the **Schumann preset**?"
+        },
+        gear: {
+          keywords: ["gear", "equipment", "lens", "camera", "sensor", "detector", "emf", "night vision", "thermal", "infrared"],
+          text: "For effective Layer 3 observation, UAPs are typically invisible to the naked eye. Recommended field equipment includes:\n\n1. **Infrared (IR) Lens**: Smartphone near-infrared lens (e.g. the [SST Infrared Lens](https://www.amazon.com/dp/B0GL7G2JPL/?tag=pacerpro10-20) in the sidebar).\n2. **EMF Anomalies Monitor**: Renders localized magnetic or RF spikes visible (e.g. the [Tri-Field EMF Monitor](https://www.amazon.com/ERICKHILL-Detector-Paranormal-Investigation-RT-100S/dp/B0DHKZB8L9/?tag=pacerpro10-20)).\n3. **Thermal Imaging**: Captures temperature anomalies from unconventional propulsion systems.\n\nKeep these active during broadcast sweeps."
+        },
+        summon: {
+          keywords: ["summon", "aliens", "uap", "ufo", "contact", "ce-5", "ce5", "how to"],
+          text: "To conduct a summoning sequence:\n\n1. Select a frequency formula (e.g. standard **Schumann Coherent** or **Ultrasonic Coupling**).\n2. Run **Summon Aliens** in the Command Console for a live 60-second broadcast, or **Download WebM** to get a loopable copy.\n3. Play the audio outdoors through an external high-fidelity speaker directed at the sky.\n4. Observe using infrared/thermal sensors and look for non-ballistic motion or localized EMF anomalies."
+        },
+        ultrasonic: {
+          keywords: ["ultrasonic", "ping", "17 khz", "ch05", "high frequency"],
+          text: "Channel 5 generates **17 kHz Ultrasonic Pings** pulsed every 3 seconds. While mostly inaudible to human ears, this extremely high-frequency burst carries high energy designed to cue high-resolution acoustic receivers and sensitive digital observation equipment in the airspace."
+        },
+        pulses: {
+          keywords: ["pulses", "chirps", "1 khz", "2.5 khz", "ch06", "ch07"],
+          text: "Channels 6 (**1 kHz Pulses**) and 7 (**2.5 kHz Chirps**) create rhythmic transients that simulate data telemetry beacons. UAPs are theorized to respond to structured electronic signatures, and these mid-range frequencies help make the beacon stand out against natural ambient noise."
+        },
+        ambient: {
+          keywords: ["ambient", "528", "432", "harmonic", "ch04", "ch08"],
+          text: "Channels 4 (**528 Hz Harmonic**) and 8 (**432 Hz Ambient Triangle Tone**) provide harmonic background layers. 528 Hz is the Solfeggio frequency of transformation and DNA tuning, while 432 Hz aligns with natural cosmic mathematical configurations, smoothing out the audio signal profile."
+        },
+        noise: {
+          keywords: ["noise", "breath", "ch09", "white noise"],
+          text: "Channel 9 (**Breathing Noise**) utilizes filtered white noise modulated by a 0.25 Hz LFO. This organic slow breathing pattern blends the electromagnetic and acoustic sweeps into the surrounding environmental noise, masking the beacon's digital profile."
+        },
+        preset_schumann: {
+          keywords: ["activate schumann preset", "schumann preset", "schumann triad preset", "schumann triad", "preset schumann"],
+          action: "preset_schumann",
+          text: "Applying the **Schumann Triad Preset**: Configuring Channels 1, 2, and 3 to 80% volume and enabling oscillators."
+        },
+        preset_ultrasonic: {
+          keywords: ["activate ultrasonic preset", "ultrasonic preset", "preset ultrasonic"],
+          action: "preset_ultrasonic",
+          text: "Applying the **Ultrasonic Coupling Preset**: Configuring Channel 5 (Ultrasonic) to 90%, Channel 6 (1 kHz Pulses) to 60%, and Channel 7 (2.5 kHz Chirps) to 70%, with others muted."
+        },
+        preset_ambient: {
+          keywords: ["activate ambient preset", "ambient preset", "preset ambient", "deep space preset", "activate deep space preset"],
+          action: "preset_ambient",
+          text: "Applying the **Deep Space Pad Preset**: Configuring Channel 4 (528 Hz) to 50%, Channel 8 (432 Hz) to 80%, and Channel 9 (Breathing Noise) to 40%, with others muted."
+        },
+        help: {
+          keywords: ["help", "info", "what can you do", "commands", "menu"],
+          text: "I can assist you with:\n\n- **Explaining the 9 Channels** (e.g., 'What is Schumann resonance?')\n- **Recommending skywatching gear** (e.g., 'What camera/lens do I need?')\n- **Explaining field protocols** (e.g., 'How to summon UAPs?')\n- **Configuring preset mixes** (e.g., 'Activate Schumann preset', 'Activate Ultrasonic preset', or 'Activate Ambient preset')."
+        },
+        default: {
+          text: "Interesting question, Operator. That query relates to Layer 4 (Cognitive Interface) parameters of the Skywatcher Framework. I suggest focusing on calibrating our acoustic resonance deck. You can ask me to **Explain Schumann Resonance**, recommend **skywatching gear**, or directly say **Activate Schumann preset** to configure the board."
+        }
+      };
+    });
+  </script>
 
   <!-- PixiJS v7 CDN for WebGL 2D rendering pipeline -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.4.2/pixi.min.js"></script>

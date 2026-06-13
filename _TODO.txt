@@ -3,7 +3,7 @@ logo page
 light/dark mode switcher; default to light mode; and store user preference in browser cache
 
 
-implement robust LLM/AI chatbot and SEO search engine meta tagging is in place.
+
 
 
 more slick 2d and 3d
@@ -17,6 +17,20 @@ examine safety (malware, clickjacking, etc)
 
 
 ----DONE----
+
+implement robust LLM/AI chatbot and SEO search engine meta tagging is in place.
+
+
+light grey behind mixing board
+
+decrease padding between Pro sound slider bars
+
+
+Normalize all slider bars to between 0% and 100% of slide position; channel 8 and 9 have very small sliders that go only from 0% to 10%; they should all go to 100%.
+If you put all sliders to 100%, make sure that the sound is not so loud that it is deafening. Maybe the maximum amplitude should be 1/2 of the current maximum.
+You should keep the same defaults as now, but enable the user to go to 100%. Hopefully that makes sense.
+
+
 
 on RESET of the audio engine (or before the first click of it), the Download WebM link should be hidden; then fade in after a stopped session.
 

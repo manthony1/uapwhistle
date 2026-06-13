@@ -846,15 +846,15 @@ function main() {
 
   // CHANNELS DICTIONARY DEFINITION
   const channelsConfig = [
-    { id: 1, setup: setupChannel1, defaultVal: 0.5, sliderId: "volumeTone1", buttonId: "playTone1", indicatorId: "channelIndicator1", valTextId: "volVal1" },
-    { id: 8, setup: setupChannel8, defaultVal: 0.5, sliderId: "volumeTone8", buttonId: "playTone8", indicatorId: "channelIndicator8", valTextId: "volVal8" },
-    { id: 9, setup: setupChannel9, defaultVal: 0.5, sliderId: "volumeTone9", buttonId: "playTone9", indicatorId: "channelIndicator9", valTextId: "volVal9" },
-    { id: 2, setup: setupChannel2, defaultVal: 0.1, sliderId: "volumeTone2", buttonId: "playTone2", indicatorId: "channelIndicator2", valTextId: "volVal2" },
-    { id: 3, setup: setupChannel3, defaultVal: 0.25, sliderId: "volumeTone3", buttonId: "playTone3", indicatorId: "channelIndicator3", valTextId: "volVal3" },
-    { id: 4, setup: setupChannel4, defaultVal: 0.25, sliderId: "volumeTone4", buttonId: "playTone4", indicatorId: "channelIndicator4", valTextId: "volVal4" },
-    { id: 5, setup: setupChannel5, defaultVal: 0.25, sliderId: "volumeTone5", buttonId: "playTone5", indicatorId: "channelIndicator5", valTextId: "volVal5" },
-    { id: 6, setup: setupChannel6, defaultVal: 0.05, sliderId: "volumeTone6", buttonId: "playTone6", indicatorId: "channelIndicator6", valTextId: "volVal6" },
-    { id: 7, setup: setupChannel7, defaultVal: 0.075, sliderId: "volumeTone7", buttonId: "playTone7", indicatorId: "channelIndicator7", valTextId: "volVal7" }
+    { id: 1, setup: setupChannel1, defaultVal: 0.5, maxGain: 0.5, sliderId: "volumeTone1", buttonId: "playTone1", indicatorId: "channelIndicator1", valTextId: "volVal1" },
+    { id: 8, setup: setupChannel8, defaultVal: 0.5, maxGain: 0.5, sliderId: "volumeTone8", buttonId: "playTone8", indicatorId: "channelIndicator8", valTextId: "volVal8" },
+    { id: 9, setup: setupChannel9, defaultVal: 0.5, maxGain: 0.5, sliderId: "volumeTone9", buttonId: "playTone9", indicatorId: "channelIndicator9", valTextId: "volVal9" },
+    { id: 2, setup: setupChannel2, defaultVal: 0.5, maxGain: 0.1, sliderId: "volumeTone2", buttonId: "playTone2", indicatorId: "channelIndicator2", valTextId: "volVal2" },
+    { id: 3, setup: setupChannel3, defaultVal: 0.5, maxGain: 0.25, sliderId: "volumeTone3", buttonId: "playTone3", indicatorId: "channelIndicator3", valTextId: "volVal3" },
+    { id: 4, setup: setupChannel4, defaultVal: 0.5, maxGain: 0.25, sliderId: "volumeTone4", buttonId: "playTone4", indicatorId: "channelIndicator4", valTextId: "volVal4" },
+    { id: 5, setup: setupChannel5, defaultVal: 0.5, maxGain: 0.25, sliderId: "volumeTone5", buttonId: "playTone5", indicatorId: "channelIndicator5", valTextId: "volVal5" },
+    { id: 6, setup: setupChannel6, defaultVal: 0.5, maxGain: 0.05, sliderId: "volumeTone6", buttonId: "playTone6", indicatorId: "channelIndicator6", valTextId: "volVal6" },
+    { id: 7, setup: setupChannel7, defaultVal: 0.5, maxGain: 0.075, sliderId: "volumeTone7", buttonId: "playTone7", indicatorId: "channelIndicator7", valTextId: "volVal7" }
   ];
 
   // INITIALIZE AUDIO CONTEXT ON DEMAND
@@ -914,7 +914,7 @@ function main() {
       }
       if (cardPro) cardPro.classList.remove("channel-active");
     } else {
-      const gainVal = parseFloat(slider.value);
+      const gainVal = parseFloat(slider.value) * config.maxGain;
       const result = config.setup(audioContext, analyserNode, gainVal);
       activeChannels[id] = result;
 
@@ -982,9 +982,6 @@ function main() {
 
       // Compute display percentage text
       let displayVal = Math.round(val * 100) + "%";
-      if (config.id === 2 || config.id === 6 || config.id === 7) {
-        displayVal = (val * 100).toFixed(1) + "%";
-      }
       
       const valText = document.getElementById(config.valTextId);
       const valTextPro = document.getElementById(config.valTextId + "Pro");
@@ -993,7 +990,7 @@ function main() {
 
       // Adjust gain node value live if playing
       if (activeChannels[config.id] && activeChannels[config.id].gainNode) {
-        activeChannels[config.id].gainNode.gain.setValueAtTime(val, audioContext.currentTime);
+        activeChannels[config.id].gainNode.gain.setValueAtTime(val * config.maxGain, audioContext.currentTime);
       }
     };
 
@@ -1242,9 +1239,6 @@ function main() {
         if (sliderPro) sliderPro.value = config.defaultVal;
 
         let displayVal = Math.round(config.defaultVal * 100) + "%";
-        if (config.id === 2 || config.id === 6 || config.id === 7) {
-          displayVal = (config.defaultVal * 100).toFixed(1) + "%";
-        }
         
         const valText = document.getElementById(config.valTextId);
         const valTextPro = document.getElementById(config.valTextId + "Pro");
