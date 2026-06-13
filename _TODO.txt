@@ -1,8 +1,5 @@
 
-change the RECORDING button text to simply "REC"
 
-
-light/dark mode switcher; default to light mode; and store user preference in browser cache
 
 
 
@@ -28,6 +25,9 @@ examine safety (malware, clickjacking, etc)
 
 
 ----DONE----
+change the RECORDING button text to simply "REC"
+
+
 
 implement robust LLM/AI chatbot and SEO search engine meta tagging is in place.
 
