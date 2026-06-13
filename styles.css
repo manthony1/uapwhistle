@@ -145,3 +145,21 @@ input[type="range"]::-webkit-slider-thumb:hover {
 .recording-active-blink {
   animation: slowBlinkRed 2s infinite ease-in-out;
 }
+
+/* Ensure the visualizer wrapper and its panels have correct responsive height */
+#visualizerWrapper {
+  height: 420px;
+}
+
+#visualizerWrapper > div {
+  height: 210px;
+}
+
+@media (min-width: 768px) {
+  #visualizerWrapper {
+    height: 210px;
+  }
+  #visualizerWrapper > div {
+    height: 100%;
+  }
+}
