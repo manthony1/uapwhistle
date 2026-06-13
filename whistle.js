@@ -27,6 +27,20 @@ function main() {
     }
   }
 
+  function showDownloadLink() {
+    if (startButton) {
+      startButton.classList.remove("opacity-0", "pointer-events-none");
+      startButton.classList.add("opacity-100", "pointer-events-auto");
+    }
+  }
+
+  function hideDownloadLink() {
+    if (startButton) {
+      startButton.classList.remove("opacity-100", "pointer-events-auto");
+      startButton.classList.add("opacity-0", "pointer-events-none");
+    }
+  }
+
   let audioContext = null;
   let masterGainNode = null;
   let analyserNode = null;
@@ -1006,6 +1020,7 @@ function main() {
     if (audioContext.state === "suspended") {
       audioContext.resume();
     }
+    hideDownloadLink();
 
     // Turn ON all channels that are currently stopped
     channelsConfig.forEach(config => {
@@ -1065,6 +1080,7 @@ function main() {
     previewButton.textContent = "Summon Aliens";
     previewButton.className = "btn-primary-green w-full text-white font-extrabold py-3 px-5 rounded-xl text-base tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
     setResetButtonDisabled(false);
+    showDownloadLink();
 
     // Reset recording indicators to standby grey
     const recordingLabel = document.getElementById("recordingLabel");
@@ -1087,6 +1103,7 @@ function main() {
     if (audioContext.state === "suspended") {
       audioContext.resume();
     }
+    hideDownloadLink();
 
     // Connect master output to a media stream destination
     const dest = audioContext.createMediaStreamDestination();
@@ -1182,6 +1199,7 @@ function main() {
 
   // SYSTEM CONTEXT RESET
   resetButton.onclick = () => {
+    hideDownloadLink();
     if (audioContext) {
       // Deactivate all channels
       channelsConfig.forEach(config => {

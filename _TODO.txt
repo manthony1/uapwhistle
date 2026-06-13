@@ -1,27 +1,36 @@
 logo page
 
-use inputs in gemini, create handbook
-
-CE-5 with tech
-science of harmonic resonances basics
+light/dark mode switcher; default to light mode; and store user preference in browser cache
 
 
+implement robust LLM/AI chatbot and SEO search engine meta tagging is in place.
 
-
-
------
 
 more slick 2d and 3d
-
-
-
 
 terms policy - just for entertainment, nothing is warranted or guaranteed
 
 
 
+examine safety (malware, clickjacking, etc)
+
+
 
 ----DONE----
+
+on RESET of the audio engine (or before the first click of it), the Download WebM link should be hidden; then fade in after a stopped session.
+
+
+remove pill from "Resonance" at the top of the site; leave just the text; decrease padding below it.
+
+buttons should be clickable completely, not just the text
+
+increase the padding between the "Summon Aliens" button and the "Download Webm" link below so a user does not accidentally re-click the Summoning button when they mean to click the Download instead (especially important on mobile)
+
+use inputs in gemini, create handbook
+
+CE-5 with tech
+science of harmonic resonances basics
 
 toggle mode: basic/pro mixer
 basic setting is the current cards with explanations

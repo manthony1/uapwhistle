@@ -41,3 +41,6 @@ vendor/
 
 # PDF files
 *.pdf
+
+# Markdown files
+*.md

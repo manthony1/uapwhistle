@@ -33,7 +33,7 @@
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-8">
     
     <!-- HEADER -->
-    <header class="border-b border-slate-200 pb-4 mb-5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <header class="border-b border-slate-200 pb-2.5 mb-3.5 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
       <div>
         <div class="flex items-center gap-3">
           <span class="inline-block animate-bounce text-3xl">🛸</span>
@@ -48,7 +48,7 @@
       </div>
       
       <!-- Telemetry Dashboard Status -->
-      <div class="bg-white border border-slate-200 rounded-xl px-6 py-2.5 flex items-center gap-6 text-sm text-slate-600 font-medium shadow-sm self-start md:self-auto w-full sm:w-auto sm:min-w-[310px] justify-center sm:justify-start">
+      <div class="flex items-center gap-6 text-sm text-slate-600 font-medium self-start md:self-auto w-full sm:w-auto justify-center sm:justify-start">
         <div>
           <span class="whitespace-nowrap">RESONANCE: <strong class="text-slate-500 font-bold inline-block min-w-[190px] align-baseline whitespace-nowrap" id="resonanceCoherence">NOT STARTED</strong></span>
         </div>
@@ -113,7 +113,7 @@
               <button id="previewButton" class="btn-primary-green w-full text-white font-extrabold py-3 px-5 rounded-xl text-base tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer">
                 Summon Aliens
               </button>
-              <button id="startButton" class="text-xs text-slate-500 hover:text-emerald-700 underline font-semibold transition-colors duration-150 cursor-pointer bg-transparent border-0 outline-none mt-2.5">
+              <button id="startButton" class="opacity-0 pointer-events-none transition-all duration-700 text-xs text-slate-500 hover:text-emerald-700 underline font-semibold cursor-pointer bg-transparent border-0 outline-none mt-6">
                 Download WebM
               </button>
             </div>
@@ -221,10 +221,10 @@
             <div class="flex items-center bg-slate-100 rounded-full p-1 border border-slate-200 shadow-inner relative w-36 h-8 select-none self-start sm:self-center">
               <!-- Sliding background indicator -->
               <div id="mixerToggleIndicator" class="absolute top-1 bottom-1 left-1 w-[68px] bg-white rounded-full shadow border border-slate-200/50 transition-all duration-200 ease-in-out"></div>
-              <button id="btnMixerBasic" class="flex-1 text-center text-xs font-bold transition-colors duration-200 cursor-pointer z-10 text-emerald-800" type="button">
+              <button id="btnMixerBasic" class="flex-1 h-full text-center text-xs font-bold transition-colors duration-200 cursor-pointer z-10 text-emerald-800" type="button">
                 BASIC
               </button>
-              <button id="btnMixerPro" class="flex-1 text-center text-xs font-bold transition-colors duration-200 cursor-pointer z-10 text-slate-400" type="button">
+              <button id="btnMixerPro" class="flex-1 h-full text-center text-xs font-bold transition-colors duration-200 cursor-pointer z-10 text-slate-400" type="button">
                 PRO
               </button>
             </div>
