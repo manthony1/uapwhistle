@@ -8,6 +8,13 @@ function main() {
   const visualizerModeSelect = document.getElementById("visualizerMode");
   const recordingIndicator = document.getElementById("recordingIndicator");
   const countdownTimer = document.getElementById("countdownTimer");
+  
+  // Basic/Pro Mixer Mode Toggle elements
+  const btnMixerBasic = document.getElementById("btnMixerBasic");
+  const btnMixerPro = document.getElementById("btnMixerPro");
+  const mixerContainerBasic = document.getElementById("mixerContainerBasic");
+  const mixerContainerPro = document.getElementById("mixerContainerPro");
+
 
   function setResetButtonDisabled(disabled) {
     resetButton.disabled = disabled;
@@ -559,6 +566,34 @@ function main() {
     });
   }
 
+  // Basic/Pro Mixer Mode Switching
+  if (btnMixerBasic && btnMixerPro && mixerContainerBasic && mixerContainerPro) {
+    const indicator = document.getElementById("mixerToggleIndicator");
+    btnMixerBasic.addEventListener("click", () => {
+      mixerContainerBasic.classList.remove("hidden");
+      mixerContainerPro.classList.add("hidden");
+      
+      if (indicator) {
+        indicator.classList.remove("left-[72px]");
+        indicator.classList.add("left-1");
+      }
+      btnMixerBasic.className = "flex-1 text-center text-xs font-bold transition-colors duration-200 cursor-pointer z-10 text-emerald-800";
+      btnMixerPro.className = "flex-1 text-center text-xs font-bold transition-colors duration-200 cursor-pointer z-10 text-slate-400";
+    });
+    btnMixerPro.addEventListener("click", () => {
+      mixerContainerBasic.classList.add("hidden");
+      mixerContainerPro.classList.remove("hidden");
+      
+      if (indicator) {
+        indicator.classList.remove("left-1");
+        indicator.classList.add("left-[72px]");
+      }
+      btnMixerPro.className = "flex-1 text-center text-xs font-bold transition-colors duration-200 cursor-pointer z-10 text-emerald-800";
+      btnMixerBasic.className = "flex-1 text-center text-xs font-bold transition-colors duration-200 cursor-pointer z-10 text-slate-400";
+    });
+  }
+
+
   // TONE LAYER SETUP FUNCTIONS
   // Channel 1: 7.83 Hz AM (Fundamental Schumann)
   function setupChannel1(ctx, dest, gainVal) {
@@ -832,30 +867,67 @@ function main() {
 
     const id = config.id;
     const button = document.getElementById(config.buttonId);
+    const buttonPro = document.getElementById(config.buttonId + "Pro");
     const indicator = document.getElementById(config.indicatorId);
+    const indicatorPro = document.getElementById(config.indicatorId + "Pro");
     const slider = document.getElementById(config.sliderId);
 
     const card = document.getElementById("channelCard" + id);
+    const cardPro = document.getElementById("channelCard" + id + "Pro");
+
     if (activeChannels[id]) {
       stopChannel(id);
       
-      // Update UI button and LED status
-      button.textContent = "▶";
-      button.classList.remove("btn-active-glow");
-      indicator.className = "w-2.5 h-2.5 rounded-full bg-slate-300";
+      // Update UI button and LED status for Basic
+      if (button) {
+        button.textContent = "▶";
+        button.classList.remove("btn-active-glow");
+      }
+      if (indicator) {
+        indicator.classList.remove("bg-emerald-500", "blink-led");
+        indicator.classList.add("bg-slate-300");
+      }
       if (card) card.classList.remove("channel-active");
+
+      // Update UI button and LED status for Pro
+      if (buttonPro) {
+        buttonPro.textContent = "▶";
+        buttonPro.classList.remove("btn-active-glow");
+      }
+      if (indicatorPro) {
+        indicatorPro.classList.remove("bg-emerald-500", "blink-led");
+        indicatorPro.classList.add("bg-slate-300");
+      }
+      if (cardPro) cardPro.classList.remove("channel-active");
     } else {
       const gainVal = parseFloat(slider.value);
       const result = config.setup(audioContext, analyserNode, gainVal);
       activeChannels[id] = result;
 
-      // Update UI button and LED status
-      button.textContent = "⏸";
-      button.classList.add("btn-active-glow");
-      indicator.className = "w-2.5 h-2.5 rounded-full bg-emerald-500 blink-led";
+      // Update UI button and LED status for Basic
+      if (button) {
+        button.textContent = "⏸";
+        button.classList.add("btn-active-glow");
+      }
+      if (indicator) {
+        indicator.classList.remove("bg-slate-300");
+        indicator.classList.add("bg-emerald-500", "blink-led");
+      }
       if (card) card.classList.add("channel-active");
+
+      // Update UI button and LED status for Pro
+      if (buttonPro) {
+        buttonPro.textContent = "⏸";
+        buttonPro.classList.add("btn-active-glow");
+      }
+      if (indicatorPro) {
+        indicatorPro.classList.remove("bg-slate-300");
+        indicatorPro.classList.add("bg-emerald-500", "blink-led");
+      }
+      if (cardPro) cardPro.classList.add("channel-active");
       setResetButtonDisabled(false);
     }
+
 
     // Dynamic Resonance updates
     updateResonanceCoherence();
@@ -877,28 +949,49 @@ function main() {
   // BIND SLIDERS AND PLAY BUTTONS DYNAMICALLY
   channelsConfig.forEach(config => {
     const slider = document.getElementById(config.sliderId);
+    const sliderPro = document.getElementById(config.sliderId + "Pro");
     const button = document.getElementById(config.buttonId);
+    const buttonPro = document.getElementById(config.buttonId + "Pro");
 
     // Click behavior
-    button.onclick = () => toggleChannel(config);
+    if (button) {
+      button.onclick = () => toggleChannel(config);
+    }
+    if (buttonPro) {
+      buttonPro.onclick = () => toggleChannel(config);
+    }
 
-    // Live volume adjustments
-    slider.oninput = () => {
-      const val = parseFloat(slider.value);
-      
+    const handleVolumeInput = (val) => {
+      // Sync values of both inputs
+      if (slider) slider.value = val;
+      if (sliderPro) sliderPro.value = val;
+
       // Compute display percentage text
       let displayVal = Math.round(val * 100) + "%";
       if (config.id === 2 || config.id === 6 || config.id === 7) {
         displayVal = (val * 100).toFixed(1) + "%";
       }
-      document.getElementById(config.valTextId).textContent = displayVal;
+      
+      const valText = document.getElementById(config.valTextId);
+      const valTextPro = document.getElementById(config.valTextId + "Pro");
+      if (valText) valText.textContent = displayVal;
+      if (valTextPro) valTextPro.textContent = displayVal;
 
       // Adjust gain node value live if playing
       if (activeChannels[config.id] && activeChannels[config.id].gainNode) {
         activeChannels[config.id].gainNode.gain.setValueAtTime(val, audioContext.currentTime);
       }
     };
+
+    // Live volume adjustments
+    if (slider) {
+      slider.oninput = () => handleVolumeInput(parseFloat(slider.value));
+    }
+    if (sliderPro) {
+      sliderPro.oninput = () => handleVolumeInput(parseFloat(sliderPro.value));
+    }
   });
+
 
   // MASTER VOLUME SLIDER BINDING
   masterVolumeSlider.oninput = () => {
@@ -1094,12 +1187,30 @@ function main() {
       channelsConfig.forEach(config => {
         stopChannel(config.id);
         const button = document.getElementById(config.buttonId);
+        const buttonPro = document.getElementById(config.buttonId + "Pro");
         const indicator = document.getElementById(config.indicatorId);
+        const indicatorPro = document.getElementById(config.indicatorId + "Pro");
         const card = document.getElementById("channelCard" + config.id);
-        button.textContent = "▶";
-        button.classList.remove("btn-active-glow");
-        indicator.className = "w-2.5 h-2.5 rounded-full bg-slate-300";
+        const cardPro = document.getElementById("channelCard" + config.id + "Pro");
+
+        if (button) {
+          button.textContent = "▶";
+          button.classList.remove("btn-active-glow");
+        }
+        if (buttonPro) {
+          buttonPro.textContent = "▶";
+          buttonPro.classList.remove("btn-active-glow");
+        }
+        if (indicator) {
+          indicator.classList.remove("bg-emerald-500", "blink-led");
+          indicator.classList.add("bg-slate-300");
+        }
+        if (indicatorPro) {
+          indicatorPro.classList.remove("bg-emerald-500", "blink-led");
+          indicatorPro.classList.add("bg-slate-300");
+        }
         if (card) card.classList.remove("channel-active");
+        if (cardPro) cardPro.classList.remove("channel-active");
       });
 
       // Clear particles (animation loop continues running in standby mode)
@@ -1108,14 +1219,21 @@ function main() {
       // Reset sliders and readout metrics to default values
       channelsConfig.forEach(config => {
         const slider = document.getElementById(config.sliderId);
-        slider.value = config.defaultVal;
+        const sliderPro = document.getElementById(config.sliderId + "Pro");
+        if (slider) slider.value = config.defaultVal;
+        if (sliderPro) sliderPro.value = config.defaultVal;
 
         let displayVal = Math.round(config.defaultVal * 100) + "%";
         if (config.id === 2 || config.id === 6 || config.id === 7) {
           displayVal = (config.defaultVal * 100).toFixed(1) + "%";
         }
-        document.getElementById(config.valTextId).textContent = displayVal;
+        
+        const valText = document.getElementById(config.valTextId);
+        const valTextPro = document.getElementById(config.valTextId + "Pro");
+        if (valText) valText.textContent = displayVal;
+        if (valTextPro) valTextPro.textContent = displayVal;
       });
+
 
       // Close the audio context safely
       audioContext.close().then(() => {

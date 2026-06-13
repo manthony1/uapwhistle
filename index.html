@@ -207,17 +207,31 @@
 
         <!-- CARD 3: TONE MIXER BOARD -->
         <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative overflow-hidden transition-all hover:shadow-md">
-          <div class="mb-6">
-            <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase">
-              Frequency Mixer Board
-            </h2>
-            <p class="text-sm text-slate-500 mt-1">
-              Toggle individual signals or modify their modulation volumes to sculpt custom resonance formulas.
-            </p>
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+            <div>
+              <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase">
+                Frequency Mixer Board
+              </h2>
+              <p class="text-sm text-slate-500 mt-1">
+                Toggle individual signals or modify their modulation volumes to sculpt custom resonance formulas.
+              </p>
+            </div>
+            
+            <!-- Basic/Pro Toggle Selector -->
+            <div class="flex items-center bg-slate-100 rounded-full p-1 border border-slate-200 shadow-inner relative w-36 h-8 select-none self-start sm:self-center">
+              <!-- Sliding background indicator -->
+              <div id="mixerToggleIndicator" class="absolute top-1 bottom-1 left-1 w-[68px] bg-white rounded-full shadow border border-slate-200/50 transition-all duration-200 ease-in-out"></div>
+              <button id="btnMixerBasic" class="flex-1 text-center text-xs font-bold transition-colors duration-200 cursor-pointer z-10 text-emerald-800" type="button">
+                BASIC
+              </button>
+              <button id="btnMixerPro" class="flex-1 text-center text-xs font-bold transition-colors duration-200 cursor-pointer z-10 text-slate-400" type="button">
+                PRO
+              </button>
+            </div>
           </div>
           
-          <!-- GRID OF MIXER CARDS -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+          <!-- BASIC MIXER: GRID OF CARDS -->
+          <div id="mixerContainerBasic" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
             
             <!-- Channel 1 -->
             <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 flex flex-col justify-between hover:border-emerald-300 hover:bg-emerald-50/10 transition-all duration-300 relative group overflow-hidden shadow-sm" id="channelCard1">
@@ -435,6 +449,132 @@
               </div>
             </div>
 
+          </div>
+
+          <!-- PRO MIXER: VERTICAL DECK -->
+          <div id="mixerContainerPro" class="hidden">
+            <div class="w-full overflow-x-auto pb-4 pt-2">
+              <div class="flex justify-between gap-3 min-w-[760px] select-none">
+                
+                <!-- Strip 1 (SR 1) -->
+                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard1Pro">
+                  <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 01</span>
+                  <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator1Pro"></span>
+                  <button id="playTone1Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
+                  <div class="relative w-8 h-36 flex items-center justify-center my-3">
+                    <input type="range" id="volumeTone1Pro" min="0" max="1.0" step="0.01" value="0.5" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
+                  </div>
+                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal1Pro">50%</span>
+                  <span class="text-[10px] font-extrabold text-emerald-800 uppercase tracking-widest mt-1 text-center leading-none">SR 1</span>
+                  <span class="text-[9px] font-medium text-slate-400 mt-0.5 whitespace-nowrap">7.83 Hz</span>
+                </div>
+
+                <!-- Strip 2 (SR 2) -->
+                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard8Pro">
+                  <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 02</span>
+                  <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator8Pro"></span>
+                  <button id="playTone8Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
+                  <div class="relative w-8 h-36 flex items-center justify-center my-3">
+                    <input type="range" id="volumeTone8Pro" min="0" max="1.0" step="0.01" value="0.5" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
+                  </div>
+                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal8Pro">50%</span>
+                  <span class="text-[10px] font-extrabold text-emerald-800 uppercase tracking-widest mt-1 text-center leading-none">SR 2</span>
+                  <span class="text-[9px] font-medium text-slate-400 mt-0.5 whitespace-nowrap">14.3 Hz</span>
+                </div>
+
+                <!-- Strip 3 (SR 3) -->
+                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard9Pro">
+                  <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 03</span>
+                  <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator9Pro"></span>
+                  <button id="playTone9Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
+                  <div class="relative w-8 h-36 flex items-center justify-center my-3">
+                    <input type="range" id="volumeTone9Pro" min="0" max="1.0" step="0.01" value="0.5" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
+                  </div>
+                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal9Pro">50%</span>
+                  <span class="text-[10px] font-extrabold text-emerald-800 uppercase tracking-widest mt-1 text-center leading-none">SR 3</span>
+                  <span class="text-[9px] font-medium text-slate-400 mt-0.5 whitespace-nowrap">20.8 Hz</span>
+                </div>
+
+                <!-- Strip 4 (528 Hz) -->
+                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard2Pro">
+                  <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 04</span>
+                  <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator2Pro"></span>
+                  <button id="playTone2Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
+                  <div class="relative w-8 h-36 flex items-center justify-center my-3">
+                    <input type="range" id="volumeTone2Pro" min="0" max="0.2" step="0.005" value="0.1" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
+                  </div>
+                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal2Pro">10.0%</span>
+                  <span class="text-[10px] font-extrabold text-emerald-800 uppercase tracking-widest mt-1 text-center leading-none">528 Hz</span>
+                  <span class="text-[9px] font-medium text-slate-400 mt-0.5 whitespace-nowrap">Harmonic</span>
+                </div>
+
+                <!-- Strip 5 (Ultrasonic) -->
+                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard3Pro">
+                  <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 05</span>
+                  <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator3Pro"></span>
+                  <button id="playTone3Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
+                  <div class="relative w-8 h-36 flex items-center justify-center my-3">
+                    <input type="range" id="volumeTone3Pro" min="0" max="0.5" step="0.01" value="0.25" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
+                  </div>
+                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal3Pro">25%</span>
+                  <span class="text-[10px] font-extrabold text-emerald-800 uppercase tracking-widest mt-1 text-center leading-none">PING</span>
+                  <span class="text-[9px] font-medium text-slate-400 mt-0.5 whitespace-nowrap">17 kHz</span>
+                </div>
+
+                <!-- Strip 6 (1 kHz) -->
+                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard4Pro">
+                  <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 06</span>
+                  <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator4Pro"></span>
+                  <button id="playTone4Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
+                  <div class="relative w-8 h-36 flex items-center justify-center my-3">
+                    <input type="range" id="volumeTone4Pro" min="0" max="0.5" step="0.01" value="0.25" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
+                  </div>
+                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal4Pro">25%</span>
+                  <span class="text-[10px] font-extrabold text-emerald-800 uppercase tracking-widest mt-1 text-center leading-none">1 kHz</span>
+                  <span class="text-[9px] font-medium text-slate-400 mt-0.5 whitespace-nowrap">Pulses</span>
+                </div>
+
+                <!-- Strip 7 (2.5 kHz) -->
+                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard5Pro">
+                  <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 07</span>
+                  <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator5Pro"></span>
+                  <button id="playTone5Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
+                  <div class="relative w-8 h-36 flex items-center justify-center my-3">
+                    <input type="range" id="volumeTone5Pro" min="0" max="0.5" step="0.01" value="0.25" class="w-32 h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
+                  </div>
+                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal5Pro">25%</span>
+                  <span class="text-[10px] font-extrabold text-emerald-800 uppercase tracking-widest mt-1 text-center leading-none">2.5 k</span>
+                  <span class="text-[9px] font-medium text-slate-400 mt-0.5 whitespace-nowrap">Chirps</span>
+                </div>
+
+                <!-- Strip 8 (432 Hz) -->
+                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard6Pro">
+                  <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 08</span>
+                  <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator6Pro"></span>
+                  <button id="playTone6Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
+                  <div class="relative w-8 h-36 flex items-center justify-center my-3">
+                    <input type="range" id="volumeTone6Pro" min="0" max="0.1" step="0.002" value="0.05" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
+                  </div>
+                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal6Pro">5.0%</span>
+                  <span class="text-[10px] font-extrabold text-emerald-800 uppercase tracking-widest mt-1 text-center leading-none">432 p</span>
+                  <span class="text-[9px] font-medium text-slate-400 mt-0.5 whitespace-nowrap">Ambient</span>
+                </div>
+
+                <!-- Strip 9 (Noise) -->
+                <div class="flex flex-col items-center bg-slate-50 border border-slate-200/80 rounded-2xl py-4 px-2 w-20 shadow-xs relative group overflow-hidden hover:border-emerald-300 transition-all duration-200" id="channelCard7Pro">
+                  <span class="text-[10px] font-bold text-slate-400 tracking-wider">CH 09</span>
+                  <span class="w-2 h-2 rounded-full bg-slate-300 mt-1" id="channelIndicator7Pro"></span>
+                  <button id="playTone7Pro" class="w-8 h-8 rounded-full bg-white hover:bg-emerald-50 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 flex items-center justify-center transition-all cursor-pointer font-bold shadow-xs mt-3 active:scale-95 text-xs" title="Toggle Channel">▶</button>
+                  <div class="relative w-8 h-36 flex items-center justify-center my-3">
+                    <input type="range" id="volumeTone7Pro" min="0" max="0.15" step="0.005" value="0.075" class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700 -rotate-90 absolute" />
+                  </div>
+                  <span class="text-xs font-bold text-slate-600 block mt-1" id="volVal7Pro">7.5%</span>
+                  <span class="text-[10px] font-extrabold text-emerald-800 uppercase tracking-widest mt-1 text-center leading-none">NOISE</span>
+                  <span class="text-[9px] font-medium text-slate-400 mt-0.5 whitespace-nowrap">Breath</span>
+                </div>
+
+              </div>
+            </div>
           </div>
         </div>
       </section>
