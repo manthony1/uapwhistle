@@ -43,7 +43,7 @@
           <span class="px-2.5 py-0.5 text-xs font-bold border border-emerald-200 rounded-full text-emerald-700 bg-emerald-50 tracking-wider">v2.0</span>
         </div>
         <p class="text-sm sm:text-base text-slate-600 mt-2 font-medium">
-          Multi-frequency atmospheric coupling & acoustic resonance console for Non-Human Intelligence (NHI) communication.
+          An interactive acoustic beacon designed to broadcast structured resonance patterns. Grounded in the Skywatcher Discovery Framework, it tests if localized environmental frequencies can cue and attract Non-Human Intelligence (NHI) or UAPs.
         </p>
       </div>
       
@@ -54,6 +54,38 @@
         </div>
       </div>
     </header>
+
+    <!-- COLLAPSIBLE BRIEFING GUIDE (Collapsed by default) -->
+    <details class="group bg-emerald-50/20 border border-emerald-200/50 rounded-2xl p-5 mb-8 transition-all hover:bg-emerald-50/40 shadow-sm">
+      <summary class="flex items-center justify-between font-extrabold text-sm text-emerald-800 tracking-wider uppercase cursor-pointer select-none list-none outline-none">
+        <span class="flex items-center gap-2">
+          <span>📖</span> Scientific Summoning Briefing: What, How & Why
+        </span>
+        <span class="text-xs text-emerald-600 font-bold group-open:hidden">EXPLORE BRIEFING ↓</span>
+        <span class="text-xs text-emerald-600 font-bold hidden group-open:inline">COLLAPSE ↑</span>
+      </summary>
+      
+      <div class="mt-4 pt-4 border-t border-emerald-100/70 grid grid-cols-1 md:grid-cols-3 gap-6 text-slate-600 text-sm leading-relaxed">
+        <div class="space-y-2">
+          <h3 class="font-extrabold text-xs text-emerald-800 uppercase tracking-widest">1. WHAT: Acoustic Resonance</h3>
+          <p>
+            This console broadcasts structured, multi-frequency sound waves. Grounded in **Layer 2 (Sensory Calibration)** of the **Skywatcher Discovery Framework**, it generates a localized resonance signature using Earth's fundamental Schumann frequencies, Solfeggio harmonics, and ultrasonic pulses to calibrate the surrounding airspace.
+          </p>
+        </div>
+        <div class="space-y-2">
+          <h3 class="font-extrabold text-xs text-emerald-800 uppercase tracking-widest">2. HOW: Atmospheric Coupling</h3>
+          <p>
+            When these waves propagate outdoors, they couple with atmospheric pressure gradients to form microscopic air-density pockets. These pockets act as passive acoustic and electromagnetic lenses, focusing infrared and microwave energy to project a structured "beacon" into the sky.
+          </p>
+        </div>
+        <div class="space-y-2">
+          <h3 class="font-extrabold text-xs text-emerald-800 uppercase tracking-widest">3. WHY & OBSERVE: Sensor Cueing</h3>
+          <p>
+            Anomalous phenomena (UAP/NHI) are theorized to detect and investigate structured energetic anomalies. Under **Layer 3 (Sensor Cueing)**, operators should run the summoning sequence while actively monitoring the sky with **infrared (IR) night-vision lenses**, thermal cameras, or **EMF anomaly detectors** to observe response signatures.
+          </p>
+        </div>
+      </div>
+    </details>
 
     <!-- MAIN GRID LAYOUT -->
     <main class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -73,8 +105,8 @@
           <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
             <!-- Left Side: Rectangular Summon Action Button -->
             <div class="md:col-span-5 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-slate-200 pb-6 md:pb-0 md:pr-6">
-              <button id="previewButton" class="w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-3.5 px-6 rounded-xl text-sm tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer">
-                Summon
+              <button id="previewButton" class="btn-primary-green w-full text-white font-extrabold py-5 px-6 rounded-xl text-base tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer">
+                Summon Aliens
               </button>
             </div>
             
@@ -93,11 +125,10 @@
                 <div class="text-center">
                   <span class="text-xs text-slate-500 font-bold block uppercase tracking-wider mb-1">REMAINING TIME:</span>
                   <!-- Recording Indicator / Countdown -->
-                  <div id="recordingIndicator" class="hidden inline-flex items-center justify-center gap-1.5 text-rose-600 font-bold text-sm">
-                    <span id="recordingLabel">🔴 RECORDING</span> 
-                    <span id="countdownTimer" class="font-extrabold text-white bg-rose-600 px-2 py-0.5 rounded border border-rose-500">30.0s</span>
+                  <div id="recordingIndicator" class="inline-flex items-center justify-center gap-2 font-bold text-sm">
+                    <span id="recordingLabel" class="text-slate-400 font-bold transition-colors duration-200">● RECORDING</span> 
+                    <span id="countdownTimer" class="font-extrabold text-slate-500 bg-slate-200 px-2 py-0.5 rounded border border-slate-300 transition-all duration-200">30.0s</span>
                   </div>
-                  <div id="idleTimerText" class="text-slate-800 font-extrabold text-base">30.0s</div>
                 </div>
               </div>
             </div>
@@ -437,7 +468,7 @@
                 Fits any modern smartphone. Custom optical glass specifically calibrated for near-infrared atmospheric observations and thermal imaging.
               </p>
             </div>
-            <a href="#" onclick="alert('Demo Affiliate Link: Redirecting to SST Night Vision Lens detail page...')" class="block text-center text-xs font-bold tracking-wider bg-white hover:bg-slate-100 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 py-2.5 rounded-xl transition-all shadow-sm">
+            <a href="#" onclick="alert('Demo Affiliate Link: Redirecting to SST Night Vision Lens detail page...')" class="btn-ad-complementary block text-center text-xs font-bold tracking-wider py-2.5 rounded-xl transition-all shadow-sm">
               VIEW SPECIFICATIONS →
             </a>
           </div>
@@ -454,7 +485,7 @@
                 Monitor real-time radiofrequency, electromagnetic field perturbations, and magnetic changes associated with atmospheric cue responses.
               </p>
             </div>
-            <a href="#" onclick="alert('Demo Sponsor Link: Checking EMF detector inventory...')" class="block text-center text-xs font-bold tracking-wider bg-white hover:bg-slate-100 border border-slate-300 hover:border-emerald-400 text-slate-700 hover:text-emerald-700 py-2.5 rounded-xl transition-all shadow-sm">
+            <a href="#" onclick="alert('Demo Sponsor Link: Checking EMF detector inventory...')" class="btn-ad-complementary block text-center text-xs font-bold tracking-wider py-2.5 rounded-xl transition-all shadow-sm">
               CHECK AVAILABILITY →
             </a>
           </div>
@@ -470,7 +501,7 @@
                 The official guide for Layer 2 & 3 cueing experiments. Includes optimal loop configurations, weather calibration settings, and coordinate logs.
               </p>
             </div>
-            <a href="#" onclick="alert('Demo Digital Product: Thank you for interest in UAP Summoner Field Handbook! Purchase portal mock triggered.')" class="block text-center text-xs font-bold tracking-wider bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 border-t border-emerald-500 text-white py-2.5 rounded-xl transition-all shadow-sm">
+            <a href="#" onclick="alert('Demo Digital Product: Thank you for interest in UAP Summoner Field Handbook! Purchase portal mock triggered.')" class="btn-ad-complementary block text-center text-xs font-bold tracking-wider py-2.5 rounded-xl transition-all shadow-sm">
               DOWNLOAD INSTANT E-BOOK →
             </a>
           </div>

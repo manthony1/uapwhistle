@@ -8,7 +8,6 @@ function main() {
   const visualizerModeSelect = document.getElementById("visualizerMode");
   const recordingIndicator = document.getElementById("recordingIndicator");
   const countdownTimer = document.getElementById("countdownTimer");
-  const idleTimerText = document.getElementById("idleTimerText");
 
   let audioContext = null;
   let masterGainNode = null;
@@ -312,7 +311,7 @@ function main() {
 
     // 1. Solid Earth Core (pulses with Schumann/Bass harmonics)
     const earthTexture = createEarthTexture();
-    const coreGeom = new THREE.SphereGeometry(0.85, 32, 32);
+    const coreGeom = new THREE.SphereGeometry(1.05, 32, 32);
     const coreMat = new THREE.MeshStandardMaterial({
       map: earthTexture,
       roughness: 0.4,
@@ -325,7 +324,7 @@ function main() {
     threeScene.add(coreMesh);
 
     // 2. Wireframe Cage (undulates with active frequency spectrum)
-    const cageGeom = new THREE.IcosahedronGeometry(1.6, 2);
+    const cageGeom = new THREE.IcosahedronGeometry(2.05, 2);
     // Cache the baseline vertex coordinates for real-time offset calculation
     const posAttr = cageGeom.attributes.position;
     cageGeom.userData = {
@@ -350,7 +349,7 @@ function main() {
     const angles = new Float32Array(particleCount * 2); // phi, theta pairs
 
     for (let i = 0; i < particleCount; i++) {
-      const radius = 2.0 + Math.random() * 0.6;
+      const radius = 2.5 + Math.random() * 0.6;
       const theta = Math.random() * Math.PI * 2;
       const phi = Math.acos((Math.random() * 2) - 1);
 
@@ -913,14 +912,18 @@ function main() {
 
     // Update Console HUD UI
     previewButton.textContent = "Stop Sequence";
-    previewButton.className = "w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3.5 px-6 rounded-xl text-sm tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
+    previewButton.className = "w-full bg-rose-600 hover:bg-rose-700 text-white font-extrabold py-5 px-6 rounded-xl text-base tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
     resetButton.disabled = true;
 
-    recordingIndicator.classList.add("hidden");
-    idleTimerText.classList.remove("hidden");
+    // Set recording indicators to active pulsing red
+    const recordingLabel = document.getElementById("recordingLabel");
+    if (recordingLabel) {
+      recordingLabel.className = "recording-active-blink font-bold transition-colors duration-200";
+    }
+    countdownTimer.className = "font-extrabold text-white bg-rose-600 px-2 py-0.5 rounded border border-rose-500 transition-all duration-200 animate-pulse";
 
     timeLeft = 30.0;
-    idleTimerText.textContent = timeLeft.toFixed(1) + "s";
+    countdownTimer.textContent = timeLeft.toFixed(1) + "s";
 
     clearInterval(previewInterval);
     previewInterval = setInterval(() => {
@@ -929,7 +932,7 @@ function main() {
         timeLeft = 0;
         clearInterval(previewInterval);
       }
-      idleTimerText.textContent = timeLeft.toFixed(1) + "s";
+      countdownTimer.textContent = timeLeft.toFixed(1) + "s";
     }, 100);
 
     clearTimeout(summonTimeout);
@@ -951,12 +954,17 @@ function main() {
     clearTimeout(summonTimeout);
 
     // Reset Console HUD UI
-    previewButton.textContent = "Summon";
-    previewButton.className = "w-full bg-emerald-800 hover:bg-emerald-900 text-white font-bold py-3.5 px-6 rounded-xl text-sm tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
+    previewButton.textContent = "Summon Aliens";
+    previewButton.className = "btn-primary-green w-full text-white font-extrabold py-5 px-6 rounded-xl text-base tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
     resetButton.disabled = false;
 
-    idleTimerText.textContent = "30.0s";
-    recordingIndicator.classList.add("hidden");
+    // Reset recording indicators to standby grey
+    const recordingLabel = document.getElementById("recordingLabel");
+    if (recordingLabel) {
+      recordingLabel.className = "text-slate-400 font-bold transition-colors duration-200";
+    }
+    countdownTimer.className = "font-extrabold text-slate-500 bg-slate-200 px-2 py-0.5 rounded border border-slate-300 transition-all duration-200";
+    countdownTimer.textContent = "30.0s";
   }
 
   previewButton.onclick = startSummoning;
@@ -1000,11 +1008,15 @@ function main() {
 
     // Update Console HUD UI
     previewButton.textContent = "Stop Sequence";
-    previewButton.className = "w-full bg-rose-600 hover:bg-rose-700 text-white font-bold py-3.5 px-6 rounded-xl text-sm tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
+    previewButton.className = "w-full bg-rose-600 hover:bg-rose-700 text-white font-extrabold py-5 px-6 rounded-xl text-base tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
     resetButton.disabled = true;
 
-    idleTimerText.classList.add("hidden");
-    recordingIndicator.classList.remove("hidden");
+    // Set recording indicators to active pulsing red
+    const recordingLabel = document.getElementById("recordingLabel");
+    if (recordingLabel) {
+      recordingLabel.className = "recording-active-blink font-bold transition-colors duration-200";
+    }
+    countdownTimer.className = "font-extrabold text-white bg-rose-600 px-2 py-0.5 rounded border border-rose-500 transition-all duration-200 animate-pulse";
 
     timeLeft = 30.0;
     countdownTimer.textContent = timeLeft.toFixed(1) + "s";
@@ -1102,6 +1114,7 @@ function main() {
 
     const bufferLength = 128;
     const dataArray = new Uint8Array(bufferLength);
+    const orbFreqArray = new Uint8Array(bufferLength);
 
     // Sync canvas drawing space with layout pixel scale
     function resizeCanvas() {
@@ -1153,12 +1166,14 @@ function main() {
         } else {
           activeAnalyser.getByteFrequencyData(dataArray);
         }
+        activeAnalyser.getByteFrequencyData(orbFreqArray);
       } else {
         if (mode === "oscilloscope") {
           dataArray.fill(128);
         } else {
           dataArray.fill(0);
         }
+        orbFreqArray.fill(0);
       }
 
       if (mode === "radial") {
@@ -1346,23 +1361,23 @@ function main() {
       if (coreMesh && cageMesh && orbitPoints) {
         let avgEnergy = 0;
         let sum = 0;
-        for (let i = 0; i < bufferLength; i++) sum += dataArray[i];
+        for (let i = 0; i < bufferLength; i++) sum += orbFreqArray[i];
         avgEnergy = sum / bufferLength;
 
-        // Slow rotation speeds up when sound is active
-        const rotSpeedFactor = 1.0 + (avgEnergy / 255) * 5.0;
+        // Slow rotation speeds up when sound is active (boosted 15%)
+        const rotSpeedFactor = 1.0 + (avgEnergy / 255) * 5.75;
         coreMesh.rotation.y += 0.005 * rotSpeedFactor;
         coreMesh.rotation.x += 0.002 * rotSpeedFactor;
         cageMesh.rotation.y -= 0.003 * rotSpeedFactor;
         cageMesh.rotation.x -= 0.001 * rotSpeedFactor;
         orbitPoints.rotation.y += 0.002 * rotSpeedFactor;
 
-        // Core dynamic pulse (bass frequencies e.g. Schumann Resonance bins 1, 2, 3)
-        const bassVal = dataArray[1] * 0.4 + dataArray[2] * 0.4 + dataArray[3] * 0.2;
-        const targetCoreScale = 1.0 + (bassVal / 255) * 0.45 + (activeAnalyser ? 0 : Math.sin(Date.now() * 0.002) * 0.05);
+        // Core dynamic pulse (bass frequencies e.g. Schumann Resonance bins 1, 2, 3) - boosted 15%
+        const bassVal = orbFreqArray[1] * 0.4 + orbFreqArray[2] * 0.4 + orbFreqArray[3] * 0.2;
+        const targetCoreScale = 1.0 + (bassVal / 255) * 0.52 + (activeAnalyser ? 0 : Math.sin(Date.now() * 0.002) * 0.05);
         coreMesh.scale.set(targetCoreScale, targetCoreScale, targetCoreScale);
 
-        // 3D Icosahedron Cage vertex mutation based on frequency spectrum
+        // 3D Icosahedron Cage vertex mutation based on frequency spectrum - boosted 15%
         const cageGeom = cageMesh.geometry;
         const posAttr = cageGeom.attributes.position;
         const origPos = cageGeom.userData.originalPositions;
@@ -1374,9 +1389,9 @@ function main() {
 
           // map vertex index to frequency bin
           const bin = i % bufferLength;
-          const amp = dataArray[bin];
-          // Up to 55% radial displacement
-          const factor = 1.0 + (amp / 255) * 0.55;
+          const amp = orbFreqArray[bin];
+          // Up to 63% radial displacement (boosted 15% from 55%)
+          const factor = 1.0 + (amp / 255) * 0.63;
 
           posAttr.setX(i, x_orig * factor);
           posAttr.setY(i, y_orig * factor);
@@ -1384,7 +1399,7 @@ function main() {
         }
         posAttr.needsUpdate = true;
 
-        // Orbiting particles paths and high-frequency vibrations
+        // Orbiting particles paths and high-frequency vibrations - boosted 15%
         const pGeom = orbitPoints.geometry;
         const pPosAttr = pGeom.attributes.position;
         const originalRadii = pGeom.userData.originalRadii;
@@ -1393,14 +1408,15 @@ function main() {
 
         for (let i = 0; i < originalRadii.length; i++) {
           const bin = (i * 2) % bufferLength;
-          const highAmp = dataArray[bin];
+          const highAmp = orbFreqArray[bin];
 
-          // Update rotation angle
-          angles[i * 2 + 1] += randomSpeeds[i] * (1.0 + (highAmp / 255) * 3.0);
+          // Update rotation angle (boosted 15% from 3.0)
+          angles[i * 2 + 1] += randomSpeeds[i] * (1.0 + (highAmp / 255) * 3.45);
 
           const phi = angles[i * 2];
           const theta = angles[i * 2 + 1];
-          const r = originalRadii[i] + (highAmp / 255) * 0.45;
+          // Particle radius expansion (boosted 15% from 0.45)
+          const r = originalRadii[i] + (highAmp / 255) * 0.52;
 
           pPosAttr.setX(i, r * Math.sin(phi) * Math.cos(theta));
           pPosAttr.setY(i, r * Math.sin(phi) * Math.sin(theta));

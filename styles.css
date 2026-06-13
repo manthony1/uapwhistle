@@ -112,3 +112,36 @@ input[type="range"]::-webkit-slider-thumb:hover {
   background-color: rgba(236, 253, 245, 0.6) !important;
   box-shadow: 0 4px 12px rgba(4, 120, 87, 0.06) !important;
 }
+
+/* Primary Green Button Style */
+.btn-primary-green {
+  background-color: #18da3b !important;
+  color: #ffffff !important;
+}
+.btn-primary-green:hover {
+  background-color: #14be33 !important;
+  box-shadow: 0 4px 12px rgba(24, 218, 59, 0.25) !important;
+}
+
+/* Complementary Ad Buttons */
+.btn-ad-complementary {
+  background-color: #39a78e !important;
+  color: #ffffff !important;
+}
+.btn-ad-complementary:hover {
+  background-color: #2f8c77 !important;
+  box-shadow: 0 4px 12px rgba(57, 167, 142, 0.2) !important;
+}
+
+/* Slow blink red/pink animation for active recording */
+@keyframes slowBlinkRed {
+  0%, 100% {
+    color: #991b1b; /* dark red */
+  }
+  50% {
+    color: #fca5a5; /* lighter red/pink */
+  }
+}
+.recording-active-blink {
+  animation: slowBlinkRed 2s infinite ease-in-out;
+}
