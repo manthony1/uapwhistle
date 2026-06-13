@@ -17,11 +17,16 @@ A browser-based sound tool designed to generate layered tones theorized to stimu
   - Breath-mimicking white noise
 - Web-native audio generation using the Web Audio API
 - One-click 30-second `.webm` audio file download
-- **SUMMON / LIVE PREVIEW** mode
+- **SUMMON / LIVE PREVIEW** mode (with real-time interactive channel active states)
 - Individual play/pause toggles and volume sliders to isolate, mix, and preview each tone
-- Built-in countdown timer and active recording indicator
-- Real-time frequency bar visualizer rendering on a clean, light canvas
-- Highly readable layout utilizing **Inter** sans-serif font and enlarged user controls
+- **Command Console**:
+  - Top-aligned Reset button dynamically communicates its state (medium grey when clickable, light gray when disabled)
+  - Revamped classic pulsing red recording pill with white text and bullet dot
+  - Monospace dark box countdown timer
+  - Stabilized "RESONANCE" status telemetry badge with min-width constraints to prevent mobile layout shifting
+- **Collapsible UAP Summoning Guide**: A default-collapsed details briefing panel summarizing key summoning instructions, sensor cueing, and framework research links
+- Real-time frequency bar, oscilloscope, and radial radar visualizers rendering on a clean, light canvas
+- Highly readable layout utilizing **Inter** sans-serif font and condensed padding to maximize above-the-fold content visibility
 
 ---
 
@@ -68,9 +73,10 @@ This plot was generated using an FFT (Fast Fourier Transform) analysis of the do
 
 ## 💻 How to Use
 
-1. Click **DOWNLOAD WebM (30s)** to generate and download a 30-second compiled signal as a `.webm` file.
-2. Click **SUMMON (LIVE PREVIEW)** for a real-time playback preview in your browser.
-3. Click individual play buttons (▶/⏸) and drag volume sliders on the **Frequency Mixer Board** to isolate, tune, and test each tone.
+1. Open the **UAP Summoning Guide** at the top for field context and reference links.
+2. Click **Summon Aliens** in the Command Console to trigger a 30-second live playback preview, or use individual play buttons (▶/⏸) and volume sliders on the **Frequency Mixer Board** to isolate, tune, and test each tone.
+3. Click **Download WebM** inside the Command Console to generate and download a 30-second compiled signal as a `.webm` file.
+4. Click the header **RESET** button (active when oscillators are initialized) to safely deactivate all playing channels, reset volume sliders to default levels, and close the audio context.
 
 ---
 
