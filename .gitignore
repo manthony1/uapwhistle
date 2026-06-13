@@ -38,3 +38,6 @@ vendor/
 
 # Browsersync or local servers
 .browser-sync/
+
+# PDF files
+*.pdf
