@@ -1,20 +1,36 @@
-make the title "UAP Whistle" to match the domain name
-subtitle: "Multi-frequency..." update to say something about aliens or
-NHI (Non Human Intelligence)
+logo page
+
+use inputs in gemini, create handbook
+
+CE-5 with tech
+science of harmonic resonances basics
 
 
-remove "sys status normal", this is a non-sensical noise
 
-remove the bullet on the card titles
 
-confirm if Resonance "Schumann Coherent" can be a feature that changes with changing the mixer (or what about presets?)
 
-what does 'reset context' mean? i think we need to be clear
-as to what context is being reset, or change the name
+-----
+toggle mode: basic/pro mixer
+basic setting is the current cards with explanations
+pro mixer settings would have vertical sliders for each sound for easy adjustment.
+is there an off the shelf package to enable this functionality?
 
-Center button text "Download WebM
+more slick 2d and 3d
 
-Remove "Signal State" and "Standby", just have the button
-be binary: recording (red), or not recording (grey)
 
-Change "Hardware Shop" to just "Get Hardware"
+
+
+terms policy - just for entertainment, nothing is warranted or guaranteed
+
+
+
+
+----DONE----
+
+Change "Explore Briefing" in the Summoning Guide card to simply "Briefing"
+
+
+increase record time to 60 seconds
+
+increase the levels on all the sounds to half of the max setting for that sound
+is the webm file downloading the custom settings?

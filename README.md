@@ -16,7 +16,7 @@ A browser-based sound tool designed to generate layered tones theorized to stimu
   - 432 Hz ambient pad
   - Breath-mimicking white noise
 - Web-native audio generation using the Web Audio API
-- One-click 30-second `.webm` audio file download
+- One-click 60-second `.webm` audio file download
 - **SUMMON / LIVE PREVIEW** mode (with real-time interactive channel active states)
 - Individual play/pause toggles and volume sliders to isolate, mix, and preview each tone
 - **Command Console**:
@@ -63,7 +63,7 @@ This zoomed-in FFT reveals the presence of the 17 kHz ultrasonic ping — a subt
 
 #### 📊 Time-Frequency Spectrogram
 ![Spectrogram](uap_spectrogram.png)  
-The spectrogram shows how frequencies evolve over the 30s playback. Pulses, modulations, and ambient tones are visible and time-aligned.  
+The spectrogram shows how frequencies evolve over the 60s playback. Pulses, modulations, and ambient tones are visible and time-aligned.  
 
 ✅ *Verifies correct timing of pulsed chirps, breath patterns, and modulated tones*
 
@@ -74,8 +74,8 @@ This plot was generated using an FFT (Fast Fourier Transform) analysis of the do
 ## 💻 How to Use
 
 1. Open the **UAP Summoning Guide** at the top for field context and reference links.
-2. Click **Summon Aliens** in the Command Console to trigger a 30-second live playback preview, or use individual play buttons (▶/⏸) and volume sliders on the **Frequency Mixer Board** to isolate, tune, and test each tone.
-3. Click **Download WebM** inside the Command Console to generate and download a 30-second compiled signal as a `.webm` file.
+2. Click **Summon Aliens** in the Command Console to trigger a 60-second live playback preview, or use individual play buttons (▶/⏸) and volume sliders on the **Frequency Mixer Board** to isolate, tune, and test each tone.
+3. Click **Download WebM** inside the Command Console to generate and download a 60-second compiled signal as a `.webm` file.
 4. Click the header **RESET** button (active when oscillators are initialized) to safely deactivate all playing channels, reset volume sliders to default levels, and close the audio context.
 
 ---
@@ -84,7 +84,7 @@ This plot was generated using an FFT (Fast Fourier Transform) analysis of the do
 
 To perform your own skywatch:
 
-1. Download the 30-second clip and loop it in your sound player.
+1. Download the 60-second clip and loop it in your sound player.
 2. Play it through an external speaker while you observe the sky.
 
 > ⚠️ **Note**: UAPs are unlikely to be visible to the naked eye. Most sightings occur through specialized gear:

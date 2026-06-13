@@ -51,7 +51,7 @@ function main() {
   let recordingTimeout = null;
   let previewInterval = null;
   let summonTimeout = null;
-  let timeLeft = 30.0;
+  let timeLeft = 60.0;
 
   // Sound Graph Canvas configuration
   const soundGraphCanvas = document.getElementById("soundGraph");
@@ -797,15 +797,15 @@ function main() {
 
   // CHANNELS DICTIONARY DEFINITION
   const channelsConfig = [
-    { id: 1, setup: setupChannel1, defaultVal: 0.7, sliderId: "volumeTone1", buttonId: "playTone1", indicatorId: "channelIndicator1", valTextId: "volVal1" },
-    { id: 8, setup: setupChannel8, defaultVal: 0.6, sliderId: "volumeTone8", buttonId: "playTone8", indicatorId: "channelIndicator8", valTextId: "volVal8" },
+    { id: 1, setup: setupChannel1, defaultVal: 0.5, sliderId: "volumeTone1", buttonId: "playTone1", indicatorId: "channelIndicator1", valTextId: "volVal1" },
+    { id: 8, setup: setupChannel8, defaultVal: 0.5, sliderId: "volumeTone8", buttonId: "playTone8", indicatorId: "channelIndicator8", valTextId: "volVal8" },
     { id: 9, setup: setupChannel9, defaultVal: 0.5, sliderId: "volumeTone9", buttonId: "playTone9", indicatorId: "channelIndicator9", valTextId: "volVal9" },
-    { id: 2, setup: setupChannel2, defaultVal: 0.04, sliderId: "volumeTone2", buttonId: "playTone2", indicatorId: "channelIndicator2", valTextId: "volVal2" },
-    { id: 3, setup: setupChannel3, defaultVal: 0.1, sliderId: "volumeTone3", buttonId: "playTone3", indicatorId: "channelIndicator3", valTextId: "volVal3" },
-    { id: 4, setup: setupChannel4, defaultVal: 0.2, sliderId: "volumeTone4", buttonId: "playTone4", indicatorId: "channelIndicator4", valTextId: "volVal4" },
-    { id: 5, setup: setupChannel5, defaultVal: 0.2, sliderId: "volumeTone5", buttonId: "playTone5", indicatorId: "channelIndicator5", valTextId: "volVal5" },
-    { id: 6, setup: setupChannel6, defaultVal: 0.02, sliderId: "volumeTone6", buttonId: "playTone6", indicatorId: "channelIndicator6", valTextId: "volVal6" },
-    { id: 7, setup: setupChannel7, defaultVal: 0.03, sliderId: "volumeTone7", buttonId: "playTone7", indicatorId: "channelIndicator7", valTextId: "volVal7" }
+    { id: 2, setup: setupChannel2, defaultVal: 0.1, sliderId: "volumeTone2", buttonId: "playTone2", indicatorId: "channelIndicator2", valTextId: "volVal2" },
+    { id: 3, setup: setupChannel3, defaultVal: 0.25, sliderId: "volumeTone3", buttonId: "playTone3", indicatorId: "channelIndicator3", valTextId: "volVal3" },
+    { id: 4, setup: setupChannel4, defaultVal: 0.25, sliderId: "volumeTone4", buttonId: "playTone4", indicatorId: "channelIndicator4", valTextId: "volVal4" },
+    { id: 5, setup: setupChannel5, defaultVal: 0.25, sliderId: "volumeTone5", buttonId: "playTone5", indicatorId: "channelIndicator5", valTextId: "volVal5" },
+    { id: 6, setup: setupChannel6, defaultVal: 0.05, sliderId: "volumeTone6", buttonId: "playTone6", indicatorId: "channelIndicator6", valTextId: "volVal6" },
+    { id: 7, setup: setupChannel7, defaultVal: 0.075, sliderId: "volumeTone7", buttonId: "playTone7", indicatorId: "channelIndicator7", valTextId: "volVal7" }
   ];
 
   // INITIALIZE AUDIO CONTEXT ON DEMAND
@@ -935,9 +935,9 @@ function main() {
     if (recordingDot) {
       recordingDot.className = "text-xs text-white";
     }
-    countdownTimer.className = "font-mono font-extrabold text-white bg-slate-950 px-2.5 py-1 rounded border border-slate-800 transition-all duration-200 text-sm animate-pulse";
+    countdownTimer.className = "font-mono font-extrabold text-rose-600 bg-white px-2.5 py-1 rounded border border-rose-500 transition-all duration-200 text-sm animate-pulse";
 
-    timeLeft = 30.0;
+    timeLeft = 60.0;
     countdownTimer.textContent = timeLeft.toFixed(1) + "s";
 
     clearInterval(previewInterval);
@@ -954,7 +954,7 @@ function main() {
     summonTimeout = setTimeout(() => {
       stopAllAudio();
       alert("⏹️ Summoning live preview completed.");
-    }, 30000);
+    }, 60000);
   }
 
   function stopAllAudio() {
@@ -982,8 +982,8 @@ function main() {
     if (recordingDot) {
       recordingDot.className = "text-xs text-red-500";
     }
-    countdownTimer.className = "font-mono font-extrabold text-slate-400 bg-slate-900 px-2.5 py-1 rounded border border-slate-800 transition-all duration-200 text-sm";
-    countdownTimer.textContent = "30.0s";
+    countdownTimer.className = "font-mono font-extrabold text-slate-400 bg-white px-2.5 py-1 rounded border border-slate-200 transition-all duration-200 text-sm";
+    countdownTimer.textContent = "60.0s";
   }
 
   previewButton.onclick = startSummoning;
@@ -1039,9 +1039,9 @@ function main() {
     if (recordingDot) {
       recordingDot.className = "text-xs text-white";
     }
-    countdownTimer.className = "font-mono font-extrabold text-white bg-slate-950 px-2.5 py-1 rounded border border-slate-800 transition-all duration-200 text-sm animate-pulse";
+    countdownTimer.className = "font-mono font-extrabold text-rose-600 bg-white px-2.5 py-1 rounded border border-rose-500 transition-all duration-200 text-sm animate-pulse";
 
-    timeLeft = 30.0;
+    timeLeft = 60.0;
     countdownTimer.textContent = timeLeft.toFixed(1) + "s";
 
     clearInterval(recordingInterval);
@@ -1058,7 +1058,7 @@ function main() {
     recordingTimeout = setTimeout(() => {
       stopRecordingFlow();
       alert("⏹️ Signal compilation completed. Audio downloaded.");
-    }, 30000);
+    }, 60000);
   }
 
   function stopRecordingFlow() {
