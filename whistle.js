@@ -9,6 +9,17 @@ function main() {
   const recordingIndicator = document.getElementById("recordingIndicator");
   const countdownTimer = document.getElementById("countdownTimer");
 
+  function setResetButtonDisabled(disabled) {
+    resetButton.disabled = disabled;
+    if (disabled) {
+      resetButton.classList.remove("btn-reset-enabled");
+      resetButton.classList.add("btn-reset-disabled");
+    } else {
+      resetButton.classList.remove("btn-reset-disabled");
+      resetButton.classList.add("btn-reset-enabled");
+    }
+  }
+
   let audioContext = null;
   let masterGainNode = null;
   let analyserNode = null;
@@ -843,7 +854,7 @@ function main() {
       button.classList.add("btn-active-glow");
       indicator.className = "w-2.5 h-2.5 rounded-full bg-emerald-500 blink-led";
       if (card) card.classList.add("channel-active");
-      resetButton.disabled = false;
+      setResetButtonDisabled(false);
     }
 
     // Dynamic Resonance updates
@@ -913,14 +924,18 @@ function main() {
     // Update Console HUD UI
     previewButton.textContent = "Stop Sequence";
     previewButton.className = "w-full bg-rose-600 hover:bg-rose-700 text-white font-extrabold py-3 px-5 rounded-xl text-base tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
-    resetButton.disabled = true;
+    setResetButtonDisabled(true);
 
     // Set recording indicators to active pulsing red
     const recordingLabel = document.getElementById("recordingLabel");
     if (recordingLabel) {
-      recordingLabel.className = "recording-active-blink font-bold transition-colors duration-200";
+      recordingLabel.className = "recording-pill-active inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-rose-600 text-xs font-bold transition-all duration-200";
     }
-    countdownTimer.className = "font-extrabold text-white bg-rose-600 px-2 py-0.5 rounded border border-rose-500 transition-all duration-200 animate-pulse";
+    const recordingDot = document.getElementById("recordingDot");
+    if (recordingDot) {
+      recordingDot.className = "text-xs text-white";
+    }
+    countdownTimer.className = "font-mono font-extrabold text-white bg-slate-950 px-2.5 py-1 rounded border border-slate-800 transition-all duration-200 text-sm animate-pulse";
 
     timeLeft = 30.0;
     countdownTimer.textContent = timeLeft.toFixed(1) + "s";
@@ -956,14 +971,18 @@ function main() {
     // Reset Console HUD UI
     previewButton.textContent = "Summon Aliens";
     previewButton.className = "btn-primary-green w-full text-white font-extrabold py-3 px-5 rounded-xl text-base tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
-    resetButton.disabled = false;
+    setResetButtonDisabled(false);
 
     // Reset recording indicators to standby grey
     const recordingLabel = document.getElementById("recordingLabel");
     if (recordingLabel) {
-      recordingLabel.className = "text-slate-400 font-bold transition-colors duration-200";
+      recordingLabel.className = "inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-400 text-xs font-bold transition-all duration-200";
     }
-    countdownTimer.className = "font-extrabold text-slate-500 bg-slate-200 px-2 py-0.5 rounded border border-slate-300 transition-all duration-200";
+    const recordingDot = document.getElementById("recordingDot");
+    if (recordingDot) {
+      recordingDot.className = "text-xs text-red-500";
+    }
+    countdownTimer.className = "font-mono font-extrabold text-slate-400 bg-slate-900 px-2.5 py-1 rounded border border-slate-800 transition-all duration-200 text-sm";
     countdownTimer.textContent = "30.0s";
   }
 
@@ -1009,14 +1028,18 @@ function main() {
     // Update Console HUD UI
     previewButton.textContent = "Stop Sequence";
     previewButton.className = "w-full bg-rose-600 hover:bg-rose-700 text-white font-extrabold py-3 px-5 rounded-xl text-base tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
-    resetButton.disabled = true;
+    setResetButtonDisabled(true);
 
     // Set recording indicators to active pulsing red
     const recordingLabel = document.getElementById("recordingLabel");
     if (recordingLabel) {
-      recordingLabel.className = "recording-active-blink font-bold transition-colors duration-200";
+      recordingLabel.className = "recording-pill-active inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-rose-600 text-xs font-bold transition-all duration-200";
     }
-    countdownTimer.className = "font-extrabold text-white bg-rose-600 px-2 py-0.5 rounded border border-rose-500 transition-all duration-200 animate-pulse";
+    const recordingDot = document.getElementById("recordingDot");
+    if (recordingDot) {
+      recordingDot.className = "text-xs text-white";
+    }
+    countdownTimer.className = "font-mono font-extrabold text-white bg-slate-950 px-2.5 py-1 rounded border border-slate-800 transition-all duration-200 text-sm animate-pulse";
 
     timeLeft = 30.0;
     countdownTimer.textContent = timeLeft.toFixed(1) + "s";
@@ -1100,7 +1123,7 @@ function main() {
         masterGainNode = null;
         analyserNode = null;
         updateResonanceCoherence();
-        resetButton.disabled = true;
+        setResetButtonDisabled(true);
         alert("Audio reset successfully.");
       });
     }

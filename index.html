@@ -48,9 +48,9 @@
       </div>
       
       <!-- Telemetry Dashboard Status -->
-      <div class="bg-white border border-slate-200 rounded-xl px-4 py-2.5 flex items-center gap-6 text-sm text-slate-600 font-medium shadow-sm self-start md:self-auto">
+      <div class="bg-white border border-slate-200 rounded-xl px-6 py-2.5 flex items-center gap-6 text-sm text-slate-600 font-medium shadow-sm self-start md:self-auto w-full sm:w-auto sm:min-w-[310px] justify-center sm:justify-start">
         <div>
-          <span>RESONANCE: <strong class="text-slate-500 font-bold" id="resonanceCoherence">NOT STARTED</strong></span>
+          <span class="whitespace-nowrap">RESONANCE: <strong class="text-slate-500 font-bold inline-block min-w-[190px] align-baseline whitespace-nowrap" id="resonanceCoherence">NOT STARTED</strong></span>
         </div>
       </div>
     </header>
@@ -98,9 +98,14 @@
           <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full filter blur-3xl"></div>
           <div class="absolute bottom-0 left-0 w-32 h-32 bg-teal-500/5 rounded-full filter blur-3xl"></div>
           
-          <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase mb-3">
-            Command Console
-          </h2>
+          <div class="flex items-center justify-between mb-3 relative z-20">
+            <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase">
+              Command Console
+            </h2>
+            <button id="resetButton" class="btn-reset-disabled px-3 py-1.5 rounded-lg text-xs font-bold tracking-wider transition-all cursor-pointer uppercase" disabled>
+              RESET
+            </button>
+          </div>
           
           <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
             <!-- Left Side: Rectangular Summon Action Button -->
@@ -113,24 +118,18 @@
               </button>
             </div>
             
-            <!-- Right Side: Secondary Actions & Realtime Output Console -->
-            <div class="md:col-span-7 space-y-3">
-              <!-- Reset Button (Moved Up) -->
-              <div class="flex items-center justify-between">
-                <span class="text-sm text-slate-600 font-medium">Reset Audio</span>
-                <button id="resetButton" class="bg-slate-100 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed text-slate-700 px-4 py-2 rounded-lg text-xs font-bold tracking-wider transition-all cursor-pointer" disabled>
-                  RESET AUDIO
-                </button>
-              </div>
-              
+            <!-- Right Side: Realtime Output Console / Telemetry Board -->
+            <div class="md:col-span-7 h-full flex flex-col justify-center">
               <!-- Telemetry Board & Timer -->
-              <div class="bg-slate-50 rounded-xl py-3 px-4 border border-slate-200 text-sm text-slate-700 flex justify-center items-center relative overflow-hidden">
+              <div class="bg-slate-50 rounded-xl py-5 px-5 border border-slate-200 text-sm text-slate-700 flex justify-center items-center relative overflow-hidden h-full shadow-inner">
                 <div class="text-center">
-                  <span class="text-xs text-slate-500 font-bold block uppercase tracking-wider mb-1">REMAINING TIME:</span>
+                  <span class="text-xs text-slate-500 font-extrabold block uppercase tracking-wider mb-2">REMAINING TIME:</span>
                   <!-- Recording Indicator / Countdown -->
-                  <div id="recordingIndicator" class="inline-flex items-center justify-center gap-2 font-bold text-sm">
-                    <span id="recordingLabel" class="text-slate-400 font-bold transition-colors duration-200">● RECORDING</span> 
-                    <span id="countdownTimer" class="font-extrabold text-slate-500 bg-slate-200 px-2 py-0.5 rounded border border-slate-300 transition-all duration-200">30.0s</span>
+                  <div id="recordingIndicator" class="inline-flex flex-col sm:flex-row items-center justify-center gap-3 font-bold text-sm">
+                    <span id="recordingLabel" class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-slate-400 text-xs font-bold transition-all duration-200">
+                      <span class="text-xs text-red-500" id="recordingDot">●</span> RECORDING
+                    </span> 
+                    <span id="countdownTimer" class="font-mono font-extrabold text-slate-400 bg-slate-900 px-2.5 py-1 rounded border border-slate-800 transition-all duration-200 text-sm">30.0s</span>
                   </div>
                 </div>
               </div>

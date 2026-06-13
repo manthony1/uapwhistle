@@ -163,3 +163,40 @@ input[type="range"]::-webkit-slider-thumb:hover {
     height: 100%;
   }
 }
+
+/* Active Recording Pill Pulse */
+@keyframes activeRecordingPulse {
+  0%, 100% {
+    background-color: #e11d48; /* rose-600 */
+    border-color: #f43f5e;
+  }
+  50% {
+    background-color: #fda4af; /* rose-300 */
+    border-color: #fecdd3;
+  }
+}
+.recording-pill-active {
+  animation: activeRecordingPulse 1.5s infinite ease-in-out;
+  background-color: #e11d48 !important;
+  color: #ffffff !important;
+}
+
+/* Reset button states */
+.btn-reset-disabled {
+  background-color: #f1f5f9 !important; /* light slate-100 */
+  color: #94a3b8 !important; /* slate-400 */
+  border: 1px solid #e2e8f0 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+}
+.btn-reset-enabled {
+  background-color: #64748b !important; /* slate-500 (medium grey) */
+  color: #ffffff !important;
+  border: 1px solid #475569 !important;
+  cursor: pointer !important;
+  box-shadow: 0 1px 3px rgba(100, 116, 139, 0.15) !important;
+}
+.btn-reset-enabled:hover, .btn-reset-enabled:active, .btn-reset-enabled:focus {
+  background-color: #475569 !important; /* slate-600 */
+  box-shadow: 0 2px 6px rgba(100, 116, 139, 0.3) !important;
+}
