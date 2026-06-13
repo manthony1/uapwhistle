@@ -912,7 +912,7 @@ function main() {
 
     // Update Console HUD UI
     previewButton.textContent = "Stop Sequence";
-    previewButton.className = "w-full bg-rose-600 hover:bg-rose-700 text-white font-extrabold py-5 px-6 rounded-xl text-base tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
+    previewButton.className = "w-full bg-rose-600 hover:bg-rose-700 text-white font-extrabold py-3 px-5 rounded-xl text-base tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
     resetButton.disabled = true;
 
     // Set recording indicators to active pulsing red
@@ -955,7 +955,7 @@ function main() {
 
     // Reset Console HUD UI
     previewButton.textContent = "Summon Aliens";
-    previewButton.className = "btn-primary-green w-full text-white font-extrabold py-5 px-6 rounded-xl text-base tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
+    previewButton.className = "btn-primary-green w-full text-white font-extrabold py-3 px-5 rounded-xl text-base tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
     resetButton.disabled = false;
 
     // Reset recording indicators to standby grey
@@ -1008,7 +1008,7 @@ function main() {
 
     // Update Console HUD UI
     previewButton.textContent = "Stop Sequence";
-    previewButton.className = "w-full bg-rose-600 hover:bg-rose-700 text-white font-extrabold py-5 px-6 rounded-xl text-base tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
+    previewButton.className = "w-full bg-rose-600 hover:bg-rose-700 text-white font-extrabold py-3 px-5 rounded-xl text-base tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
     resetButton.disabled = true;
 
     // Set recording indicators to active pulsing red
