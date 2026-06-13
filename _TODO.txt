@@ -1,6 +1,17 @@
-logo page
+
+change the RECORDING button text to simply "REC"
+
 
 light/dark mode switcher; default to light mode; and store user preference in browser cache
+
+
+
+
+
+
+logo page
+
+
 
 
 
