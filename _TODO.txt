@@ -1,16 +1,5 @@
 
-
-
-
-
-
-
-
-logo page
-
-
-
-
+stripe purchase for book and thank you page back on our site with upsell
 
 
 
@@ -19,12 +8,14 @@ more slick 2d and 3d
 terms policy - just for entertainment, nothing is warranted or guaranteed
 
 
-
 examine safety (malware, clickjacking, etc)
 
-
+logo page
 
 ----DONE----
+
+collapsable cards
+
 change the RECORDING button text to simply "REC"
 
 

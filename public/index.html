@@ -158,97 +158,110 @@
         </div>
         
         <!-- CARD 2: ATMOSPHERIC ACTIVITY GRAPH -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative overflow-hidden transition-all hover:shadow-md">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-            <div>
-              <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase">
-                Tone Activity Graph
-              </h2>
-              <p class="text-sm text-slate-500 mt-1">Real-time Fast Fourier Transform (FFT) signal amplitude distribution.</p>
+        <details open class="group bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative overflow-hidden transition-all hover:shadow-md">
+          <summary class="flex items-center justify-between font-extrabold text-sm text-slate-800 tracking-wider uppercase cursor-pointer select-none list-none outline-none">
+            <span class="flex items-center gap-2">
+              <span>📈</span> Tone Activity Graph
+            </span>
+            <span class="text-xs text-slate-500 font-bold group-open:hidden">EXPAND ↓</span>
+            <span class="text-xs text-slate-500 font-bold hidden group-open:inline">COLLAPSE ↑</span>
+          </summary>
+          
+          <div class="mt-4 pt-4 border-t border-slate-200">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+              <div>
+                <p class="text-sm text-slate-500 mt-1">Real-time Fast Fourier Transform (FFT) signal amplitude distribution.</p>
+              </div>
+              
+              <div class="flex flex-wrap items-center gap-3">
+                <!-- Visualizer Mode Selector -->
+                <div class="flex items-center gap-2 bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-200 shadow-sm">
+                  <label for="visualizerMode" class="text-xs font-bold text-slate-600 whitespace-nowrap">📡 VIEW MODE</label>
+                  <select id="visualizerMode" class="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer pr-1">
+                    <option value="spectrum">📊 FFT Spectrum</option>
+                    <option value="oscilloscope">📈 Oscilloscope</option>
+                    <option value="radial">🌀 Radial Radar</option>
+                  </select>
+                </div>
+
+                <!-- Live Master Volume -->
+                <div class="flex items-center gap-3 bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-200 shadow-sm">
+                  <label for="volumeSlider" class="text-xs font-bold text-slate-600 whitespace-nowrap">🔊 LIVE VOLUME</label>
+                  <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5" class="w-28 h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
+                </div>
+              </div>
             </div>
             
-            <div class="flex flex-wrap items-center gap-3">
-              <!-- Visualizer Mode Selector -->
-              <div class="flex items-center gap-2 bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-200 shadow-sm">
-                <label for="visualizerMode" class="text-xs font-bold text-slate-600 whitespace-nowrap">📡 VIEW MODE</label>
-                <select id="visualizerMode" class="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer pr-1">
-                  <option value="spectrum">📊 FFT Spectrum</option>
-                  <option value="oscilloscope">📈 Oscilloscope</option>
-                  <option value="radial">🌀 Radial Radar</option>
-                </select>
+            <!-- Visualizer Visual Container -->
+            <div id="visualizerWrapper" class="flex flex-col md:flex-row w-full bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-inner">
+              <!-- 2D Telemetry Panel (2/3 width on desktop, full width on mobile) -->
+              <div class="relative flex-1 md:flex-[2] border-b md:border-b-0 md:border-r border-slate-200 overflow-hidden">
+                <!-- Grid overlay lines for oscilloscope vibe -->
+                <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
+                <canvas id="soundGraph" class="w-full h-full block absolute inset-0 z-10"></canvas>
               </div>
-
-              <!-- Live Master Volume -->
-              <div class="flex items-center gap-3 bg-slate-50 px-3.5 py-2 rounded-xl border border-slate-200 shadow-sm">
-                <label for="volumeSlider" class="text-xs font-bold text-slate-600 whitespace-nowrap">🔊 LIVE VOLUME</label>
-                <input type="range" id="volumeSlider" min="0" max="1" step="0.01" value="0.5" class="w-28 h-1.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-emerald-700" />
+              <!-- 3D Resonance Orb Panel (1/3 width on desktop, full width on mobile) -->
+              <div class="relative flex-1 md:flex-[1] bg-slate-50 overflow-hidden">
+                <canvas id="resonanceOrb" class="w-full h-full block absolute inset-0 z-10"></canvas>
+                <!-- Small label indicating it's a 3D simulation -->
+                <div class="absolute top-2 right-2 z-20 text-[8px] font-black tracking-widest text-slate-500 bg-white/90 px-1.5 py-0.5 rounded border border-slate-200 pointer-events-none uppercase">3D RESONANCE ORB</div>
               </div>
             </div>
+            
+            <!-- Frequency Legend Bar -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mt-4 text-xs text-slate-600 font-medium">
+              <div class="flex items-center gap-1.5">
+                <span class="w-3.5 h-3.5 rounded bg-emerald-400 border border-emerald-200"></span>
+                <span>Low Amp</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-3.5 h-3.5 rounded bg-sky-400 border border-sky-200"></span>
+                <span>Medium Amp</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-3.5 h-3.5 rounded bg-amber-400 border border-amber-200"></span>
+                <span>High Amp</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-3.5 h-3.5 rounded bg-rose-400 border border-rose-200"></span>
+                <span>Intense Peaks</span>
+              </div>
+              <div class="h-4 w-px bg-slate-200"></div>
+              <div class="text-xs text-emerald-700 font-bold">Spectrum Scale: 0 Hz – 20 kHz</div>
+            </div>
           </div>
-          
-          <!-- Visualizer Visual Container -->
-          <div id="visualizerWrapper" class="flex flex-col md:flex-row w-full bg-slate-50 border border-slate-200 rounded-xl overflow-hidden shadow-inner">
-            <!-- 2D Telemetry Panel (2/3 width on desktop, full width on mobile) -->
-            <div class="relative flex-1 md:flex-[2] border-b md:border-b-0 md:border-r border-slate-200 overflow-hidden">
-              <!-- Grid overlay lines for oscilloscope vibe -->
-              <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
-              <canvas id="soundGraph" class="w-full h-full block absolute inset-0 z-10"></canvas>
-            </div>
-            <!-- 3D Resonance Orb Panel (1/3 width on desktop, full width on mobile) -->
-            <div class="relative flex-1 md:flex-[1] bg-slate-50 overflow-hidden">
-              <canvas id="resonanceOrb" class="w-full h-full block absolute inset-0 z-10"></canvas>
-              <!-- Small label indicating it's a 3D simulation -->
-              <div class="absolute top-2 right-2 z-20 text-[8px] font-black tracking-widest text-slate-500 bg-white/90 px-1.5 py-0.5 rounded border border-slate-200 pointer-events-none uppercase">3D RESONANCE ORB</div>
-            </div>
-          </div>
-          
-          <!-- Frequency Legend Bar -->
-          <div class="flex flex-wrap items-center justify-between gap-3 mt-4 text-xs text-slate-600 font-medium">
-            <div class="flex items-center gap-1.5">
-              <span class="w-3.5 h-3.5 rounded bg-emerald-400 border border-emerald-200"></span>
-              <span>Low Amp</span>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <span class="w-3.5 h-3.5 rounded bg-sky-400 border border-sky-200"></span>
-              <span>Medium Amp</span>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <span class="w-3.5 h-3.5 rounded bg-amber-400 border border-amber-200"></span>
-              <span>High Amp</span>
-            </div>
-            <div class="flex items-center gap-1.5">
-              <span class="w-3.5 h-3.5 rounded bg-rose-400 border border-rose-200"></span>
-              <span>Intense Peaks</span>
-            </div>
-            <div class="h-4 w-px bg-slate-200"></div>
-            <div class="text-xs text-emerald-700 font-bold">Spectrum Scale: 0 Hz – 20 kHz</div>
-          </div>
-        </div>
+        </details>
 
         <!-- CARD 3: TONE MIXER BOARD -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative overflow-hidden transition-all hover:shadow-md">
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-            <div>
-              <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase">
-                Frequency Mixer Board
-              </h2>
-              <p class="text-sm text-slate-500 mt-1">
-                Toggle individual signals or modify their modulation volumes to sculpt custom resonance formulas.
-              </p>
+        <details open class="group bg-white border border-slate-200 rounded-2xl p-6 shadow-sm relative overflow-hidden transition-all hover:shadow-md">
+          <summary class="flex items-center justify-between font-extrabold text-sm text-slate-800 tracking-wider uppercase cursor-pointer select-none list-none outline-none">
+            <span class="flex items-center gap-2">
+              <span>🎛️</span> Frequency Mixer Board
+            </span>
+            <span class="text-xs text-slate-500 font-bold group-open:hidden">EXPAND ↓</span>
+            <span class="text-xs text-slate-500 font-bold hidden group-open:inline">COLLAPSE ↑</span>
+          </summary>
+          
+          <div class="mt-4 pt-4 border-t border-slate-200">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+              <div>
+                <p class="text-sm text-slate-500 mt-1">
+                  Toggle individual signals or modify their modulation volumes to sculpt custom resonance formulas.
+                </p>
+              </div>
+              
+              <!-- Basic/Pro Toggle Selector -->
+              <div class="flex items-center bg-slate-100 rounded-full p-1 border border-slate-200 shadow-inner relative w-36 h-8 select-none self-start sm:self-center">
+                <!-- Sliding background indicator -->
+                <div id="mixerToggleIndicator" class="absolute top-1 bottom-1 left-1 w-[68px] bg-white rounded-full shadow border border-slate-200/50 transition-all duration-200 ease-in-out"></div>
+                <button id="btnMixerBasic" class="flex-1 h-full text-center text-xs font-bold transition-colors duration-200 cursor-pointer z-10 text-emerald-800" type="button">
+                  BASIC
+                </button>
+                <button id="btnMixerPro" class="flex-1 h-full text-center text-xs font-bold transition-colors duration-200 cursor-pointer z-10 text-slate-400" type="button">
+                  PRO
+                </button>
+              </div>
             </div>
-            
-            <!-- Basic/Pro Toggle Selector -->
-            <div class="flex items-center bg-slate-100 rounded-full p-1 border border-slate-200 shadow-inner relative w-36 h-8 select-none self-start sm:self-center">
-              <!-- Sliding background indicator -->
-              <div id="mixerToggleIndicator" class="absolute top-1 bottom-1 left-1 w-[68px] bg-white rounded-full shadow border border-slate-200/50 transition-all duration-200 ease-in-out"></div>
-              <button id="btnMixerBasic" class="flex-1 h-full text-center text-xs font-bold transition-colors duration-200 cursor-pointer z-10 text-emerald-800" type="button">
-                BASIC
-              </button>
-              <button id="btnMixerPro" class="flex-1 h-full text-center text-xs font-bold transition-colors duration-200 cursor-pointer z-10 text-slate-400" type="button">
-                PRO
-              </button>
-            </div>
-          </div>
           
           <!-- BASIC MIXER: GRID OF CARDS -->
           <div id="mixerContainerBasic" class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4 bg-slate-200/70 border border-slate-300/80 rounded-2xl p-4 shadow-inner">
@@ -597,6 +610,7 @@
             </div>
           </div>
         </div>
+      </details>
       </section>
 
       <!-- RIGHT COLUMN: SIDEBAR & CONTEXTUAL ADS (1/3 width) -->
@@ -625,7 +639,7 @@
                 The official guide for Layer 2 & 3 cueing experiments. Critical companion to get the most out of this online summoning tool: includes optimal loop configurations, weather calibration settings, and coordinate logs.
               </p>
             </div>
-            <a href="#" onclick="alert('Demo Digital Product: Thank you for interest in UAP Summoner Field Handbook! Purchase portal mock triggered.')" class="btn-primary-green block text-center text-xs font-bold tracking-wider py-2.5 rounded-xl transition-all shadow-md">
+            <a href="/.netlify/functions/create-checkout" class="btn-primary-green block text-center text-xs font-bold tracking-wider py-2.5 rounded-xl transition-all shadow-md">
               DOWNLOAD INSTANT E-BOOK →
             </a>
           </div>

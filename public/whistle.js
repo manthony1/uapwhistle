@@ -68,11 +68,11 @@ function main() {
   let activeChannels = {}; // keys are config.id, values are { nodes, gainNode, cleanup }
   let recorder = null;
   let chunks = [];
-  let recordingInterval = null;
-  let recordingTimeout = null;
   let previewInterval = null;
   let summonTimeout = null;
   let timeLeft = 60.0;
+  let lastRecordedBlobUrl = null;
+  let recorderDest = null;
 
   // Sound Graph Canvas configuration
   const soundGraphCanvas = document.getElementById("soundGraph");
@@ -1019,6 +1019,26 @@ function main() {
     }
     hideDownloadLink();
 
+    // Set up background recording destination
+    if (!recorderDest) {
+      recorderDest = audioContext.createMediaStreamDestination();
+      masterGainNode.connect(recorderDest);
+    }
+
+    recorder = new MediaRecorder(recorderDest.stream, { mimeType: "audio/webm" });
+    chunks = [];
+    recorder.ondataavailable = (e) => {
+      if (e.data.size > 0) chunks.push(e.data);
+    };
+    recorder.onstop = () => {
+      const blob = new Blob(chunks, { type: "audio/webm" });
+      if (lastRecordedBlobUrl) {
+        URL.revokeObjectURL(lastRecordedBlobUrl);
+      }
+      lastRecordedBlobUrl = URL.createObjectURL(blob);
+    };
+    recorder.start();
+
     // Turn ON all channels that are currently stopped
     channelsConfig.forEach(config => {
       if (!activeChannels[config.id]) {
@@ -1057,7 +1077,7 @@ function main() {
 
     clearTimeout(summonTimeout);
     summonTimeout = setTimeout(() => {
-      stopAllAudio();
+      stopRecordingFlow();
       alert("⏹️ Summoning live preview completed.");
     }, 60000);
   }
@@ -1094,90 +1114,21 @@ function main() {
 
   previewButton.onclick = startSummoning;
 
-  // COMPILE & DOWNLOAD 30s RECORDING
-  function startRecording() {
-    initAudio();
-    if (audioContext.state === "suspended") {
-      audioContext.resume();
-    }
-    hideDownloadLink();
-
-    // Connect master output to a media stream destination
-    const dest = audioContext.createMediaStreamDestination();
-    masterGainNode.connect(dest);
-
-    recorder = new MediaRecorder(dest.stream, { mimeType: "audio/webm" });
-    chunks = [];
-    recorder.ondataavailable = (e) => {
-      if (e.data.size > 0) chunks.push(e.data);
-    };
-    recorder.onstop = () => {
-      const blob = new Blob(chunks, { type: "audio/webm" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "uap_summon_sound.webm";
-      a.click();
-
-      // Clean up routing connection to recorder destination
-      try { masterGainNode.disconnect(dest); } catch(e) {}
-    };
-
-    // Activate all channels for complete signal compilation
-    channelsConfig.forEach(config => {
-      if (!activeChannels[config.id]) {
-        toggleChannel(config);
-      }
-    });
-
-    recorder.start();
-
-    // Update Console HUD UI
-    previewButton.textContent = "Stop Sequence";
-    previewButton.className = "w-full bg-rose-600 hover:bg-rose-700 text-white font-extrabold py-3 px-5 rounded-xl text-base tracking-wider transition-all duration-200 shadow-md flex items-center justify-center gap-2 cursor-pointer";
-    setResetButtonDisabled(true);
-
-    // Set recording indicators to active pulsing red
-    const recordingLabel = document.getElementById("recordingLabel");
-    if (recordingLabel) {
-      recordingLabel.className = "recording-pill-active inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-rose-600 text-xs font-bold transition-all duration-200";
-    }
-    const recordingDot = document.getElementById("recordingDot");
-    if (recordingDot) {
-      recordingDot.className = "text-xs text-white";
-    }
-    countdownTimer.className = "font-mono font-extrabold text-rose-600 bg-white px-2.5 py-1 rounded border border-rose-500 transition-all duration-200 text-sm animate-pulse";
-
-    timeLeft = 60.0;
-    countdownTimer.textContent = timeLeft.toFixed(1) + "s";
-
-    clearInterval(recordingInterval);
-    recordingInterval = setInterval(() => {
-      timeLeft -= 0.1;
-      if (timeLeft <= 0) {
-        timeLeft = 0;
-        clearInterval(recordingInterval);
-      }
-      countdownTimer.textContent = timeLeft.toFixed(1) + "s";
-    }, 100);
-
-    clearTimeout(recordingTimeout);
-    recordingTimeout = setTimeout(() => {
-      stopRecordingFlow();
-      alert("⏹️ Signal compilation completed. Audio downloaded.");
-    }, 60000);
-  }
-
   function stopRecordingFlow() {
     if (recorder && recorder.state !== "inactive") {
       recorder.stop();
     }
-    clearInterval(recordingInterval);
-    clearTimeout(recordingTimeout);
     stopAllAudio();
   }
 
-  startButton.onclick = startRecording;
+  startButton.onclick = () => {
+    if (lastRecordedBlobUrl) {
+      const a = document.createElement("a");
+      a.href = lastRecordedBlobUrl;
+      a.download = "uap_summon_sound.webm";
+      a.click();
+    }
+  };
 
   // PREVIEW BUTTON BEHAVIOR TOGGLES ACTIVE STATES
   previewButton.onclick = () => {
@@ -1197,6 +1148,10 @@ function main() {
   // SYSTEM CONTEXT RESET
   resetButton.onclick = () => {
     hideDownloadLink();
+    if (lastRecordedBlobUrl) {
+      URL.revokeObjectURL(lastRecordedBlobUrl);
+      lastRecordedBlobUrl = null;
+    }
     if (audioContext) {
       // Deactivate all channels
       channelsConfig.forEach(config => {
