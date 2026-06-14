@@ -1,0 +1,24 @@
+{
+  "name": "uap_soundwhistle",
+  "version": "1.0.0",
+  "description": "A browser-based sound tool designed to generate layered tones theorized to stimulate atmospheric resonance and potentially attract aerial phenomena. Inspired by Schumann resonance research and field experimenters.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/manthony1/uapwhistle.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/manthony1/uapwhistle/issues"
+  },
+  "homepage": "https://github.com/manthony1/uapwhistle#readme",
+  "dependencies": {
+    "stripe": "^22.2.1"
+  }
+}
