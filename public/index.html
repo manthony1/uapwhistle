@@ -115,8 +115,8 @@
         
         <!-- CARD 1: SUMMONING CONTROL DECK -->
         <div class="bg-white border-2 border-emerald-500/20 rounded-2xl p-4 shadow-md relative overflow-hidden transition-all hover:shadow-lg">
-          <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full filter blur-3xl"></div>
-          <div class="absolute bottom-0 left-0 w-32 h-32 bg-teal-500/5 rounded-full filter blur-3xl"></div>
+          <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-500/5 rounded-full filter blur-3xl pointer-events-none"></div>
+          <div class="absolute bottom-0 left-0 w-32 h-32 bg-teal-500/5 rounded-full filter blur-3xl pointer-events-none"></div>
           
           <div class="flex items-center justify-between mb-3 relative z-20">
             <h2 class="text-sm font-extrabold tracking-wider text-slate-800 uppercase">
@@ -179,8 +179,9 @@
                   <label for="visualizerMode" class="text-xs font-bold text-slate-600 whitespace-nowrap">📡 VIEW MODE</label>
                   <select id="visualizerMode" class="bg-transparent text-xs font-bold text-slate-800 focus:outline-none cursor-pointer pr-1">
                     <option value="spectrum">📊 FFT Spectrum</option>
-                    <option value="oscilloscope">📈 Oscilloscope</option>
-                    <option value="radial">🌀 Radial Radar</option>
+                    <option value="waterfall">🌊 Scrolling Spectrogram</option>
+                    <option value="mandala">🔆 Reactive Mandala</option>
+                    <option value="orbitals">⚛️ Gravitational Orbitals</option>
                   </select>
                 </div>
 
@@ -198,7 +199,7 @@
               <div class="relative flex-1 md:flex-[2] border-b md:border-b-0 md:border-r border-slate-200 overflow-hidden">
                 <!-- Grid overlay lines for oscilloscope vibe -->
                 <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.03)_1px,transparent_1px)] bg-[size:20px_20px] pointer-events-none"></div>
-                <canvas id="soundGraph" class="w-full h-full block absolute inset-0 z-10"></canvas>
+                <div id="soundGraphContainer" class="w-full h-full block absolute inset-0 z-10"></div>
               </div>
               <!-- 3D Resonance Orb Panel (1/3 width on desktop, full width on mobile) -->
               <div class="relative flex-1 md:flex-[1] bg-slate-50 overflow-hidden">
@@ -1033,8 +1034,8 @@
     });
   </script>
 
-  <!-- PixiJS v7 CDN for WebGL 2D rendering pipeline -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pixi.js/7.4.2/pixi.min.js"></script>
+  <!-- p5.js v1.9.0 CDN for creative 2D rendering pipeline -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"></script>
   <!-- Three.js v128 CDN for WebGL 3D rendering pipeline -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="whistle.js"></script>

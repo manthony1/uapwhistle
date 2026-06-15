@@ -1,6 +1,7 @@
-// UAP Summoner Pro - Core Web Audio Synth Engine & Visualizer
+console.log("UAP Whistle: script loading...");
 
 function main() {
+  console.log("UAP Whistle: executing main()...");
   const startButton = document.getElementById("startButton");
   const previewButton = document.getElementById("previewButton");
   const resetButton = document.getElementById("resetButton");
@@ -44,13 +45,8 @@ function main() {
   let audioContext = null;
   let masterGainNode = null;
   let analyserNode = null;
-  let animationId = null;
-
-  // PixiJS visualizer objects and variables
-  let pixiApp = null;
-  let gridGraphics = null;
-  let particleGraphics = null;
-  let particles = [];
+  // p5.js visualizer instance
+  let p5Instance = null;
   
   // Three.js visualizer objects and variables
   let threeScene = null;
@@ -61,10 +57,6 @@ function main() {
   let orbitPoints = null;
   const resonanceOrbCanvas = document.getElementById("resonanceOrb");
 
-  const gridCols = 18;
-  const gridRows = 10;
-  let gridNodes = [];
-
   let activeChannels = {}; // keys are config.id, values are { nodes, gainNode, cleanup }
   let recorder = null;
   let chunks = [];
@@ -74,51 +66,13 @@ function main() {
   let lastRecordedBlobUrl = null;
   let recorderDest = null;
 
-  // Sound Graph Canvas configuration
-  const soundGraphCanvas = document.getElementById("soundGraph");
-
-  // Create PixiJS Application targeting our canvas
-  pixiApp = new PIXI.Application({
-    view: soundGraphCanvas,
-    resolution: window.devicePixelRatio || 1,
-    autoDensity: true,
-    backgroundAlpha: 0, // Transparent, matches container bg
-    width: soundGraphCanvas.clientWidth,
-    height: soundGraphCanvas.clientHeight
-  });
-
-  // Create graphics layers
-  gridGraphics = new PIXI.Graphics();
-  particleGraphics = new PIXI.Graphics();
-  
-  pixiApp.stage.addChild(gridGraphics);
-  pixiApp.stage.addChild(particleGraphics);
-
-  // Initialize space-time grid nodes
-  function initGridNodes() {
-    const w = soundGraphCanvas.clientWidth || 800;
-    const h = soundGraphCanvas.clientHeight || 180;
-    gridNodes = [];
-    
-    for (let c = 0; c < gridCols; c++) {
-      gridNodes[c] = [];
-      const originX = (c / (gridCols - 1)) * w;
-      for (let r = 0; r < gridRows; r++) {
-        const originY = (r / (gridRows - 1)) * h;
-        gridNodes[c][r] = {
-          originX: originX,
-          originY: originY,
-          x: originX,
-          y: originY
-        };
-      }
-    }
-  }
-  initGridNodes();
+  // Sound Graph Container configuration
+  const soundGraphContainer = document.getElementById("soundGraphContainer");
 
   // Initialize Three.js 3D WebGL resonance orb
   function initThreeJS() {
-    const w = resonanceOrbCanvas.clientWidth || 200;
+    try {
+      const w = resonanceOrbCanvas.clientWidth || 200;
     const h = resonanceOrbCanvas.clientHeight || 180;
 
     threeScene = new THREE.Scene();
@@ -408,8 +362,12 @@ function main() {
       transparent: true,
       opacity: 0.85
     });
-    orbitPoints = new THREE.Points(particleGeom, particleMat);
-    threeScene.add(orbitPoints);
+      orbitPoints = new THREE.Points(particleGeom, particleMat);
+      threeScene.add(orbitPoints);
+      console.log("UAP Whistle: Three.js resonance orb initialized successfully.");
+    } catch (err) {
+      console.warn("UAP Whistle: Failed to initialize Three.js resonance orb (WebGL might be unsupported/disabled):", err);
+    }
   }
   initThreeJS();
 
@@ -449,136 +407,7 @@ function main() {
     }
   }
 
-  // Helper to convert HSL to Hex color for PixiJS drawing
-  function hslaToHex(h, s, l) {
-    s /= 100;
-    l /= 100;
-    let c = (1 - Math.abs(2 * l - 1)) * s;
-    let x = c * (1 - Math.abs((h / 60) % 2 - 1));
-    let m = l - c / 2;
-    let r = 0, g = 0, b = 0;
-    if (0 <= h && h < 60) {
-      r = c; g = x; b = 0;
-    } else if (60 <= h && h < 120) {
-      r = x; g = c; b = 0;
-    } else if (120 <= h && h < 180) {
-      r = 0; g = c; b = x;
-    } else if (180 <= h && h < 240) {
-      r = 0; g = x; b = c;
-    } else if (240 <= h && h < 300) {
-      r = x; g = 0; b = c;
-    } else if (300 <= h && h < 360) {
-      r = c; g = 0; b = x;
-    }
-    let red = Math.round((r + m) * 255);
-    let green = Math.round((g + m) * 255);
-    let blue = Math.round((b + m) * 255);
-    return (red << 16) + (green << 8) + blue;
-  }
 
-  function spawnParticle(x, y, vx, vy, size, color, maxLife) {
-    if (particles.length > 150) {
-      particles.shift();
-    }
-    particles.push({
-      x: x,
-      y: y,
-      vx: vx,
-      vy: vy,
-      size: size,
-      color: color,
-      life: maxLife,
-      maxLife: maxLife
-    });
-  }
-
-  function updateAndDrawParticles() {
-    const width = soundGraphCanvas.clientWidth;
-    const height = soundGraphCanvas.clientHeight;
-    
-    for (let i = particles.length - 1; i >= 0; i--) {
-      const p = particles[i];
-      p.x += p.vx;
-      p.y += p.vy;
-      p.life -= 1;
-      
-      if (p.life <= 0 || p.x < 0 || p.x > width || p.y < 0 || p.y > height) {
-        particles.splice(i, 1);
-        continue;
-      }
-      
-      const alpha = p.life / p.maxLife;
-      particleGraphics.lineStyle(0);
-      particleGraphics.beginFill(p.color, alpha);
-      particleGraphics.drawCircle(p.x, p.y, p.size);
-      particleGraphics.endFill();
-    }
-  }
-
-  // Draw initial static clean grid in canvas depending on view mode
-  function drawStaticGrid() {
-    const w = soundGraphCanvas.clientWidth;
-    const h = soundGraphCanvas.clientHeight;
-    pixiApp.renderer.resize(w, h);
-    
-    gridGraphics.clear();
-    particleGraphics.clear();
-    
-    const mode = visualizerModeSelect ? visualizerModeSelect.value : "spectrum";
-
-    if (mode === "radial") {
-      // Draw radar scope grid (concentric circles and crosshairs)
-      const cx = w / 2;
-      const cy = h / 2;
-      const maxRadius = Math.min(w, h) * 0.45;
-      
-      gridGraphics.lineStyle(1.5, 0x4f46e5, 0.08);
-      for (let r = maxRadius / 3; r <= maxRadius; r += maxRadius / 3) {
-        gridGraphics.drawCircle(cx, cy, r);
-      }
-      
-      gridGraphics.moveTo(cx - maxRadius, cy);
-      gridGraphics.lineTo(cx + maxRadius, cy);
-      gridGraphics.moveTo(cx, cy - maxRadius);
-      gridGraphics.lineTo(cx, cy + maxRadius);
-
-      gridGraphics.lineStyle(1.5, 0x4f46e5, 0.2);
-      gridGraphics.drawCircle(cx, cy, maxRadius);
-    } else if (mode === "oscilloscope") {
-      gridGraphics.lineStyle(1.0, 0x000000, 0.03);
-      for (let y = h / 4; y < h; y += h / 4) {
-        if (Math.abs(y - h / 2) > 2) {
-          gridGraphics.moveTo(0, y);
-          gridGraphics.lineTo(w, y);
-        }
-      }
-      gridGraphics.lineStyle(2.0, 0x4f46e5, 0.25);
-      gridGraphics.moveTo(0, h / 2);
-      gridGraphics.lineTo(w, h / 2);
-    } else {
-      gridGraphics.lineStyle(1.0, 0x000000, 0.04);
-      for (let x = 20; x < w; x += 20) {
-        gridGraphics.moveTo(x, 0);
-        gridGraphics.lineTo(x, h);
-      }
-      for (let y = 20; y < h; y += 20) {
-        gridGraphics.moveTo(0, y);
-        gridGraphics.lineTo(w, y);
-      }
-    }
-  }
-  drawStaticGrid();
-  
-  window.addEventListener("resize", () => {
-    initGridNodes();
-    if (!animationId) drawStaticGrid();
-  });
-  
-  if (visualizerModeSelect) {
-    visualizerModeSelect.addEventListener("change", () => {
-      if (!animationId) drawStaticGrid();
-    });
-  }
 
   // Basic/Pro Mixer Mode Switching
   if (btnMixerBasic && btnMixerPro && mixerContainerBasic && mixerContainerPro) {
@@ -1214,331 +1043,486 @@ function main() {
     }
   };
 
-  // HIGH-FIDELITY GLOWING FREQUENCY SPECTROGRAM VISUALIZER
-  function startGraphVisualizer() {
-    if (animationId) {
-      cancelAnimationFrame(animationId);
+  // Three.js update loop helper
+  function updateThreeJS(orbFreqArray) {
+    if (coreMesh && cageMesh && orbitPoints) {
+      const bufferLength = 128;
+      let avgEnergy = 0;
+      let sum = 0;
+      for (let i = 0; i < bufferLength; i++) sum += orbFreqArray[i];
+      avgEnergy = sum / bufferLength;
+
+      // Slow rotation speeds up when sound is active (boosted 15%)
+      const rotSpeedFactor = 1.0 + (avgEnergy / 255) * 5.75;
+      coreMesh.rotation.y += 0.005 * rotSpeedFactor;
+      coreMesh.rotation.x += 0.002 * rotSpeedFactor;
+      cageMesh.rotation.y -= 0.003 * rotSpeedFactor;
+      cageMesh.rotation.x -= 0.001 * rotSpeedFactor;
+      orbitPoints.rotation.y += 0.002 * rotSpeedFactor;
+
+      // Core dynamic pulse (bass frequencies e.g. Schumann Resonance bins 1, 2, 3) - boosted 15%
+      const bassVal = orbFreqArray[1] * 0.4 + orbFreqArray[2] * 0.4 + orbFreqArray[3] * 0.2;
+      const targetCoreScale = 1.0 + (bassVal / 255) * 0.52 + (analyserNode ? 0 : Math.sin(Date.now() * 0.002) * 0.05);
+      coreMesh.scale.set(targetCoreScale, targetCoreScale, targetCoreScale);
+
+      // 3D Icosahedron Cage vertex mutation based on frequency spectrum - boosted 15%
+      const cageGeom = cageMesh.geometry;
+      const posAttr = cageGeom.attributes.position;
+      const origPos = cageGeom.userData.originalPositions;
+      
+      for (let i = 0; i < posAttr.count; i++) {
+        const x_orig = origPos[i * 3];
+        const y_orig = origPos[i * 3 + 1];
+        const z_orig = origPos[i * 3 + 2];
+
+        // map vertex index to frequency bin
+        const bin = i % bufferLength;
+        const amp = orbFreqArray[bin];
+        // Up to 63% radial displacement (boosted 15% from 55%)
+        const factor = 1.0 + (amp / 255) * 0.63;
+
+        posAttr.setX(i, x_orig * factor);
+        posAttr.setY(i, y_orig * factor);
+        posAttr.setZ(i, z_orig * factor);
+      }
+      posAttr.needsUpdate = true;
+
+      // Orbiting particles paths and high-frequency vibrations - boosted 15%
+      const pGeom = orbitPoints.geometry;
+      const pPosAttr = pGeom.attributes.position;
+      const originalRadii = pGeom.userData.originalRadii;
+      const randomSpeeds = pGeom.userData.randomSpeeds;
+      const angles = pGeom.userData.angles;
+
+      for (let i = 0; i < originalRadii.length; i++) {
+        const bin = (i * 2) % bufferLength;
+        const highAmp = orbFreqArray[bin];
+
+        // Update rotation angle (boosted 15% from 3.0)
+        angles[i * 2 + 1] += randomSpeeds[i] * (1.0 + (highAmp / 255) * 3.45);
+
+        const phi = angles[i * 2];
+        const theta = angles[i * 2 + 1];
+        // Particle radius expansion (boosted 15% from 0.45)
+        const r = originalRadii[i] + (highAmp / 255) * 0.52;
+
+        pPosAttr.setX(i, r * Math.sin(phi) * Math.cos(theta));
+        pPosAttr.setY(i, r * Math.sin(phi) * Math.sin(theta));
+        pPosAttr.setZ(i, r * Math.cos(phi));
+      }
+      pPosAttr.needsUpdate = true;
+
+      // Render Three.js scene
+      threeRenderer.render(threeScene, threeCamera);
     }
 
+    // Make sure Three.js renderer size is sync'd
+    if (threeRenderer) {
+      const threeW = resonanceOrbCanvas.clientWidth;
+      const threeH = resonanceOrbCanvas.clientHeight;
+      if (threeRenderer.domElement.width !== threeW * (window.devicePixelRatio || 1) || threeRenderer.domElement.height !== threeH * (window.devicePixelRatio || 1)) {
+        threeRenderer.setSize(threeW, threeH);
+        threeCamera.aspect = threeW / threeH;
+        threeCamera.updateProjectionMatrix();
+      }
+    }
+  }
+
+  // p5.js instance mode sketch configuration
+  const sketch = (p) => {
     const bufferLength = 128;
     const dataArray = new Uint8Array(bufferLength);
     const orbFreqArray = new Uint8Array(bufferLength);
 
-    // Sync canvas drawing space with layout pixel scale
-    function resizeCanvas() {
-      const rect = soundGraphCanvas.getBoundingClientRect();
-      soundGraphCanvas.width = rect.width * window.devicePixelRatio;
-      soundGraphCanvas.height = rect.height * window.devicePixelRatio;
-    }
-    resizeCanvas();
-    window.addEventListener("resize", resizeCanvas);
-    
-    // Clear particles on start
-    particles = [];
-    let phase = 0;
+    // Peak drop tracking variables
+    let peaks = new Array(bufferLength).fill(0);
+    let peakHoldFrames = new Array(bufferLength).fill(0);
 
-    function draw() {
-      animationId = requestAnimationFrame(draw);
+    // Sparks variables
+    let sparks = [];
 
-      const width = soundGraphCanvas.clientWidth;
-      const height = soundGraphCanvas.clientHeight;
+    // Waterfall Spectrogram variables
+    let waterfallHistory = [];
+    const maxWaterfallRows = 32;
 
-      // Make sure PixiJS renderer size is sync'd
-      if (pixiApp.renderer.width !== width || pixiApp.renderer.height !== height) {
-        pixiApp.renderer.resize(width, height);
-        initGridNodes();
+    // Mandala parameters
+    let mandalaAngle = 0;
+
+    // Gravitational Wave Orbitals particles
+    let orbitalParticles = [];
+
+    p.setup = () => {
+      const w = soundGraphContainer.clientWidth || 800;
+      const h = soundGraphContainer.clientHeight || 180;
+      p.createCanvas(w, h);
+      p.frameRate(60);
+
+      // Initialize Gravitational Wave Orbitals particle swarm
+      const maxR = Math.min(w, h) * 0.46;
+      const minR = maxR * 0.16;
+      for (let i = 0; i < 70; i++) {
+        const band = i % 8; // group into 8 frequency bands
+        const radius = p.map(band, 0, 8, minR, maxR);
+        orbitalParticles.push({
+          angle: Math.random() * Math.PI * 2,
+          radius: radius,
+          baseRadius: radius,
+          speed: (0.01 + Math.random() * 0.015) * (Math.random() < 0.5 ? 1 : -1),
+          band: band,
+          size: 1.5 + Math.random() * 2.5
+        });
       }
+    };
 
-      // Make sure Three.js renderer size is sync'd
-      if (threeRenderer) {
-        const threeW = resonanceOrbCanvas.clientWidth;
-        const threeH = resonanceOrbCanvas.clientHeight;
-        if (threeRenderer.domElement.width !== threeW * (window.devicePixelRatio || 1) || threeRenderer.domElement.height !== threeH * (window.devicePixelRatio || 1)) {
-          threeRenderer.setSize(threeW, threeH);
-          threeCamera.aspect = threeW / threeH;
-          threeCamera.updateProjectionMatrix();
-        }
-      }
-
-      gridGraphics.clear();
-      particleGraphics.clear();
-
+    p.draw = () => {
+      const w = p.width;
+      const h = p.height;
       const mode = visualizerModeSelect ? visualizerModeSelect.value : "spectrum";
-      phase += 0.08; // Increment ripples phase
 
-      // Query active audio analyzer node if available, otherwise fallback to standby zeroes/midlines
-      const activeAnalyser = analyserNode;
-      if (activeAnalyser) {
-        if (mode === "oscilloscope") {
-          activeAnalyser.getByteTimeDomainData(dataArray);
-        } else {
-          activeAnalyser.getByteFrequencyData(dataArray);
-        }
-        activeAnalyser.getByteFrequencyData(orbFreqArray);
+      p.clear();
+
+      // Get analyser data or fill standbys
+      if (analyserNode) {
+        analyserNode.getByteFrequencyData(dataArray);
+        analyserNode.getByteFrequencyData(orbFreqArray);
       } else {
-        if (mode === "oscilloscope") {
-          dataArray.fill(128);
-        } else {
-          dataArray.fill(0);
-        }
+        dataArray.fill(0);
         orbFreqArray.fill(0);
       }
 
-      if (mode === "radial") {
-        const cx = width / 2;
-        const cy = height / 2;
-        const maxRadius = Math.min(width, height) * 0.45;
-        const innerRadius = maxRadius * 0.25;
-
-        // Draw concentric radar lines
-        gridGraphics.lineStyle(1.0, 0x4f46e5, 0.05);
-        for (let r = maxRadius / 3; r <= maxRadius; r += maxRadius / 3) {
-          gridGraphics.drawCircle(cx, cy, r);
-        }
-        
-        // Draw crosshairs
-        gridGraphics.moveTo(cx - maxRadius, cy);
-        gridGraphics.lineTo(cx + maxRadius, cy);
-        gridGraphics.moveTo(cx, cy - maxRadius);
-        gridGraphics.lineTo(cx, cy + maxRadius);
-
-        // Outer ring boundary
-        gridGraphics.lineStyle(1.5, 0x4f46e5, 0.12);
-        gridGraphics.drawCircle(cx, cy, maxRadius);
-
-        // Draw circular frequency sweep
-        const numSpokes = Math.min(bufferLength, 85);
-        const angleStep = (Math.PI * 2) / numSpokes;
-        
-        for (let i = 0; i < numSpokes; i++) {
-          const val = dataArray[i];
-          const percent = val / 255;
-          const spokeLength = percent * (maxRadius - innerRadius);
-
-          const angle = i * angleStep - Math.PI / 2;
-          const xStart = cx + Math.cos(angle) * innerRadius;
-          const yStart = cy + Math.sin(angle) * innerRadius;
-          const xEnd = cx + Math.cos(angle) * (innerRadius + spokeLength);
-          const yEnd = cy + Math.sin(angle) * (innerRadius + spokeLength);
-
-          const hue = 240 + percent * 110;
-          const colorHex = hslaToHex(hue, 90, 50);
-          
-          gridGraphics.lineStyle(Math.max(2, (width / numSpokes) * 0.5), colorHex, 0.8);
-          gridGraphics.moveTo(xStart, yStart);
-          gridGraphics.lineTo(xEnd, yEnd);
-
-          // Spawn radial particles
-          if (val > 100 && Math.random() < 0.15) {
-            spawnParticle(xEnd, yEnd, Math.cos(angle) * (1 + percent * 3), Math.sin(angle) * (1 + percent * 3), 1.5 + percent * 1.5, colorHex, 45);
-          }
-        }
-
-        // Pulsing inner ring core
-        const lowFreqVal = dataArray[1] || 0;
-        const pulseFactor = 1 + (lowFreqVal / 255) * 0.15;
-        
-        gridGraphics.lineStyle(2.0, 0x4f46e5, 1.0);
-        gridGraphics.beginFill(0x4f46e5, 0.08);
-        gridGraphics.drawCircle(cx, cy, innerRadius * pulseFactor);
-        gridGraphics.endFill();
-
-      } else if (mode === "oscilloscope") {
-        // Draw central baseline and horizontal grid lines
-        gridGraphics.lineStyle(1.0, 0x000000, 0.02);
-        for (let y = height / 4; y < height; y += height / 4) {
-          if (Math.abs(y - height / 2) > 2) {
-            gridGraphics.moveTo(0, y);
-            gridGraphics.lineTo(width, y);
-          }
-        }
-        gridGraphics.lineStyle(1.5, 0x4f46e5, 0.1);
-        gridGraphics.moveTo(0, height / 2);
-        gridGraphics.lineTo(width, height / 2);
-
-        // Trace wave curve
-        gridGraphics.lineStyle(3.0, 0x4f46e5, 0.95);
-        
-        const sliceWidth = width / bufferLength;
-        let x = 0;
-
-        for (let i = 0; i < bufferLength; i++) {
-          const v = dataArray[i] / 128.0;
-          const y = (v * height) / 2;
-
-          if (i === 0) {
-            gridGraphics.moveTo(x, y);
-          } else {
-            gridGraphics.lineTo(x, y);
-          }
-          
-          // Spawn waveform current particles
-          if (Math.abs(dataArray[i] - 128) > 15 && Math.random() < 0.05) {
-            const flowSpeed = 2.5 + Math.random() * 2;
-            spawnParticle(x, y, flowSpeed, (v - 1.0) * 1.5, 1.5, 0x4f46e5, 50);
-          }
-
-          x += sliceWidth;
-        }
-
+      // Draw active visualization mode
+      if (mode === "waterfall") {
+        drawWaterfall(p, w, h, dataArray);
+      } else if (mode === "mandala") {
+        drawMandala(p, w, h, dataArray);
+      } else if (mode === "orbitals") {
+        drawGravitationalOrbitals(p, w, h, dataArray);
       } else {
-        // FFT Spectrum - Gravitational Grid deforming
-        // Calculate average amplitude for ripple scaling
-        let sum = 0;
-        for (let i = 0; i < 40; i++) sum += dataArray[i] || 0;
-        const avg = sum / 40;
-        const amplitude = (avg / 255) * 16; // ripple height up to 16px
-        
-        // Displace space-time grid nodes
-        const cx = width / 2;
-        const cy = height / 2;
-        
-        for (let c = 0; c < gridCols; c++) {
-          for (let r = 0; r < gridRows; r++) {
-            const node = gridNodes[c][r];
-            if (!node) continue;
-            
-            const dx = node.originX - cx;
-            const dy = node.originY - cy;
-            const dist = Math.sqrt(dx * dx + dy * dy) || 1;
-            
-            // Generate expanding circular gravity ripples
-            const factor = Math.max(0, 1 - dist / (width * 0.7)); // fade with distance
-            const ripple = Math.sin(dist / 14 - phase) * amplitude * factor;
-            
-            node.x = node.originX + (dx / dist) * ripple;
-            node.y = node.originY + (dy / dist) * ripple;
-          }
-        }
-
-        // Draw horizontal grid lines
-        gridGraphics.lineStyle(1.5, 0x4f46e5, 0.12);
-        for (let r = 0; r < gridRows; r++) {
-          if (gridNodes[0] && gridNodes[0][r]) {
-            gridGraphics.moveTo(gridNodes[0][r].x, gridNodes[0][r].y);
-            for (let c = 1; c < gridCols; c++) {
-              gridGraphics.lineTo(gridNodes[c][r].x, gridNodes[c][r].y);
-            }
-          }
-        }
-        
-        // Draw vertical grid lines
-        for (let c = 0; c < gridCols; c++) {
-          if (gridNodes[c] && gridNodes[c][0]) {
-            gridGraphics.moveTo(gridNodes[c][0].x, gridNodes[c][0].y);
-            for (let r = 1; r < gridRows; r++) {
-              gridGraphics.lineTo(gridNodes[c][r].x, gridNodes[c][r].y);
-            }
-          }
-        }
-
-        // Draw frequency amplitude bars on top of the grid
-        const barWidth = (width / bufferLength) * 1.25;
-        let barX = 0;
-
-        for (let i = 0; i < bufferLength; i++) {
-          const val = dataArray[i];
-          const percent = val / 255;
-          const barHeight = percent * height * 0.95;
-          const barY = height - barHeight;
-
-          if (barHeight > 0) {
-            const hue = 240 + percent * 110;
-            const colorHex = hslaToHex(hue, 90, 48);
-            
-            // Draw visual spectrum columns
-            gridGraphics.lineStyle(0);
-            gridGraphics.beginFill(colorHex, 0.85);
-            gridGraphics.drawRoundedRect(barX, barY, barWidth - 2, barHeight, 3);
-            gridGraphics.endFill();
-
-            // Spawn sparks particles at the top of active columns
-            if (val > 140 && Math.random() < 0.12) {
-              spawnParticle(barX + barWidth / 2, barY, (Math.random() - 0.5) * 1.2, -1 - Math.random() * 2.5, 2.0, colorHex, 40);
-            }
-          }
-
-          barX += barWidth;
-        }
+        drawFFTSpectrum(p, w, h, dataArray);
       }
 
-      // Update and Draw Particles
-      updateAndDrawParticles();
+      // Keep Three.js orb in sync
+      try {
+        updateThreeJS(orbFreqArray);
+      } catch (err) {
+        // fail silently to keep p5 drawing loop running
+      }
+    };
 
-      // Render Three.js 3D Orb Animations
-      if (coreMesh && cageMesh && orbitPoints) {
-        let avgEnergy = 0;
-        let sum = 0;
-        for (let i = 0; i < bufferLength; i++) sum += orbFreqArray[i];
-        avgEnergy = sum / bufferLength;
+    p.windowResized = () => {
+      if (soundGraphContainer) {
+        const w = soundGraphContainer.clientWidth;
+        const h = soundGraphContainer.clientHeight;
+        p.resizeCanvas(w, h);
+      }
+    };
 
-        // Slow rotation speeds up when sound is active (boosted 15%)
-        const rotSpeedFactor = 1.0 + (avgEnergy / 255) * 5.75;
-        coreMesh.rotation.y += 0.005 * rotSpeedFactor;
-        coreMesh.rotation.x += 0.002 * rotSpeedFactor;
-        cageMesh.rotation.y -= 0.003 * rotSpeedFactor;
-        cageMesh.rotation.x -= 0.001 * rotSpeedFactor;
-        orbitPoints.rotation.y += 0.002 * rotSpeedFactor;
+    // p5.js FFT spectrum drawing
+    function drawFFTSpectrum(p, w, h, data) {
+      // 1. Cybernetic grid background (static)
+      p.stroke(79, 70, 229, 20); // soft indigo
+      p.strokeWeight(1);
+      
+      const cols = 20;
+      const rows = 8;
+      
+      for (let c = 0; c <= cols; c++) {
+        let x = (c / cols) * w;
+        p.line(x, 0, x, h);
+      }
+      for (let r = 0; r <= rows; r++) {
+        let y = (r / rows) * h;
+        p.line(0, y, w, y);
+      }
 
-        // Core dynamic pulse (bass frequencies e.g. Schumann Resonance bins 1, 2, 3) - boosted 15%
-        const bassVal = orbFreqArray[1] * 0.4 + orbFreqArray[2] * 0.4 + orbFreqArray[3] * 0.2;
-        const targetCoreScale = 1.0 + (bassVal / 255) * 0.52 + (activeAnalyser ? 0 : Math.sin(Date.now() * 0.002) * 0.05);
-        coreMesh.scale.set(targetCoreScale, targetCoreScale, targetCoreScale);
+      // Draw sparks particles
+      p.noStroke();
+      for (let i = sparks.length - 1; i >= 0; i--) {
+        let s = sparks[i];
+        s.x += s.vx;
+        s.y += s.vy;
+        s.life--;
+        if (s.life <= 0) {
+          sparks.splice(i, 1);
+          continue;
+        }
+        let alpha = p.map(s.life, 0, s.maxLife, 0, 220);
+        p.fill(p.red(s.color), p.green(s.color), p.blue(s.color), alpha);
+        p.ellipse(s.x, s.y, s.size);
+      }
 
-        // 3D Icosahedron Cage vertex mutation based on frequency spectrum - boosted 15%
-        const cageGeom = cageMesh.geometry;
-        const posAttr = cageGeom.attributes.position;
-        const origPos = cageGeom.userData.originalPositions;
+      // 2. Main frequency columns
+      const displayBins = 64;
+      const barWidth = w / displayBins;
+      const colStart = p.color(79, 70, 229); // Indigo
+      const colEnd = p.color(244, 63, 94);   // Rose
+
+      for (let i = 0; i < displayBins; i++) {
+        const val = data[i] || 0;
+        const percent = val / 255;
+        const barH = percent * h * 0.92;
         
-        for (let i = 0; i < posAttr.count; i++) {
-          const x_orig = origPos[i * 3];
-          const y_orig = origPos[i * 3 + 1];
-          const z_orig = origPos[i * 3 + 2];
-
-          // map vertex index to frequency bin
-          const bin = i % bufferLength;
-          const amp = orbFreqArray[bin];
-          // Up to 63% radial displacement (boosted 15% from 55%)
-          const factor = 1.0 + (amp / 255) * 0.63;
-
-          posAttr.setX(i, x_orig * factor);
-          posAttr.setY(i, y_orig * factor);
-          posAttr.setZ(i, z_orig * factor);
+        if (barH > 0) {
+          const barColor = p.lerpColor(colStart, colEnd, percent);
+          p.fill(p.red(barColor), p.green(barColor), p.blue(barColor), 200);
+          p.noStroke();
+          p.rect(i * barWidth + 1, h - barH, barWidth - 2, barH, 4, 4, 0, 0);
+          
+          // Spawn rising sparks
+          if (val > 130 && Math.random() < 0.12) {
+            sparks.push({
+              x: i * barWidth + barWidth / 2,
+              y: h - barH,
+              vx: (Math.random() - 0.5) * 1.5,
+              vy: -0.8 - Math.random() * 2,
+              size: 1.5 + Math.random() * 2,
+              color: barColor,
+              life: 25 + Math.random() * 15,
+              maxLife: 40
+            });
+          }
         }
-        posAttr.needsUpdate = true;
 
-        // Orbiting particles paths and high-frequency vibrations - boosted 15%
-        const pGeom = orbitPoints.geometry;
-        const pPosAttr = pGeom.attributes.position;
-        const originalRadii = pGeom.userData.originalRadii;
-        const randomSpeeds = pGeom.userData.randomSpeeds;
-        const angles = pGeom.userData.angles;
-
-        for (let i = 0; i < originalRadii.length; i++) {
-          const bin = (i * 2) % bufferLength;
-          const highAmp = orbFreqArray[bin];
-
-          // Update rotation angle (boosted 15% from 3.0)
-          angles[i * 2 + 1] += randomSpeeds[i] * (1.0 + (highAmp / 255) * 3.45);
-
-          const phi = angles[i * 2];
-          const theta = angles[i * 2 + 1];
-          // Particle radius expansion (boosted 15% from 0.45)
-          const r = originalRadii[i] + (highAmp / 255) * 0.52;
-
-          pPosAttr.setX(i, r * Math.sin(phi) * Math.cos(theta));
-          pPosAttr.setY(i, r * Math.sin(phi) * Math.sin(theta));
-          pPosAttr.setZ(i, r * Math.cos(phi));
+        // Peak drop calculations
+        let curPeak = peaks[i] || 0;
+        if (barH > curPeak) {
+          peaks[i] = barH;
+          peakHoldFrames[i] = 18;
+        } else {
+          if (peakHoldFrames[i] > 0) {
+            peakHoldFrames[i]--;
+          } else {
+            peaks[i] -= 1.6;
+            if (peaks[i] < 0) peaks[i] = 0;
+          }
         }
-        pPosAttr.needsUpdate = true;
 
-        // Render Three.js scene
-        threeRenderer.render(threeScene, threeCamera);
+        // Render peak dot
+        if (peaks[i] > 2) {
+          const peakColor = p.lerpColor(colStart, colEnd, peaks[i] / h);
+          p.fill(p.red(peakColor), p.green(peakColor), p.blue(peakColor), 235);
+          p.noStroke();
+          p.ellipse(i * barWidth + barWidth / 2, h - peaks[i] - 3, Math.max(3, barWidth - 4));
+        }
       }
     }
-    draw();
+
+
+
+    // p5.js Scrolling Spectrogram (Waterfall) drawing
+    function drawWaterfall(p, w, h, data) {
+      const bins = 64;
+      const currentFrame = new Uint8Array(bins);
+      for (let i = 0; i < bins; i++) {
+        currentFrame[i] = data[i] || 0;
+      }
+      waterfallHistory.push(currentFrame);
+      if (waterfallHistory.length > maxWaterfallRows) {
+        waterfallHistory.shift();
+      }
+
+      p.noStroke();
+      const rowHeight = h / maxWaterfallRows;
+      const barWidth = w / bins;
+      const colStart = p.color(248, 250, 252); // light grey base
+      const colLow = p.color(79, 70, 229);   // Indigo
+      const colMid = p.color(14, 165, 233);  // Cyan
+      const colHigh = p.color(244, 63, 94);  // Rose
+
+      for (let r = 0; r < waterfallHistory.length; r++) {
+        const frame = waterfallHistory[r];
+        const y = (r / maxWaterfallRows) * h;
+        
+        for (let c = 0; c < bins; c++) {
+          const val = frame[c];
+          const percent = val / 255;
+          let cellColor;
+          
+          if (percent === 0) {
+            cellColor = colStart;
+          } else if (percent < 0.35) {
+            cellColor = p.lerpColor(colStart, colLow, percent / 0.35);
+          } else if (percent < 0.75) {
+            cellColor = p.lerpColor(colLow, colMid, (percent - 0.35) / 0.4);
+          } else {
+            cellColor = p.lerpColor(colMid, colHigh, (percent - 0.75) / 0.25);
+          }
+          
+          p.fill(p.red(cellColor), p.green(cellColor), p.blue(cellColor), 180);
+          p.rect(c * barWidth, y, barWidth + 0.5, rowHeight + 0.5);
+        }
+      }
+    }
+
+    // p5.js Audio-Reactive Mandala drawing
+    function drawMandala(p, w, h, data) {
+      const cx = w / 2;
+      const cy = h / 2;
+      const maxRadius = Math.min(w, h) * 0.45;
+
+      p.push();
+      p.translate(cx, cy);
+      
+      let sum = 0;
+      for (let i = 0; i < 40; i++) sum += data[i] || 0;
+      const avgEnergy = sum / 40;
+      mandalaAngle += 0.006 + (avgEnergy / 255) * 0.024;
+
+      // 1. Draw glowing background grid mandala layers
+      p.noFill();
+      p.stroke(79, 70, 229, 25); 
+      p.strokeWeight(1);
+      
+      p.rotate(mandalaAngle * 0.3);
+      for (let i = 3; i <= 6; i++) {
+        let r = maxRadius * (i / 6);
+        p.beginShape();
+        for (let j = 0; j < i; j++) {
+          let angle = (j / i) * Math.PI * 2;
+          p.vertex(Math.cos(angle) * r, Math.sin(angle) * r);
+        }
+        p.endShape(p.CLOSE);
+      }
+
+      // 2. Draw reactive frequency ring
+      p.rotate(-mandalaAngle * 0.8);
+      const displayBins = 64;
+      const angleStep = (Math.PI * 2) / displayBins;
+      const innerRadius = maxRadius * 0.25;
+      
+      const ctx = p.drawingContext;
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = 'rgba(244, 63, 94, 0.55)'; // rose glow
+
+      const colStart = p.color(14, 165, 233); // Cyan
+      const colEnd = p.color(244, 63, 94);   // Rose
+
+      p.strokeWeight(2.5);
+      for (let i = 0; i < displayBins; i++) {
+        const val = data[i] || 0;
+        const percent = val / 255;
+        const spokeLength = percent * (maxRadius - innerRadius) * 0.8;
+        const angle = i * angleStep;
+
+        const xStart = Math.cos(angle) * innerRadius;
+        const yStart = Math.sin(angle) * innerRadius;
+        const xEnd = Math.cos(angle) * (innerRadius + spokeLength);
+        const yEnd = Math.sin(angle) * (innerRadius + spokeLength);
+
+        const color = p.lerpColor(colStart, colEnd, percent);
+        p.stroke(p.red(color), p.green(color), p.blue(color), 210);
+        
+        p.line(xStart, yStart, xEnd, yEnd);
+        p.line(-xStart, -yStart, -xEnd, -yEnd); // mirror
+      }
+      
+      ctx.shadowBlur = 0; // reset glow
+
+      // 3. Central breathing pulsing core
+      const bassVal = data[1] * 0.5 + data[2] * 0.5;
+      const pulseFactor = 1 + (bassVal / 255) * 0.25;
+      p.stroke(14, 165, 233, 140);
+      p.strokeWeight(1.5);
+      p.fill(79, 70, 229, 20);
+      p.ellipse(0, 0, innerRadius * 2 * pulseFactor);
+
+      p.rotate(mandalaAngle * 1.5);
+      p.stroke(244, 63, 94, 150);
+      p.beginShape();
+      for (let i = 0; i < 3; i++) {
+        let angle = (i / 3) * Math.PI * 2;
+        p.vertex(Math.cos(angle) * innerRadius * 0.6 * pulseFactor, Math.sin(angle) * innerRadius * 0.6 * pulseFactor);
+      }
+      p.endShape(p.CLOSE);
+
+      p.pop();
+    }
+
+    // p5.js Gravitational Wave Orbitals drawing
+    function drawGravitationalOrbitals(p, w, h, data) {
+      const cx = w / 2;
+      const cy = h / 2;
+      const maxRadius = Math.min(w, h) * 0.46;
+      const innerRadius = maxRadius * 0.16;
+
+      // Draw background gravitational pull rings
+      p.stroke(79, 70, 229, 15);
+      p.strokeWeight(1);
+      p.noFill();
+      p.ellipse(cx, cy, innerRadius * 2);
+      p.ellipse(cx, cy, maxRadius * 2);
+
+      // Update particle positions based on active frequency energy
+      orbitalParticles.forEach(pt => {
+        const binStart = pt.band * 8;
+        let sum = 0;
+        for (let i = 0; i < 8; i++) {
+          sum += data[binStart + i] || 0;
+        }
+        const amp = sum / 8;
+        const percent = amp / 255;
+
+        // Radius expands/contracts with sound
+        const targetRadius = pt.baseRadius + percent * 30 * (pt.band % 2 === 0 ? 1 : -1);
+        pt.radius = p.lerp(pt.radius, targetRadius, 0.1);
+        
+        // Speed scaling
+        const rotSpeed = pt.speed * (1.0 + percent * 4.5);
+        pt.angle += rotSpeed;
+
+        const x = cx + Math.cos(pt.angle) * pt.radius;
+        const y = cy + Math.sin(pt.angle) * pt.radius;
+
+        const ptColor = p.lerpColor(p.color(14, 165, 233), p.color(244, 63, 94), pt.band / 7);
+        p.fill(p.red(ptColor), p.green(ptColor), p.blue(ptColor), 200 + percent * 55);
+        p.noStroke();
+        p.ellipse(x, y, pt.size + percent * 4);
+        
+        pt.x = x;
+        pt.y = y;
+        pt.activePercent = percent;
+      });
+
+      // Draw gravity connection filaments
+      p.stroke(14, 165, 233, 40);
+      p.strokeWeight(0.5);
+      for (let i = 0; i < orbitalParticles.length; i++) {
+        const p1 = orbitalParticles[i];
+        for (let j = i + 1; j < orbitalParticles.length; j++) {
+          const p2 = orbitalParticles[j];
+          if (p1.band === p2.band) {
+            let d = p.dist(p1.x, p1.y, p2.x, p2.y);
+            if (d < w * 0.15) {
+              const alpha = p.map(d, 0, w * 0.15, 80 * (p1.activePercent + p2.activePercent), 0);
+              p.stroke(14, 165, 233, alpha);
+              p.line(p1.x, p1.y, p2.x, p2.y);
+            }
+          }
+        }
+      }
+
+      // Draw central black hole gravity core
+      let bassVal = data[1] * 0.5 + data[2] * 0.5;
+      let coreScale = 1.0 + (bassVal / 255) * 0.35;
+      
+      p.stroke(244, 63, 94, 130);
+      p.strokeWeight(2);
+      p.fill(15, 23, 42, 230); // deep black hole core
+      p.ellipse(cx, cy, innerRadius * 2 * coreScale);
+      
+      p.fill(244, 63, 94, 25);
+      p.noStroke();
+      p.ellipse(cx, cy, innerRadius * 1.5 * coreScale);
+    }
+  };
+
+  // Launch p5.js visualizer sketch instance
+  try {
+    p5Instance = new p5(sketch, 'soundGraphContainer');
+    console.log("UAP Whistle: p5.js visualizer initialized successfully.");
+  } catch (err) {
+    console.error("UAP Whistle: Failed to initialize p5.js visualizer:", err);
   }
-  startGraphVisualizer();
 }
 
 window.addEventListener("DOMContentLoaded", main);
